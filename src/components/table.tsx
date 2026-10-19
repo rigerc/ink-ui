@@ -1,5 +1,6 @@
 import React from "react"
-import { Box, Text, useStdout } from "ink"
+import { Box, Text } from "ink"
+import { useTerminalColumns } from "./use-terminal-columns.js"
 import { colors } from "../tokens.js"
 import {
   resolveColumnWidths,
@@ -45,7 +46,7 @@ export const Table = <T extends Record<string, unknown>>({
   maxWidth,
   headerColor = colors.muted,
 }: TableProps<T>) => {
-  const { stdout } = useStdout()
+  const terminalColumns = useTerminalColumns()
   const rows = data.map((row) =>
     columns.map((column) => cellText(row[column.key])),
   )
@@ -53,7 +54,7 @@ export const Table = <T extends Record<string, unknown>>({
     columns,
     rows,
     gap,
-    maxWidth: maxWidth ?? stdout?.columns ?? FALLBACK_TERMINAL_WIDTH,
+    maxWidth: maxWidth ?? terminalColumns ?? FALLBACK_TERMINAL_WIDTH,
   })
 
   // flexShrink={0} is what keeps every row's columns lining up: the widths were
