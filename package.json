@@ -1,5 +1,5 @@
 {
-  "name": "@kud/ink-ui",
+  "name": "@rigerc/ink-ui",
   "version": "0.41.0",
   "description": "React component library for Ink CLIs",
   "type": "module",
@@ -58,9 +58,12 @@
     "components"
   ],
   "license": "MIT",
-  "homepage": "https://kud.github.io/ink-ui",
+  "homepage": "https://github.com/rigerc/ink-ui#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/kud/ink-ui"
+    "url": "https://github.com/rigerc/ink-ui.git"
+  },
+  "bugs": {
+    "url": "https://github.com/rigerc/ink-ui/issues"
   }
 }
