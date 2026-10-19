@@ -33,6 +33,17 @@
 npm install @rigerc/ink-ui
 ```
 
+Until this fork is published under the `@rigerc` npm scope, you can
+install directly from its GitHub branch:
+
+```sh
+npm install github:rigerc/ink-ui#chore/ink-8-compatibility
+```
+
+Git installs build `dist/` automatically using the package's `prepare` script.
+After publication, use the scoped npm install command above.
+
+
 `ink` and `react` are peer dependencies and must be installed separately:
 
 ```sh
