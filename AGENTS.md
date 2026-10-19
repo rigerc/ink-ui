@@ -1,5 +1,5 @@
 | A list or detail body before its first load lands | `SkeletonRows` in the body, `SkeletonBar` for a lone value, `count: null` on tabs — then real content, kept through every refresh |
-# Building a CLI with @kud/ink-ui
+# Building a CLI with @rigerc/ink-ui
 
 The design-system manual, for an AI agent or a person writing a terminal UI
 against this package. It carries the judgement calls the type definitions
@@ -269,7 +269,7 @@ use it. A literal like `color="orange"` or `color="#FF8C00"` is wrong even when
 it renders identically — it breaks the moment a token moves.
 
 ```ts
-import { colors, palette, priorityColors, softColors, tonalColors, tonalStrongColors, spacing } from "@kud/ink-ui"
+import { colors, palette, priorityColors, softColors, tonalColors, tonalStrongColors, spacing } from "@rigerc/ink-ui"
 // colors: accent · secondary · muted · dim · success · error · warning · info · pending · group
 //         ticket · pr · link · added · removed · selection · track · trackHighlight
 // palette: the raw hexes those are drawn from; priorityColors: highest · high · medium · low · lowest
