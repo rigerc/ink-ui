@@ -37,7 +37,7 @@ Until this fork is published under the `@rigerc` npm scope, you can
 install directly from its GitHub branch:
 
 ```sh
-npm install github:rigerc/ink-ui#chore/ink-8-compatibility
+npm install github:rigerc/ink-ui#chore/rebrand-rigerc-scope
 ```
 
 Git installs build `dist/` automatically using the package's `prepare` script.
