@@ -20,6 +20,12 @@ jobs:
       - uses: actions/setup-node@v5
         with:
           node-version: "24"
+      # Temporary lockfile regeneration/export for the Ink 8 migration PR.
+      # This block is removed after its output is committed to package-lock.json.
+      - run: npm install --package-lock-only --ignore-scripts
+      - name: Export lockfile for migration
+        run: |
+          node -e 'const {readFileSync}=require("node:fs");const s=readFileSync("package-lock.json","utf8");for(let i=0;i<s.length;i+=1000)console.log("INK8_LOCK_PART:"+String(i/1000).padStart(5,"0")+":"+JSON.stringify(s.slice(i,i+1000)))'
       - run: npm ci
       - run: npm run typecheck
       - run: npm run check:agents

@@ -39,6 +39,19 @@ npm install @kud/ink-ui
 npm install ink react
 ```
 
+### Ink compatibility
+
+`@kud/ink-ui` supports Ink 7 and Ink 8 on Node.js 22 or later. Ink 8
+requires React 19.3 or later; when installing Ink 8, install a matching
+version of React:
+
+```sh
+npm install ink@^8 react@^19.3.0
+```
+
+The library preserves the same public component API across both Ink majors.
+
+
 ### Building with an AI agent
 
 The package ships `AGENTS.md`, a short brief covering the composition rules and house conventions that the type definitions cannot express — which components own the keyboard, what to compose for a given screen, and the traps. Point your agent at it:

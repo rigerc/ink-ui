@@ -1,5 +1,6 @@
 import React from "react"
-import { Box, Text, useStdout } from "ink"
+import { Box, Text } from "ink"
+import { useTerminalColumns } from "./use-terminal-columns.js"
 import stringWidth from "string-width"
 import { glyph } from "@kud/glyphs"
 import { colors } from "../tokens.js"
@@ -248,8 +249,8 @@ export const Tabs = <T extends string>({
   items,
   width,
 }: TabsProps<T>) => {
-  const { stdout } = useStdout()
-  const availableWidth = width ?? stdout?.columns
+  const terminalColumns = useTerminalColumns()
+  const availableWidth = width ?? terminalColumns
 
   const cells = items.map((item) => {
     const [fullLabel, fullTail] = fullPartsOf(item)
