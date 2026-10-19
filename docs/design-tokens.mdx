@@ -6,8 +6,8 @@ description: The shared colour palette and spacing scale that keep every screen 
 Every component is built on the same set of design tokens. Import `colors`, `palette`, `priorityColors` and `spacing` to keep your own components aligned with the design system.
 
 ```ts
-import { colors, palette, priorityColors, spacing } from "@kud/ink-ui";
-import type { Color, Palette, PriorityColor, Spacing } from "@kud/ink-ui";
+import { colors, palette, priorityColors, spacing } from "@rigerc/ink-ui";
+import type { Color, Palette, PriorityColor, Spacing } from "@rigerc/ink-ui";
 ```
 
 ## 🌈 Colours
@@ -39,7 +39,7 @@ Every value is drawn from `palette`, tuned to the dark ground `#1a1b27`: dark-on
 
 ```tsx
 import { Text } from "ink";
-import { colors } from "@kud/ink-ui";
+import { colors } from "@rigerc/ink-ui";
 
 <Text color={colors.accent}>Highlighted</Text>;
 ```
@@ -57,7 +57,7 @@ import { colors } from "@kud/ink-ui";
 
 ```tsx
 import { Box } from "ink";
-import { spacing } from "@kud/ink-ui";
+import { spacing } from "@rigerc/ink-ui";
 
 <Box marginBottom={spacing.md}>…</Box>;
 ```

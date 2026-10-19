@@ -2,12 +2,12 @@
 
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white)
 ![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=node.js&logoColor=white)
-![npm](https://img.shields.io/npm/v/%40kud%2Fink-ui?style=flat-square&color=CB3837)
+![npm](https://img.shields.io/npm/v/%40rigerc%2Fink-ui?style=flat-square&color=CB3837)
 ![MIT](https://img.shields.io/badge/licence-MIT-22C55E?style=flat-square)
 
 **React component library for Ink CLIs**
 
-<a href="https://kud.io/projects/ink-ui">Website</a> · <a href="https://kud.io/projects/ink-ui/docs">Documentation</a>
+<a href="https://github.com/rigerc/ink-ui">Repository</a> · <a href="https://github.com/rigerc/ink-ui/tree/main/docs">Documentation</a>
 
 </div>
 
@@ -30,8 +30,19 @@
 ## Install
 
 ```sh
-npm install @kud/ink-ui
+npm install @rigerc/ink-ui
 ```
+
+Until this fork is published under the `@rigerc` npm scope, you can
+install directly from its GitHub branch:
+
+```sh
+npm install github:rigerc/ink-ui#chore/rebrand-rigerc-scope
+```
+
+Git installs build `dist/` automatically using the package's `prepare` script.
+After publication, use the scoped npm install command above.
+
 
 `ink` and `react` are peer dependencies and must be installed separately:
 
@@ -41,7 +52,7 @@ npm install ink react
 
 ### Ink compatibility
 
-`@kud/ink-ui` supports Ink 7 and Ink 8 on Node.js 22 or later. Ink 8
+`@rigerc/ink-ui` supports Ink 7 and Ink 8 on Node.js 22 or later. Ink 8
 requires React 19.3 or later; when installing Ink 8, install a matching
 version of React:
 
@@ -57,7 +68,7 @@ The library preserves the same public component API across both Ink majors.
 The package ships `AGENTS.md`, a short brief covering the composition rules and house conventions that the type definitions cannot express — which components own the keyboard, what to compose for a given screen, and the traps. Point your agent at it:
 
 ```
-node_modules/@kud/ink-ui/AGENTS.md
+node_modules/@rigerc/ink-ui/AGENTS.md
 ```
 
 ## Usage
@@ -65,7 +76,7 @@ node_modules/@kud/ink-ui/AGENTS.md
 ```tsx
 import React from "react"
 import { render } from "ink"
-import { Banner, Header, Badge, Spinner, colors } from "@kud/ink-ui"
+import { Banner, Header, Badge, Spinner, colors } from "@rigerc/ink-ui"
 
 const App = () => (
   <>
@@ -83,7 +94,7 @@ Inputs report their value through `onChange`/`onSubmit`, and lists nest with a s
 
 ```tsx
 import { Text } from "ink"
-import { EmailInput, PasswordInput, UnorderedList } from "@kud/ink-ui"
+import { EmailInput, PasswordInput, UnorderedList } from "@rigerc/ink-ui"
 
 const SignUp = () => (
   <>
@@ -109,7 +120,7 @@ const SignUp = () => (
 Components stay presentational and controlled — they take `active`/`value` and render. The behaviour hooks supply the keyboard state to drive them, so the two compose without either forcing the other:
 
 ```tsx
-import { Tabs, useTabs, useListCursor } from "@kud/ink-ui"
+import { Tabs, useTabs, useListCursor } from "@rigerc/ink-ui"
 
 const items = [
   { value: "open", label: "Open", count: 3 },
@@ -128,7 +139,7 @@ Both take `{ isActive }` so a screen with several focus regions can gate them, a
 All components accept only the props they need — no theme provider or context required. Design tokens are plain objects:
 
 ```ts
-import { colors, spacing } from "@kud/ink-ui"
+import { colors, spacing } from "@rigerc/ink-ui"
 
 // colors.accent   → "#FF8C00"
 // colors.success  → "#5FD7A7"
@@ -138,7 +149,7 @@ import { colors, spacing } from "@kud/ink-ui"
 ## Development
 
 ```sh
-git clone https://github.com/kud/ink-ui.git
+git clone https://github.com/rigerc/ink-ui.git
 cd ink-ui
 npm install
 npm run dev
@@ -146,4 +157,4 @@ npm run dev
 
 `npm run build` compiles TypeScript to `dist/`. `npm run dev` runs the compiler in watch mode.
 
-📚 **Full documentation → [ink-ui/docs](https://kud.io/projects/ink-ui/docs)**
+📚 **Full documentation → [ink-ui/docs](https://github.com/rigerc/ink-ui/tree/main/docs)**
