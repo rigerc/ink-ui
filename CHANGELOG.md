@@ -4,6 +4,15 @@ All notable changes to this project are documented here.
 
 ---
 
+## 0.41.2 — 2026-10-28
+
+- Added the Ink UI screen design skill and automated its API reference updates.
+- Added generated repository context for AGENTS.md and an automated refresh workflow.
+- Added Oxfmt configuration and incremental formatting checks in CI.
+- Corrected package manifest syntax and addressed lint findings.
+
+---
+
 ## 0.41.0 — 2026-10-06
 
 ### Highlights
