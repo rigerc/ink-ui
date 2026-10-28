@@ -25,9 +25,6 @@ jobs:
         with:
           node-version: '24'
           cache: npm
-      # TODO: Remove when the Ink 8 migration lockfile has been committed.
-      - name: Temporarily reconcile the migration lockfile
-        run: npm install --package-lock-only --ignore-scripts
       - run: npm ci
       - run: npm audit --audit-level=moderate
 
