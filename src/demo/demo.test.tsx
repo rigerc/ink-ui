@@ -1,6 +1,6 @@
 import React from "react"
 import { render } from "ink-testing-library"
-import { describe, expect, it } from "vitest"
+import { describe, expect, it, vi } from "vitest"
 import { entries } from "./entries.js"
 import { Gallery } from "./gallery.js"
 
@@ -21,6 +21,16 @@ describe("interactive gallery demos", () => {
 
   it("demonstrates validation, back, completion, cancellation and restart", async () => {
     const ui = render(preview("Stepper", true))
+    const expectFrame = async (text: string) => {
+      // Navigation includes async guards and React/Ink rendering. Wait for the
+      // resulting screen rather than relying on a fixed 35 ms delay.
+      await vi.waitFor(() => expect(ui.lastFrame()).toContain(text), {
+        timeout: 2000,
+        interval: 10,
+      })
+      await settle()
+    }
+
     expect(ui.lastFrame()).toContain("Details not ready")
     expect(ui.lastFrame()).toContain("Validation")
 
@@ -29,34 +39,27 @@ describe("interactive gallery demos", () => {
     expect(ui.lastFrame()).toContain("Details not ready")
 
     ui.stdin.write(" ")
-    await settle()
-    expect(ui.lastFrame()).toContain("Details ready")
+    await expectFrame("Details ready")
 
     ui.stdin.write("\r")
-    await settle()
-    expect(ui.lastFrame()).toContain("Async validation passed")
+    await expectFrame("Async validation passed")
 
     ui.stdin.write("b")
-    await settle()
-    expect(ui.lastFrame()).toContain("Details ready")
+    await expectFrame("Details ready")
 
     ui.stdin.write("\r")
-    await settle()
+    await expectFrame("Async validation passed")
     ui.stdin.write("\r")
-    await settle()
-    expect(ui.lastFrame()).toContain("Ready to complete the wizard")
+    await expectFrame("Ready to complete the wizard")
 
     ui.stdin.write("\r")
-    await settle()
-    expect(ui.lastFrame()).toContain("Wizard completed.")
+    await expectFrame("Wizard completed.")
 
     ui.stdin.write("r")
-    await settle()
-    expect(ui.lastFrame()).toContain("Details not ready")
+    await expectFrame("Details not ready")
 
     ui.stdin.write("b")
-    await settle()
-    expect(ui.lastFrame()).toContain("Wizard cancelled.")
+    await expectFrame("Wizard cancelled.")
   })
 
   it("can change Stepper progress to ASCII and vertical layout", async () => {

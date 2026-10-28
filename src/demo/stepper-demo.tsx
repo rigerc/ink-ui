@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useLayoutEffect, useRef, useState } from "react"
 import { Box, Text, useInput } from "ink"
 import {
   Step,
@@ -19,14 +19,20 @@ type Result = "completed" | "cancelled" | null
  * The gallery owns Escape to leave the preview. Use b as its explicit
  * step-back shortcut so the Stepper never steals the host's Escape key.
  */
-const StepBackKey = ({ focused }: DemoProps) => {
+type BackHandler = () => Promise<void>
+type BackRef = React.RefObject<BackHandler | null>
+
+const StepBackKey = ({ backRef }: { backRef: BackRef }) => {
   const { goBack, isValidating } = useStepper()
-  useInput(
-    (input) => {
-      if (input === "b" && !isValidating) void goBack()
-    },
-    { isActive: focused },
-  )
+
+  // The demo owns its shortcuts at the root. Register the current step's
+  // navigation handler without remounting an Ink input listener per step.
+  useLayoutEffect(() => {
+    backRef.current = isValidating ? null : goBack
+    return () => {
+      if (backRef.current === goBack) backRef.current = null
+    }
+  }, [backRef, goBack, isValidating])
   return null
 }
 
@@ -37,6 +43,7 @@ export const StepperDemo = ({ focused }: DemoProps) => {
   const [vertical, setVertical] = useState(false)
   const [result, setResult] = useState<Result>(null)
   const [run, setRun] = useState(0)
+  const backRef = useRef<BackHandler | null>(null)
 
   useInput(
     (input) => {
@@ -48,6 +55,10 @@ export const StepperDemo = ({ focused }: DemoProps) => {
         return
       }
       if (result) return
+      if (input === "b") {
+        void backRef.current?.()
+        return
+      }
       if (input === "a") setAscii((value) => !value)
       if (input === "v") setVertical((value) => !value)
       if (input === " " && stepIndex === 0) setReady((value) => !value)
@@ -89,21 +100,21 @@ export const StepperDemo = ({ focused }: DemoProps) => {
               </Text>
               <Text dimColor>Press space to toggle readiness; Enter is guarded.</Text>
               <StepperNavigation />
-              <StepBackKey focused={focused} />
+              <StepBackKey backRef={backRef} />
             </Box>
           </Step>
           <Step key="validation" name="Validation" canProceed={async () => true}>
             <Box flexDirection="column">
               <Text>Async validation passed. Continue to review.</Text>
               <StepperNavigation />
-              <StepBackKey focused={focused} />
+              <StepBackKey backRef={backRef} />
             </Box>
           </Step>
           <Step key="review" name="Review">
             <Box flexDirection="column">
               <Text color={colors.success}>Ready to complete the wizard.</Text>
               <StepperNavigation />
-              <StepBackKey focused={focused} />
+              <StepBackKey backRef={backRef} />
             </Box>
           </Step>
         </Stepper>
