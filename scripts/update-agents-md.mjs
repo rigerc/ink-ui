@@ -21,6 +21,7 @@ function generateContext() {
   const modules = countFiles("src/components", /^(?!.*\.test\.)[^.].*\.[cm]?tsx?$/)
   const tests = countFiles("src/components", /\.test\.[cm]?tsx?$/)
   const docs = countFiles("docs", /\.mdx?$/)
+
   const scripts = Object.entries(pkg.scripts ?? {})
     .sort(([a], [b]) => a.localeCompare(b))
     .map(([name, command]) => `| \`npm run ${inline(name)}\` | \`${inline(command)}\` |`)
@@ -57,17 +58,21 @@ function generateContext() {
 function replaceContext(document, generated) {
   const begin = document.indexOf(beginMarker)
   const end = document.indexOf(endMarker)
+
   if ((begin < 0) !== (end < 0) ||
       (begin >= 0 && (begin >= end || document.indexOf(beginMarker, begin + 1) !== -1 || document.indexOf(endMarker, end + 1) !== -1))) {
     throw new Error("AGENTS.md has malformed or duplicate generated-context markers")
   }
+
   if (begin < 0) return `${document.trimEnd()}\n\n${generated}\n`
+
   return document.slice(0, begin) + generated + document.slice(end + endMarker.length)
 }
 
 const path = file("AGENTS.md")
 const current = readFileSync(path, "utf8")
 const updated = replaceContext(current, generateContext())
+
 if (process.argv.includes("--check")) {
   if (updated !== current) {
     console.error("AGENTS.md generated context is stale; run npm run update:agents")
