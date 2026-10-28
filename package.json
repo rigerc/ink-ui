@@ -19,8 +19,8 @@
     "node": ">=22"
   },
   "scripts": {
-    "build": "tsup",
-    "dev": "tsup --watch",
+    "build": "tsup && tsc --emitDeclarationOnly",
+    "dev": "tsup --watch --onSuccess \\"tsc --emitDeclarationOnly\\"",
     "demo": "tsx src/demo/index.tsx",
     "typecheck": "tsc --noEmit",
     "check:agents": "node scripts/check-agents-md.mjs",
