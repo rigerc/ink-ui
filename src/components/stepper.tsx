@@ -296,7 +296,9 @@ export const Stepper = ({
     (_input, key) => {
       if (key.return) void context.goNext()
     },
-    { isActive: keyboardNav && !finished && !!active && !isValidating },
+    // Keep the subscription mounted while a transition is validating.
+    // navigate() uses busy.current to reject overlapping Enter presses.
+    { isActive: keyboardNav && !finished && !!active },
   )
 
   if (!active || finished) return null
