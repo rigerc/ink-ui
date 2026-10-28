@@ -169,3 +169,9 @@ frames; press `a` while focused to switch the glyph set.
 `npm run build` compiles TypeScript to `dist/`. `npm run dev` runs the compiler in watch mode.
 
 📚 **Full documentation → [ink-ui/docs](https://github.com/rigerc/ink-ui/tree/main/docs)**
+
+## Design-only screen skill
+
+For screen planning and UX reviews, see the [Ink UI Screen Design skill](skills/ink-ui-screen-design/SKILL.md). It provides component selection guidance, Page and responsive layout patterns, keyboard/focus conventions, semantic visual tokens, screen-state design, and a critique checklist. It is a documentation-only skill; using it does not change the library's runtime behavior.
+
+
