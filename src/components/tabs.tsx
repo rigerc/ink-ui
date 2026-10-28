@@ -1,5 +1,6 @@
+import { TextRenderer } from "./text-renderer.js"
 import React from "react"
-import { Box, Text } from "ink"
+import { Box } from "ink"
 import { useTerminalColumns } from "./use-terminal-columns.js"
 import stringWidth from "string-width"
 import { glyph } from "@kud/glyphs"
@@ -260,6 +261,7 @@ export const Tabs = <T extends string>({
   items,
   width,
 }: TabsProps<T>) => {
+  const Text = React.useContext(TextRenderer)
   const terminalColumns = useTerminalColumns()
   const availableWidth = width ?? terminalColumns
 

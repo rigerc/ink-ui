@@ -37,6 +37,12 @@ export interface StepProps {
   children: ReactNode | ((context: StepContext) => ReactNode)
 }
 
+const isCallback = <T extends (...args: never[]) => ReactNode>(value: ReactNode | T): value is T =>
+  typeof value === "function"
+
+const isGuard = (value: boolean | (() => boolean | Promise<boolean>)): value is () => boolean | Promise<boolean> =>
+  typeof value === "function"
+
 /** Marker component: only the active Step's content is mounted. */
 export const Step = (_props: StepProps): null => null
 
@@ -236,15 +242,15 @@ export const Stepper = ({
     onCancel?.()
   }
 
-  const navigate = async (direction: "next" | "back" | number) => {
+  const navigate = async (direction: "next" | "back" | { index: number }) => {
     if (busy.current || ended.current || !active) return
 
     const target =
-      typeof direction === "number"
-        ? clamp(direction, steps.length)
-        : direction === "next"
-          ? currentStep + 1
-          : currentStep - 1
+      direction === "next"
+        ? currentStep + 1
+        : direction === "back"
+          ? currentStep - 1
+          : clamp(direction.index, steps.length)
 
     if (target === currentStep) return
 
@@ -266,7 +272,7 @@ export const Stepper = ({
 
       if (direction === "next") {
         const guard = active.element.props.canProceed ?? true
-        const permitted = typeof guard === "function" ? await guard() : guard
+        const permitted = isGuard(guard) ? await guard() : guard
 
         if (!permitted || !stillCurrent()) return
       }
@@ -309,7 +315,7 @@ export const Stepper = ({
     keyboardNav,
     goNext: () => navigate("next"),
     goBack: () => navigate("back"),
-    goTo: (index) => navigate(index),
+    goTo: (index) => navigate({ index }),
     cancel,
   }
 
@@ -339,7 +345,7 @@ export const Stepper = ({
         {showProgress &&
           (renderProgress ? renderProgress(progress) : <StepperProgress {...progress} />)}
         <Box key={active.id} flexDirection="column">
-          {typeof content === "function" ? content(context) : content}
+          {isCallback(content) ? content(context) : content}
         </Box>
         {error && <StatusMessage variant="error">{error}</StatusMessage>}
       </Box>

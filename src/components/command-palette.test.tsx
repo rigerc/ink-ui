@@ -9,7 +9,7 @@ import { colors } from "../tokens.js"
 
 // Under FORCE_COLOR the frame carries escape codes between a glyph and its
 // text; assertions read the plain text so the file passes with colour on or off.
-const plain = (frame?: string) => (frame ?? "").replace(/\u001b\[[0-9;]*m/g, "")
+const plain = (frame?: string) => (frame ?? "").replace(new RegExp(`${String.fromCharCode(27)}\\[[0-9;]*m`, "g"), "")
 const delay = (ms = 60) => new Promise((resolve) => setTimeout(resolve, ms))
 const ESC = "\u001B"
 const DOWN = "\u001B[B"

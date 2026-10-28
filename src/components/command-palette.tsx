@@ -44,6 +44,9 @@ export type PaletteMessage = {
   onSubmit?: () => void
 }
 
+const isMessageText = (message: string | PaletteMessage | undefined): message is string =>
+  typeof message === "string"
+
 type CommandPaletteProps = {
   /** The rows to draw, in order. The palette never filters them. */
   items: PaletteItem[]
@@ -179,7 +182,7 @@ export const CommandPalette = ({
   // Before the first keystroke there are no rows and no verdict yet: the
   // hint holds the slot so the box keeps its shape, padded like every line.
   const note: PaletteMessage | undefined =
-    typeof message === "string" ? { text: message } : message
+    isMessageText(message) ? { text: message } : message
 
   const emptyLine =
     note ?? (query.trim() === "" && emptyHint ? { text: emptyHint } : undefined)

@@ -1,6 +1,8 @@
 import React from "react"
-import { render } from "ink-testing-library"
-import { describe, it, expect, beforeEach, afterEach, vi } from "vitest"
+import { render as renderInk } from "ink-testing-library"
+import { Text } from "ink"
+import { TextRenderer } from "./text-renderer.js"
+import { describe, it, expect, beforeEach, afterEach } from "vitest"
 import stringWidth from "string-width"
 import { glyph } from "@kud/glyphs"
 import {
@@ -19,26 +21,21 @@ import { colors } from "../tokens.js"
  * probe records every `Text`'s props while rendering the real component, so the
  * split is asserted on props and the frames stay what the user sees.
  */
-vi.mock("ink", async (importOriginal) => {
-  const actual = await importOriginal<typeof import("ink")>()
-  const React = await import("react")
-  const store = globalThis as unknown as { __inkTextCalls: unknown[] }
-  store.__inkTextCalls = []
+type TextCall = React.ComponentProps<typeof Text>
 
-  return {
-    ...actual,
-    Text: (props: any) => {
-      store.__inkTextCalls.push(props)
+const calls: TextCall[] = []
+const textCalls = () => calls
 
-      return React.createElement(actual.Text, props)
-    },
-  }
-})
+const Probe = (props: TextCall) => {
+  calls.push(props)
 
-type TextCall = Record<string, any>
+  return <Text {...props} />
+}
 
-const textCalls = () =>
-  (globalThis as unknown as { __inkTextCalls: TextCall[] }).__inkTextCalls
+const render = (node: React.ReactElement) =>
+  renderInk(<TextRenderer.Provider value={Probe}>{node}</TextRenderer.Provider>)
+
+const isString = (value: React.ReactNode): value is string => typeof value === "string"
 
 beforeEach(() => {
   textCalls().length = 0
@@ -113,7 +110,7 @@ describe("Tabs", () => {
     const runs = textCalls()
     expect(
       runs.filter(
-        (p) => typeof p.children === "string" && p.children.includes("/"),
+        (p) => isString(p.children) && p.children.includes("/"),
       ),
     ).toHaveLength(1)
   })
@@ -623,7 +620,7 @@ describe("Tabs count chip", () => {
     const runs = textCalls()
     expect(
       runs.filter(
-        (p) => typeof p.children === "string" && p.children.includes("Open"),
+        (p) => isString(p.children) && p.children.includes("Open"),
       ),
     ).toHaveLength(1)
     expect(runs).toContainEqual(
@@ -699,7 +696,7 @@ describe("Tabs count chip", () => {
     expect(
       runs.filter(
         (p) =>
-          typeof p.children === "string" && p.children.includes("Bravo"),
+          isString(p.children) && p.children.includes("Bravo"),
       ),
     ).toHaveLength(0)
     expect(runs).toContainEqual(

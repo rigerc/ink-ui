@@ -37,8 +37,6 @@ const justification = {
   right: "flex-end",
 } as const
 
-const cellText = (value: unknown) => String(value ?? "")
-
 export const Table = <T extends Record<string, unknown>>({
   data,
   columns,
@@ -49,7 +47,7 @@ export const Table = <T extends Record<string, unknown>>({
   const terminalColumns = useTerminalColumns()
 
   const rows = data.map((row) =>
-    columns.map((column) => cellText(row[column.key])),
+    columns.map((column) => String(row[column.key] ?? "")),
   )
 
   const widths = resolveColumnWidths({

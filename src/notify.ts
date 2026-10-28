@@ -20,7 +20,7 @@ export const buildAppleScript = (
     options.title && `title "${escape(options.title)}"`,
     options.subtitle && `subtitle "${escape(options.subtitle)}"`,
     options.sound &&
-      `sound name "${escape(typeof options.sound === "string" ? options.sound : "default")}"`,
+      `sound name "${escape(options.sound === true ? "default" : options.sound)}"`,
   ].filter(Boolean)
 
   const suffix = clauses.length > 0 ? ` with ${clauses.join(" ")}` : ""

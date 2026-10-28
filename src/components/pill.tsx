@@ -1,5 +1,6 @@
+import { TextRenderer } from "./text-renderer.js"
 import React from "react"
-import { Text } from "ink"
+
 import { glyph } from "@kud/glyphs"
 import { colors, softColors, tonalColors, tonalStrongColors } from "../tokens.js"
 
@@ -192,6 +193,8 @@ export const Pill = ({
   strong = false,
   color,
 }: PillProps) => {
+  const Text = React.useContext(TextRenderer)
+
   if (tone === "outline") {
     const fill = color ?? FILL[variant]
 
