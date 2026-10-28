@@ -3,7 +3,7 @@
 import React, { useState } from "react"
 import { Box, Text, useInput } from "ink"
 import { SelectableRow } from "./selectable-row.js"
-import { colors } from "../tokens.js"
+import { colors, symbols } from "../tokens.js"
 import type { SelectOption } from "./select.js"
 
 type MultiSelectProps<T extends string> = {
@@ -68,12 +68,12 @@ export const MultiSelect = <T extends string>({
             <Text bold={active} color={active ? colors.info : undefined}>
               {option.label}
             </Text>
-            {on ? <Text color={colors.success}>{" ✓"}</Text> : null}
+            {on ? <Text color={colors.success}>{" " + symbols.success}</Text> : null}
           </SelectableRow>
         )
       })}
       {options.length > count && (
-        <Text dimColor>{`  … ${options.length} total`}</Text>
+        <Text dimColor>{`  ${symbols.ellipsis} ${options.length} total`}</Text>
       )}
     </Box>
   )

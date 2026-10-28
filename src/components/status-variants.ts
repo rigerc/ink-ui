@@ -1,5 +1,5 @@
 import { glyph } from "@kud/glyphs"
-import { colors } from "../tokens.js"
+import { colors, symbols } from "../tokens.js"
 import { getIconMode } from "../icon-mode.js"
 
 export type StatusVariant = "success" | "error" | "warning" | "info"
@@ -8,10 +8,10 @@ export type StatusVariant = "success" | "error" | "warning" | "info"
 // counterparts from @kud/glyphs. Each variant is distinguished by shape, not
 // colour, so status reads for colourblind users; colour only reinforces.
 const UNICODE: Record<StatusVariant, string> = {
-  success: "✓",
-  error: "✗",
-  warning: "⚠",
-  info: "ℹ",
+  success: symbols.success,
+  error: symbols.error,
+  warning: symbols.warn,
+  info: symbols.info,
 }
 
 const NERD: Record<StatusVariant, string> = {

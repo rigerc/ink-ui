@@ -3,7 +3,7 @@
 import React, { useState } from "react"
 import { Box, Text, useInput } from "ink"
 import { SelectableRow } from "./selectable-row.js"
-import { colors } from "../tokens.js"
+import { colors, symbols } from "../tokens.js"
 
 export type SelectOption<T extends string = string> = {
   label: string
@@ -67,12 +67,12 @@ export const Select = <T extends string>({
             <Text bold={active} color={active ? colors.info : undefined}>
               {option.label}
             </Text>
-            {active ? <Text color={colors.success}>{" ✓"}</Text> : null}
+            {active ? <Text color={colors.success}>{" " + symbols.success}</Text> : null}
           </SelectableRow>
         )
       })}
       {options.length > count && (
-        <Text dimColor>{`  … ${options.length} total`}</Text>
+        <Text dimColor>{`  ${symbols.ellipsis} ${options.length} total`}</Text>
       )}
     </Box>
   )

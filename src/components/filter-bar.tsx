@@ -1,6 +1,6 @@
 import React from "react"
 import { Box, Text } from "ink"
-import { colors } from "../tokens.js"
+import { colors, symbols } from "../tokens.js"
 
 type FilterBarProps = {
   /** From `useFilterMode`. `null` draws nothing. */
@@ -39,7 +39,7 @@ export const FilterBar = ({ term, typing, caret, matches }: FilterBarProps) => {
         </>
       ) : (
         <>
-          {typing ? <Text color={colors.info}>▏</Text> : null}
+          {typing ? <Text color={colors.info}>{symbols.caret}</Text> : null}
           <Text>{term.slice(at)}</Text>
         </>
       )}

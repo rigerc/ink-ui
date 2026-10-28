@@ -90,12 +90,24 @@ import {
 ```
 
 The symbol keys include `success`, `error`, `warn`, `info`,
-`pointer`, checked/unchecked boxes, `bullet`, `pending`, `ellipsis`,
-`line`, and filled/empty bars. `borders` defines `base`, `focus`,
+`active`, `pending`, `pointer`, checked/unchecked boxes, `bullet`,
+`nestedBullet` / `nestedBulletEmpty`, `caret`, `ellipsis`,
+`line`, `verticalLine`, `rule`, and filled/empty bars. `borders` defines `base`, `focus`,
 and `ascii` styles for Ink's `borderStyle`. `motion` supplies Unicode
-and ASCII spinner frames plus an interval, for components that need to
-animate. Consumers choose their appropriate glyph set; the library's
+and ASCII spinner frames plus `intervalMs` (spinner animation) and
+`skeletonIntervalMs` (skeleton shimmer). `Spinner` accepts `ascii` to
+switch to the ASCII frame set without changing other components. Consumers choose their appropriate glyph set; the library's
 existing `setIconMode` remains available for Nerd Font icons.
+
+These semantic tokens are used throughout the existing components:
+`StatusMessage` and `Alert` resolve icons through `statusVariant`;
+`Select`, `MultiSelect`, `SelectableRow`, `Toggle`, `Switch`,
+`ToggleSwitch`, `UnorderedList`, `Panel`, and `CommandPalette`
+share cursor/selection symbols; `ProgressBar` and `SkeletonBar`
+use the bar glyph; `Page`, `Tabs`, `FilterBar`, and
+`CommandPalette` use line/caret tokens; bordered components use
+`borders`; and `Spinner` / `SkeletonRows` use `motion`.
+Specialized brand icons and keyboard hints remain caller-defined.
 
 The existing `colors`, `softColors`, `tonalColors`,
 `tonalStrongColors`, `priorityColors`, and `spacing` are unchanged.

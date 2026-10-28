@@ -1,10 +1,10 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react"
 import { Box, Text, measureElement, useWindowSize, type DOMElement } from "ink"
-import { colors } from "../tokens.js"
+import { colors, symbols, motion } from "../tokens.js"
 
 // One cell per frame: fast enough to read as motion, slow enough that the eye
 // can follow the band rather than seeing a flicker.
-const SHIMMER_FRAME_MS = 70
+const SHIMMER_FRAME_MS = motion.skeletonIntervalMs
 // The crest is seven cells across with two blended cells each side — wide
 // enough to find at row-scan speed, narrow enough to read as a band and not a
 // second bar.
@@ -141,13 +141,13 @@ export const SkeletonBar = ({
   }, [active])
 
   if (!controlled && !active)
-    return <Text color={colors.track}>{"█".repeat(cells)}</Text>
+    return <Text color={colors.track}>{symbols.barFull.repeat(cells)}</Text>
   const at = controlled ? frame : ownFrame
   return (
     <Text>
       {Array.from({ length: cells }, (_, i) => (
         <Text key={i} color={skeletonCellColor(i, at, cells, rowOffset)}>
-          █
+          {symbols.barFull}
         </Text>
       ))}
     </Text>

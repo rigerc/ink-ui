@@ -13,7 +13,7 @@
 
 ## Features
 
-- **27 ready-made components**, pre-styled and ready to drop in:
+- **28 ready-made components**, pre-styled and ready to drop in:
   - **Inputs** — `TextInput`, `EmailInput` (domain completion), `PasswordInput` (masked), `ConfirmInput`
   - **Lists** — `UnorderedList`, `OrderedList` (both nestable), `Table`
   - **Selection & navigation** — `Select`, `MultiSelect`, `Tabs`, `Stepper`, `Switch`, `Toggle`, `SelectableRow`

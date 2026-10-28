@@ -2,7 +2,7 @@
 // and adapted to @kud/ink-ui tokens and conventions.
 import React from "react"
 import { Text } from "ink"
-import { colors } from "../tokens.js"
+import { colors, symbols } from "../tokens.js"
 
 type ProgressBarProps = {
   // 0–100.
@@ -35,8 +35,8 @@ export const ProgressBar = ({
   const filled = Math.round((clamped / 100) * width)
   return (
     <Text>
-      <Text color={color}>{"█".repeat(filled)}</Text>
-      <Text color={trackColor}>{"█".repeat(width - filled)}</Text>
+      <Text color={color}>{symbols.barFull.repeat(filled)}</Text>
+      <Text color={trackColor}>{symbols.barFull.repeat(width - filled)}</Text>
     </Text>
   )
 }

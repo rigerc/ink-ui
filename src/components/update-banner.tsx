@@ -1,6 +1,6 @@
 import React from "react"
 import { Box, Text, useInput } from "ink"
-import { colors } from "../tokens.js"
+import { colors, borders, spacing } from "../tokens.js"
 
 type UpdateBannerProps = {
   name: string
@@ -39,11 +39,11 @@ export const UpdateBanner = ({
   return (
     <Box
       flexDirection="column"
-      borderStyle="round"
+      borderStyle={borders.base}
       borderColor={colors.accent}
-      paddingX={2}
-      paddingY={1}
-      rowGap={1}
+      paddingX={spacing.sm}
+      paddingY={spacing.xs}
+      rowGap={spacing.xs}
     >
       {/* The package name leads: when several CLIs might offer an upgrade,
           which one is asking is the thing you need first. "update available"
@@ -70,7 +70,7 @@ export const UpdateBanner = ({
         </Text>
         <Text>upgrade now</Text>
         <Text dimColor>·</Text>
-        <Text backgroundColor="#2b323d" color="#8fa3ad">
+        <Text backgroundColor={colors.track} color="#8fa3ad">
           {" N "}
         </Text>
         <Text dimColor>later — run {command} yourself</Text>

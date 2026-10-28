@@ -173,6 +173,17 @@ export type Spacing = (typeof spacing)[keyof typeof spacing]
  * conventions. Shape carries meaning; color only reinforces it.
  */
 export type Symbols = {
+  /** Filled state marker used by switches, toggles and focused panels. */
+  active: string
+  /** Nested square markers for lists. */
+  nestedBullet: string
+  nestedBulletEmpty: string
+  /** Dotted horizontal rule for page headers. */
+  rule: string
+  /** Terminal input caret. */
+  caret: string
+  /** Vertical group separator. */
+  verticalLine: string
   success: string
   error: string
   warn: string
@@ -189,6 +200,12 @@ export type Symbols = {
 }
 
 export const symbols: Symbols = {
+  active: "●",
+  nestedBullet: "▪",
+  nestedBulletEmpty: "▫",
+  rule: "╌",
+  caret: "▏",
+  verticalLine: "│",
   success: "✓",
   error: "✗",
   warn: "⚠",
@@ -205,6 +222,12 @@ export const symbols: Symbols = {
 }
 
 export const asciiSymbols: Symbols = {
+  active: "*",
+  nestedBullet: "+",
+  nestedBulletEmpty: "-",
+  rule: "-",
+  caret: "|",
+  verticalLine: "|",
   success: "+",
   error: "x",
   warn: "!",
@@ -233,4 +256,6 @@ export const motion = {
   spinner: ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"],
   asciiSpinner: ["-", "\\", "|", "/"],
   intervalMs: 80,
+  /** Skeleton shimmer has a faster independent rhythm. */
+  skeletonIntervalMs: 70,
 } as const

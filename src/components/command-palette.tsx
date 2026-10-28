@@ -4,7 +4,7 @@ import stringWidth from "string-width"
 import { TextInput } from "./text-input.js"
 import { type Hint } from "./footer-hints.js"
 import { useListCursor } from "./use-list-cursor.js"
-import { colors } from "../tokens.js"
+import { colors, symbols, borders } from "../tokens.js"
 import { statusVariant } from "./status-variants.js"
 
 export type PaletteItem = {
@@ -186,7 +186,7 @@ export const CommandPalette = ({
   return (
     <Box
       flexDirection="column"
-      borderStyle="round"
+      borderStyle={borders.base}
       borderColor={colors.info}
       backgroundColor={colors.track}
       width={width}
@@ -212,7 +212,7 @@ export const CommandPalette = ({
           <Text> </Text>
         </Box>
       </Box>
-      <Text dimColor>{" " + "─".repeat(inner - 2) + " "}</Text>
+      <Text dimColor>{" " + symbols.line.repeat(inner - 2) + " "}</Text>
       {items.length === 0 && emptyLine?.text ? (
         errorMark ? (
           <Text color={errorMark.color}>
@@ -232,11 +232,11 @@ export const CommandPalette = ({
           return (
             <Text key={`header:${row.header}`}>
               {" "}
-              <Text dimColor>{"── "}</Text>
+              <Text dimColor>{symbols.line.repeat(2) + " "}</Text>
               <Text bold color={colors.group}>
                 {title}
               </Text>
-              <Text dimColor>{" " + "─".repeat(headerTrail(title))}</Text>
+              <Text dimColor>{" " + symbols.line.repeat(headerTrail(title))}</Text>
             </Text>
           )
         }
@@ -245,7 +245,7 @@ export const CommandPalette = ({
         return (
           <Box key={item.id} width={inner}>
             <Box flexShrink={0}>
-              <Text color={colors.info}>{active ? " ❯ " : "   "}</Text>
+              <Text color={colors.info}>{active ? ` ${symbols.pointer} ` : "   "}</Text>
             </Box>
             {hasMarkers ? (
               <Box flexShrink={0}>
@@ -272,7 +272,7 @@ export const CommandPalette = ({
           {" " + spaces(inner - 2 - stringWidth(counter)) + counter + " "}
         </Text>
       ) : null}
-      <Text dimColor>{" " + "─".repeat(inner - 2) + " "}</Text>
+      <Text dimColor>{" " + symbols.line.repeat(inner - 2) + " "}</Text>
       {/* Drawn inline rather than with FooterHints: its column gaps are
           unwritten cells, which is where the host showed through the footer. */}
       <Text>

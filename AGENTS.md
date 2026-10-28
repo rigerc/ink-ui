@@ -523,3 +523,14 @@ exports from `src/tokens.ts`. `Stepper` errors use `StatusMessage`
 and its navigation hints use `FooterHints`. The token file also exports
 `asciiSymbols`, `borders`, and `motion`; there is no parallel theme
 provider or second palette.
+
+## Shared visual tokens
+
+Use `symbols`, `asciiSymbols`, `borders`, and `motion` from
+`src/tokens.ts` in all shared UI components instead of duplicating
+semantic glyphs, border styles, or animation constants. The status
+glyphs come from `statusVariant`, which preserves its Nerd Font mode.
+Use `symbols.active` / `symbols.pending` for toggle states,
+`symbols.pointer` for selection, and `symbols.line` /
+`symbols.rule` for separators. Preserve specialized brand symbols and
+caller-provided key hints rather than force-fitting them to other roles.

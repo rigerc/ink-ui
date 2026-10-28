@@ -1,6 +1,6 @@
 import React from "react"
 import { Box, Text } from "ink"
-import { colors } from "../tokens.js"
+import { colors, symbols } from "../tokens.js"
 
 type SelectableRowProps = {
   active?: boolean
@@ -13,7 +13,7 @@ const isTextValue = (value: React.ReactNode): value is string | number =>
 
 export const SelectableRow = ({
   active = false,
-  marker = "❯",
+  marker = symbols.pointer,
   children,
 }: SelectableRowProps) => (
   <Box>
