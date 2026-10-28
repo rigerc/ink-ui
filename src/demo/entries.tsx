@@ -1,9 +1,11 @@
-// Demo registry — one entry per public component, used by the gallery.
+// Demo registry — public component previews plus a shared-token explorer.
 // Interactive components render live but inert until focused (isActive/isDisabled
 // gated on `focused`); parent-controlled ones (Tabs/Switch/Toggle) wire their
 // own input in focus mode.
 import React, { useEffect, useState } from "react"
 import { Box, Text, useInput } from "ink"
+import { StepperDemo } from "./stepper-demo.js"
+import { TokensDemo } from "./tokens-demo.js"
 import {
   Alert,
   Badge,
@@ -24,9 +26,6 @@ import {
   ScrollView,
   Select,
   SelectableRow,
-  Step,
-  Stepper,
-  StepperNavigation,
   Spinner,
   StatusMessage,
   Switch,
@@ -38,6 +37,7 @@ import {
   ToggleSwitch,
   UnorderedList,
   colors,
+  type Hint,
   type SwitchValue,
 } from "../index.js"
 
@@ -45,6 +45,8 @@ export type DemoEntry = {
   name: string
   category: string
   interactive: boolean
+  /** Extra shortcuts shown when a demo owns the keyboard. */
+  focusHints?: Hint[]
   render: (focused: boolean) => React.ReactNode
 }
 
@@ -306,25 +308,6 @@ const ToggleSwitchDemo = ({ focused }: { focused: boolean }) => {
 }
 
 
-const StepperDemo = ({ focused }: { focused: boolean }) => {
-  const [done, setDone] = useState(false)
-  return done ? (
-    <Text>Wizard complete.</Text>
-  ) : (
-    <Stepper onComplete={() => setDone(true)} keyboardNav={focused}>
-      <Step name="Details">
-        <Text>Enter to review the details.</Text>
-      </Step>
-      <Step name="Review">
-        <>
-          <Text>Enter to finish.</Text>
-          <StepperNavigation />
-        </>
-      </Step>
-    </Stepper>
-  )
-}
-
 // ── registry ──────────────────────────────────────────────────────────
 
 export const entries: DemoEntry[] = [
@@ -451,6 +434,7 @@ export const entries: DemoEntry[] = [
     name: "Stepper",
     category: "Selection",
     interactive: true,
+    focusHints: [["↵", "next"], ["b", "step back"], ["a", "ASCII"], ["v", "layout"]],
     render: (f) => <StepperDemo focused={f} />,
   },
   {
@@ -651,5 +635,12 @@ export const entries: DemoEntry[] = [
     category: "Layout",
     interactive: true,
     render: (f) => <ScrollViewDemo focused={f} />,
+  },
+  {
+    name: "Design tokens",
+    category: "Tokens",
+    interactive: true,
+    focusHints: [["a", "ASCII / Unicode"]],
+    render: (f) => <TokensDemo focused={f} />,
   },
 ]
