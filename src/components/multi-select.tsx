@@ -1,5 +1,5 @@
 // Ported from @inkjs/ui (MIT, Vadim Demedes — https://github.com/vadimdemedes/ink-ui)
-// and adapted to @kud/ink-ui tokens, glyph vocabulary, and conventions.
+// and adapted to @rigerc/ink-ui tokens, glyph vocabulary, and conventions.
 import React, { useState } from "react"
 import { Box, Text, useInput } from "ink"
 import { SelectableRow } from "./selectable-row.js"

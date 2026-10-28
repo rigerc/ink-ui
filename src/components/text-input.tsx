@@ -1,5 +1,5 @@
 // Ported from @inkjs/ui (MIT, Vadim Demedes — https://github.com/vadimdemedes/ink-ui)
-// and adapted to @kud/ink-ui tokens and conventions.
+// and adapted to @rigerc/ink-ui tokens and conventions.
 import React, { useState } from "react"
 import { Text, useInput } from "ink"
 
