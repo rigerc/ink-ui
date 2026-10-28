@@ -166,8 +166,10 @@ npm run format        # Format files in place
 npm run format:check  # Report files requiring formatting (no changes written)
 ```
 
-Formatting is opt-in until the existing source tree has received a one-time
-formatting pass; it is not yet enforced by CI.
+CI checks formatting for changed TypeScript and JavaScript files in `src/`,
+`scripts/`, and `tools/`. Existing untouched files are exempt until a one-time
+formatting pass is committed. `npm run format:check` still checks the whole
+repository locally and may report legacy files that need formatting.
 
 ### Interactive gallery
 
