@@ -155,6 +155,20 @@ npm install
 npm run dev
 ```
 
+### Formatting
+
+Code formatting uses [Oxfmt](https://oxc.rs/docs/guide/usage/formatter) with
+the same single-quote and object-brace-spacing rules as `ink-cli-starter`.
+Run the formatter before committing changes:
+
+```sh
+npm run format        # Format files in place
+npm run format:check  # Report files requiring formatting (no changes written)
+```
+
+Formatting is opt-in until the existing source tree has received a one-time
+formatting pass; it is not yet enforced by CI.
+
 ### Interactive gallery
 
 Run `npm run demo` to browse live component previews. Use ↑/↓ or j/k
