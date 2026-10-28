@@ -42,7 +42,7 @@
     "@kud/glyphs": "0.4.0",
     "cli-spinners": "3.4.0",
     "figures": "6.1.0",
-    "string-width": "8.2.2"
+    "string-width": "8.3.0"
   },
   "devDependencies": {
     "@oxlint/plugins": "1.90.0",
