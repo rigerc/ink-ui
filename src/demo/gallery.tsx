@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { Box, Text, useApp, useInput } from "ink"
-import { Header, FooterHints, SelectableRow, type Hint } from "../index.js"
+import { Header, FooterHints, SelectableRow, spacing, symbols, type Hint } from "../index.js"
 import { entries } from "./entries.js"
 
 export const Gallery = () => {
@@ -37,17 +37,17 @@ export const Gallery = () => {
     ["q", "quit"],
   ]
   const focusHints: Hint[] = [
-    ["esc", "back"],
-    ["q", "quit"],
+    ...(current.focusHints ?? []),
+    ["esc", "gallery"],
   ]
 
   return (
-    <Box flexDirection="column" paddingX={1}>
+    <Box flexDirection="column" paddingX={spacing.xs}>
       <Header subtitle={`${index + 1}/${entries.length} · ${current.category}`}>
         ink-ui · demo
       </Header>
-      <Box flexDirection="row" marginTop={1}>
-        <Box flexDirection="column" width={20} marginRight={2}>
+      <Box flexDirection="row" marginTop={spacing.xs}>
+        <Box flexDirection="column" width={20} marginRight={spacing.sm}>
           {entries.map((entry, i) => {
             const showHeader =
               i === 0 || entries[i - 1]!.category !== entry.category
@@ -69,17 +69,17 @@ export const Gallery = () => {
           <Text dimColor>
             {current.name}
             {focused
-              ? "  ● focused"
+              ? `  ${symbols.active} focused`
               : current.interactive
                 ? "  ⏎ to interact"
                 : ""}
           </Text>
-          <Box marginTop={1} flexDirection="column">
+          <Box marginTop={spacing.xs} flexDirection="column">
             {current.render(focused)}
           </Box>
         </Box>
       </Box>
-      <Box marginTop={1}>
+      <Box marginTop={spacing.xs}>
         <FooterHints hints={focused ? focusHints : navHints} />
       </Box>
     </Box>

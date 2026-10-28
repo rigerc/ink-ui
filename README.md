@@ -155,6 +155,17 @@ npm install
 npm run dev
 ```
 
+### Interactive gallery
+
+Run `npm run demo` to browse live component previews. Use ↑/↓ or j/k
+to select an entry, Enter to focus an interactive example, and Esc to
+return to the gallery. The **Stepper** preview demonstrates async
+`canProceed` validation, back/cancel, completion, restart, ASCII progress
+and vertical progress (space marks details ready, b goes back, a changes
+glyphs, v changes layout, and r restarts). The **Design tokens** preview
+shows shared colors, Unicode/ASCII symbols, borders, spacing and spinner
+frames; press `a` while focused to switch the glyph set.
+
 `npm run build` compiles TypeScript to `dist/`. `npm run dev` runs the compiler in watch mode.
 
 📚 **Full documentation → [ink-ui/docs](https://github.com/rigerc/ink-ui/tree/main/docs)**
