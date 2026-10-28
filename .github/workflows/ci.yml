@@ -36,7 +36,7 @@ jobs:
       - name: Verify published package contents
         shell: bash
         run: |
-          npm pack --dry-run --json > "$RUNNER_TEMP/pack.json"
+          npm pack --dry-run --json --ignore-scripts > "$RUNNER_TEMP/pack.json"
           node --input-type=module -e '
             import { readFileSync } from "node:fs";
             const manifest = JSON.parse(readFileSync(process.env.RUNNER_TEMP + "/pack.json", "utf8"))[0];
