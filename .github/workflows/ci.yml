@@ -29,7 +29,14 @@ jobs:
           node-version: '24'
           cache: npm
       - run: npm ci
-      - run: npm run lint
+      - name: Lint (list files and report diagnostics)
+        run: |
+          echo "Oxlint version: $(npx oxlint --version)"
+          echo 'Files selected for linting:'
+          npm run lint -- --debug files
+          echo 'Running lint:'
+          npm run lint -- --format stylish
+          echo 'Lint passed.'
       - run: npm run typecheck
       - run: npm run check:agents
       - run: npm test
