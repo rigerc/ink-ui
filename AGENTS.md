@@ -554,6 +554,7 @@ Do not edit it by hand; the guidance above remains human-maintained.
 | --- | --- |
 | `npm run build` | `tsup` |
 | `npm run check:agents` | `node scripts/check-agents-md.mjs` |
+| `npm run check:skill` | `node scripts/sync-skill.mjs --check` |
 | `npm run demo` | `tsx src/demo/index.tsx` |
 | `npm run dev` | `tsup --watch` |
 | `npm run format` | `oxfmt .` |
@@ -564,5 +565,6 @@ Do not edit it by hand; the guidance above remains human-maintained.
 | `npm run test:watch` | `vitest` |
 | `npm run typecheck` | `tsc --noEmit` |
 | `npm run update:agents` | `node scripts/update-agents-md.mjs` |
+| `npm run update:skill` | `node scripts/sync-skill.mjs --write` |
 
 <!-- END GENERATED REPOSITORY CONTEXT -->
