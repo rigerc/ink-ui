@@ -20,7 +20,7 @@
   },
   "scripts": {
     "build": "tsup && tsc --emitDeclarationOnly",
-    "dev": "tsup --watch --onSuccess \\"tsc --emitDeclarationOnly\\"",
+    "dev": "tsup --watch --onSuccess 'tsc --emitDeclarationOnly'",
     "demo": "tsx src/demo/index.tsx",
     "typecheck": "tsc --noEmit",
     "check:agents": "node scripts/check-agents-md.mjs",
