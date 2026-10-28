@@ -22,7 +22,7 @@
 - **Behaviour hooks** — `useTabs` and `useListCursor` own the keyboard state that every consumer used to hand-roll, so Tab/Shift+Tab and arrow/vim navigation behave the same everywhere
 - **Full [@inkjs/ui](https://github.com/vadimdemedes/ink-ui) parity** — every upstream component has an equivalent, plus a dozen more the design system adds on top
 - **Colourblind-safe by design** — state is signalled by shape, case, and glyph, never colour alone
-- **Design tokens included** — a shared palette (`colors`) and spacing (`spacing`), plus optional theme-aware semantic colors, symbols, borders, and motion via `ThemeProvider`
+- **Design tokens included** — established palettes (`colors`, `softColors`, `tonalColors`), spacing, and reusable semantic symbols, ASCII fallbacks, border presets, and motion tokens
 - **Full TypeScript support** — ships compiled output with `.d.ts` declarations for every component and token type
 - **ESM only, zero config** — no runtime bundling step; just import and render
 - **Peer-dependency light** — only requires `ink ≥ 7` and `react ≥ 19`

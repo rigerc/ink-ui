@@ -11,7 +11,9 @@ import React, {
   type ReactNode,
 } from "react"
 import { Box, Text, useInput } from "ink"
-import { useTheme } from "../theme/context.js"
+import { colors, spacing, symbols, asciiSymbols } from "../tokens.js"
+import { FooterHints, type Hint } from "./footer-hints.js"
+import { StatusMessage } from "./status-message.js"
 
 /** Inspired by the MIT-licensed Stepper in rigerc/nosey. */
 export interface StepContext {
@@ -57,6 +59,8 @@ export interface StepperProps {
    * Esc/backspace/q always belong to the host's useAppKeys.
    */
   keyboardNav?: boolean
+  /** Use ASCII symbols in the built-in progress display. */
+  ascii?: boolean
   showProgress?: boolean
   renderProgress?: (props: StepperProgressProps) => ReactNode
 }
@@ -66,37 +70,40 @@ export interface StepperProgressProps {
   /** steps.length means all steps have been completed. */
   currentStep: number
   orientation?: "horizontal" | "vertical"
+  /** Use printable ASCII symbols rather than Unicode. */
+  ascii?: boolean
 }
 
 export const StepperProgress = ({
   steps,
   currentStep,
   orientation = "horizontal",
+  ascii = false,
 }: StepperProgressProps) => {
-  const theme = useTheme()
+  const markers = ascii ? asciiSymbols : symbols
 
   return (
     <Box
       flexDirection={orientation === "vertical" ? "column" : "row"}
       flexWrap="wrap"
-      columnGap={2}
+      columnGap={spacing.sm}
     >
       {steps.map(({ id, name }, index) => {
         const complete = index < currentStep
         const current = index === currentStep
         const marker = complete
-          ? theme.symbols.success
+          ? markers.success
           : current
-            ? theme.symbols.pointer
-            : theme.symbols.pending
+            ? markers.pointer
+            : markers.pending
         return (
           <Text
             key={id}
             bold={current}
             color={
-              theme.color[complete ? "success" : current ? "primary" : "muted"]
+              colors[complete ? "success" : current ? "accent" : "muted"]
             }
-            dimColor={theme.mono && !current}
+            dimColor={!current && !complete}
           >
             {marker} {index + 1}. {name}
           </Text>
@@ -114,19 +121,16 @@ export const useStepper = (): StepContext => {
   return context
 }
 
-/** Display hints; the host must wire Esc/backspace to goBack itself. */
+/** Hints follow the FooterHints visual language; the host still owns Back. */
 export const StepperNavigation = () => {
   const { isFirst, isLast, isValidating, keyboardNav } = useStepper()
-  const theme = useTheme()
-  if (isValidating) {
-    return <Text color={theme.color.muted}>Validating{theme.symbols.ellipsis}</Text>
-  }
-  return (
-    <Text color={theme.color.muted}>
-      {keyboardNav ? "enter: " + (isLast ? "finish" : "next") + " · " : ""}
-      {isFirst ? "back: cancel" : "back: previous"} (host)
-    </Text>
-  )
+  if (isValidating) return <Text color={colors.muted}>Validating{symbols.ellipsis}</Text>
+
+  const hints: Hint[] = [
+    ...(keyboardNav ? ([["↵", isLast ? "finish" : "next"]] as Hint[]) : []),
+    ["⌫", isFirst ? "cancel" : "back"],
+  ]
+  return <FooterHints hints={hints} />
 }
 
 type IndexedStep = { id: string; element: ReactElement<StepProps> }
@@ -162,10 +166,10 @@ export const Stepper = ({
   step,
   initialStep = 0,
   keyboardNav = false,
+  ascii = false,
   showProgress = true,
   renderProgress,
 }: StepperProps) => {
-  const theme = useTheme()
   const steps = collectSteps(children)
   const [position, setPosition] = useState<{ index: number; id: string | null }>({
     index: initialStep,
@@ -299,23 +303,19 @@ export const Stepper = ({
   const progress: StepperProgressProps = {
     steps: steps.map((item) => ({ id: item.id, name: item.element.props.name })),
     currentStep,
+    ascii,
   }
   const content = active.element.props.children
 
   return (
     <StepperContext.Provider value={context}>
-      <Box flexDirection="column" gap={1}>
+      <Box flexDirection="column" gap={spacing.xs}>
         {showProgress &&
           (renderProgress ? renderProgress(progress) : <StepperProgress {...progress} />)}
         <Box key={active.id} flexDirection="column">
           {typeof content === "function" ? content(context) : content}
         </Box>
-        {error && (
-          <Box gap={1}>
-            <Text color={theme.color.danger}>{theme.symbols.error}</Text>
-            <Text>{error}</Text>
-          </Box>
-        )}
+        {error && <StatusMessage variant="error">{error}</StatusMessage>}
       </Box>
     </StepperContext.Provider>
   )

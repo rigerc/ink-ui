@@ -72,22 +72,5 @@ export type { NotifyOptions } from "./notify.js"
 export { colors, softColors, tonalColors, tonalStrongColors, spacing, palette, priorityColors } from "./tokens.js"
 export type { Color, SoftColor, Spacing, Palette, PriorityColor } from "./tokens.js"
 
-export { ThemeProvider, useTheme, useTone } from "./theme/context.js"
-export type { ThemeProviderProps } from "./theme/context.js"
-export { themes, applyAscii } from "./theme/themes.js"
-export {
-  themeNames,
-  tones,
-  unicodeSymbols,
-  asciiSymbols,
-  unicodeSpinner,
-  asciiSpinner,
-} from "./theme/tokens.js"
-export type {
-  Theme,
-  ThemeName,
-  ThemePalette,
-  Tone,
-  BorderName,
-  Symbols,
-} from "./theme/tokens.js"
+export { symbols, asciiSymbols, borders, motion } from "./tokens.js"
+export type { Symbols, BorderStyle } from "./tokens.js"

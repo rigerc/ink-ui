@@ -166,3 +166,71 @@ export const spacing = {
 } as const
 
 export type Spacing = (typeof spacing)[keyof typeof spacing]
+
+/**
+ * Semantic terminal glyphs, inspired by the token categories in rigerc/nosey.
+ * The default glyphs match ink-ui's existing StatusMessage and Select
+ * conventions. Shape carries meaning; color only reinforces it.
+ */
+export type Symbols = {
+  success: string
+  error: string
+  warn: string
+  info: string
+  pointer: string
+  checkboxChecked: string
+  checkboxUnchecked: string
+  bullet: string
+  pending: string
+  ellipsis: string
+  line: string
+  barFull: string
+  barEmpty: string
+}
+
+export const symbols: Symbols = {
+  success: "✓",
+  error: "✗",
+  warn: "⚠",
+  info: "ℹ",
+  pointer: "❯",
+  checkboxChecked: "◼",
+  checkboxUnchecked: "◻",
+  bullet: "•",
+  pending: "○",
+  ellipsis: "…",
+  line: "─",
+  barFull: "█",
+  barEmpty: "░",
+}
+
+export const asciiSymbols: Symbols = {
+  success: "+",
+  error: "x",
+  warn: "!",
+  info: "i",
+  pointer: ">",
+  checkboxChecked: "[x]",
+  checkboxUnchecked: "[ ]",
+  bullet: "*",
+  pending: "o",
+  ellipsis: "...",
+  line: "-",
+  barFull: "#",
+  barEmpty: "-",
+}
+
+/** Border presets are style names accepted by Ink's Box borderStyle prop. */
+export type BorderStyle = "round" | "single" | "bold" | "double" | "classic"
+export const borders = {
+  base: "round",
+  focus: "bold",
+  ascii: "classic",
+} as const satisfies Record<string, BorderStyle>
+
+/** Motion and fallback frames are visual tokens, not animation state. */
+export const motion = {
+  spinner: ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"],
+  asciiSpinner: ["-", "\\", "|", "/"],
+  intervalMs: 80,
+} as const

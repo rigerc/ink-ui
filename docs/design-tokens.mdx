@@ -63,41 +63,41 @@ import { spacing } from "@kud/ink-ui";
 ```
 
 
-## Theme-aware tokens
+## Symbols, borders and motion
 
-The existing `colors`, `palette`, and `spacing` remain stable for
-existing applications. New components may use a theme's **semantic roles**
-(`primary`, `accent`, `success`, `warn`, `danger`, `info`, `muted`),
-symbols, borders, and motion settings.
+The token system also provides semantic terminal glyphs, accessible ASCII
+fallbacks, border presets, and motion settings. These extend the existing
+`src/tokens.ts` module; **no theme provider or alternate palette is required**.
 
 ```tsx
 import {
-  ThemeProvider,
-  Stepper,
-  Step,
-  useTheme,
-  themes,
+  colors,
+  spacing,
+  symbols,
+  asciiSymbols,
+  borders,
+  motion,
 } from "@kud/ink-ui"
 
-// Built-in themes: dark (default), light, contrast, mono.
-<ThemeProvider theme="light" ascii={false}>
-  <Stepper onComplete={() => {}}>
-    <Step name="Start">Start here</Step>
-    <Step name="Finish">Finish here</Step>
-  </Stepper>
-</ThemeProvider>
+// Stepper uses colors.success / colors.accent / colors.muted and symbols.
+<Text color={colors.success}>{symbols.success} Completed</Text>
+<Box borderStyle={borders.base} borderColor={colors.muted} padding={spacing.xs}>
+  <Text>Ready</Text>
+</Box>
 
-// Inside a theme-aware component:
-const { color, symbols, border, motion, mono } = useTheme()
+// Fallback for environments that only support ASCII glyphs:
+<Text>{asciiSymbols.pointer} Pending</Text>
 ```
 
-`ThemeProvider` also accepts a complete custom `Theme` object (for example
-`{ ...themes.dark, color: { ...themes.dark.color, primary: "#00B5D8" } }`).
-`ascii` swaps symbols, spinner glyphs, and border tokens for conservative
-terminals. `NO_COLOR` always selects `mono`, regardless of the chosen
-theme. A provider is optional: `useTheme` defaults to dark (or mono under
-`NO_COLOR`).
+The symbol keys include `success`, `error`, `warn`, `info`,
+`pointer`, checked/unchecked boxes, `bullet`, `pending`, `ellipsis`,
+`line`, and filled/empty bars. `borders` defines `base`, `focus`,
+and `ascii` styles for Ink's `borderStyle`. `motion` supplies Unicode
+and ASCII spinner frames plus an interval, for components that need to
+animate. Consumers choose their appropriate glyph set; the library's
+existing `setIconMode` remains available for Nerd Font icons.
 
-Theme roles are additive: legacy components that use `colors` continue
-using the established static palette, and new theme-aware components such
-as `Stepper` read from the provider.
+The existing `colors`, `softColors`, `tonalColors`,
+`tonalStrongColors`, `priorityColors`, and `spacing` are unchanged.
+`NO_COLOR` continues to be handled by Ink/terminal color support; it
+does not change the semantic meaning of the symbols.

@@ -512,9 +512,14 @@ nothing before it ships.
 
 `Stepper` is a wizard, not a second keyboard owner. It leaves Enter unbound
 unless `keyboardNav` is explicitly enabled (only safe without an input
-claiming Enter). It never claims `esc`, `backspace`, or `q`. Route the
-host's one `useAppKeys({ onBack })` peel to `useStepper().goBack()` through
-the active step or host bridge; `goBack()` cancels from the first step.
-Provide explicit keys for dynamic `Step` children. The tokens used by new
-wizard chrome come from `ThemeProvider`/`useTheme`; existing static
-`colors` and `spacing` are retained for legacy code.
+claiming Enter). It never claims `esc`, `backspace`, or `q`. Route
+the host's one `useAppKeys({ onBack })` peel to
+`useStepper().goBack()` through the active step or host bridge; calling
+`goBack()` from the first step cancels. Provide explicit keys for dynamic
+`Step` children.
+
+`StepperProgress` uses the **existing** `colors` and new `symbols`
+exports from `src/tokens.ts`. `Stepper` errors use `StatusMessage`
+and its navigation hints use `FooterHints`. The token file also exports
+`asciiSymbols`, `borders`, and `motion`; there is no parallel theme
+provider or second palette.

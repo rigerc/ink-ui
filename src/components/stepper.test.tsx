@@ -9,7 +9,6 @@ import {
   StepperProgress,
   type StepContext,
 } from "./stepper.js"
-import { ThemeProvider } from "../theme/context.js"
 
 const settle = () => new Promise((resolve) => setTimeout(resolve, 30))
 
@@ -200,16 +199,15 @@ describe("Stepper", () => {
 
   it("supports vertical and fully completed progress with ASCII tokens", () => {
     const { lastFrame } = render(
-      <ThemeProvider theme="mono" ascii>
-        <StepperProgress
-          orientation="vertical"
-          currentStep={2}
-          steps={[
-            { id: "a", name: "One" },
-            { id: "b", name: "Two" },
-          ]}
-        />
-      </ThemeProvider>,
+      <StepperProgress
+        ascii
+        orientation="vertical"
+        currentStep={2}
+        steps={[
+          { id: "a", name: "One" },
+          { id: "b", name: "Two" },
+        ]}
+      />,
     )
     expect(lastFrame()).toContain("+ 1. One")
     expect(lastFrame()).toContain("+ 2. Two")

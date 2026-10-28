@@ -50,13 +50,21 @@ single `useAppKeys`. In the host's back handler, call `goBack()` (or
 `cancel()` to cancel directly); disable the Stepper's Enter shortcut while
 a text field owns input.
 
-## Progress and themes
+## Progress and design tokens
 
-The built-in `StepperProgress` uses semantic tokens from `useTheme()`
-for complete/current/pending states, and shows distinct symbols so the
-meaning does not depend on color. Set `showProgress={false}` to hide it, or
-pass `renderProgress={(props) => <StepperProgress {...props} orientation="vertical" />}`.
-An optional `StepperNavigation` displays hints without claiming keys.
+The built-in `StepperProgress` uses ink-ui's existing `colors.success`,
+`colors.accent` and `colors.muted`, along with the exported `symbols`
+for completed, active and pending states. A shape always carries status,
+even on monochrome terminals.
 
-See [Theme tokens](./design-tokens) for the optional `ThemeProvider`
-and ASCII/monochrome support.
+Set `showProgress={false}` to hide progress or pass
+`renderProgress={(props) => <StepperProgress {...props} orientation="vertical" />}`
+for a custom layout. Pass `ascii` on `Stepper` or `StepperProgress`
+to use `asciiSymbols` in progress indicators.
+
+Validation failures render via ink-ui's `StatusMessage variant="error"`,
+and `StepperNavigation` uses its `FooterHints` presentation. Hints never
+bind keys; the host owns the Back action.
+
+See [Design Tokens](./design-tokens) for the expanded symbol, border,
+and motion tokens.
