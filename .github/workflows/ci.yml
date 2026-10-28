@@ -65,6 +65,7 @@ jobs:
           fi
       - run: npm run typecheck
       - run: npm run check:agents
+      - run: npm run check:skill
       - run: npm test
       - name: Test Pill with NO_COLOR inherited
         run: npx vitest run src/components/pill.test.tsx
