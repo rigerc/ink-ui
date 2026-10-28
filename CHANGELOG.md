@@ -4,6 +4,14 @@ All notable changes to this project are documented here.
 
 ---
 
+## Unreleased
+
+- Add local color overrides and explicit terminal-default foreground to selectable rows, footer hints, confirmations, spinners and status messages without changing existing defaults.
+- Add measured custom-marker gutters and compact indentation, configurable ASCII Back hints, optional arrow-key confirmation and static reduced-motion spinners.
+- Document host-owned appearance composition and keyboard ownership.
+
+---
+
 ## 0.41.2 — 2026-10-28
 
 - Added the Ink UI screen design skill and automated its API reference updates.

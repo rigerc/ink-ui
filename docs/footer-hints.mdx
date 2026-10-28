@@ -27,3 +27,11 @@ import type { Hint } from "@rigerc/ink-ui";
   ]}
 />
 ```
+
+## Host appearance and automatic tail
+
+`page="root"` appends Help and Quit; `page="nested"` adds Back first. `help={false}` omits Help. `backKey` defaults to `⌫` and can be `Esc` for ASCII output; caller-supplied hint keys are never rewritten. `tailHints(page, help, backKey)` provides the same tail without rendering.
+
+`keyColor` defaults to white; `labelColor` defaults to terminal foreground. Both accept `null` to explicitly use terminal foreground or an Ink color supplied by the host. `dimLabels` defaults to true; use false for normal-intensity labels. `columnGap` defaults to 2 and can be reduced when budgeting a narrow footer. Wrapping does not insert blank rows.
+
+See [widget appearance](./widget-appearance).

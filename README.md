@@ -43,7 +43,6 @@ npm install github:rigerc/ink-ui#chore/rebrand-rigerc-scope
 Git installs build `dist/` automatically using the package's `prepare` script.
 After publication, use the scoped npm install command above.
 
-
 `ink` and `react` are peer dependencies and must be installed separately:
 
 ```sh
@@ -62,7 +61,6 @@ npm install ink@^8 react@^19.3.0
 
 The library preserves the same public component API across both Ink majors.
 
-
 ### Building with an AI agent
 
 The package ships `AGENTS.md`, a short brief covering the composition rules and house conventions that the type definitions cannot express — which components own the keyboard, what to compose for a given screen, and the traps. Point your agent at it:
@@ -71,12 +69,16 @@ The package ships `AGENTS.md`, a short brief covering the composition rules and 
 node_modules/@rigerc/ink-ui/AGENTS.md
 ```
 
+## Host appearance options
+
+`SelectableRow`, `FooterHints`, `ConfirmInput`, `Spinner` and `StatusMessage` accept local appearance overrides. Omit a color to keep the house default, or pass `null` for terminal-default foreground. Glyph choices and reduced motion remain independent. See [widget appearance](docs/widget-appearance.mdx) for a terminal-native/ASCII example and keyboard ownership notes.
+
 ## Usage
 
 ```tsx
-import React from "react"
-import { render } from "ink"
-import { Banner, Header, Badge, Spinner, colors } from "@rigerc/ink-ui"
+import React from 'react';
+import {render} from 'ink';
+import {Banner, Header, Badge, Spinner, colors} from '@rigerc/ink-ui';
 
 const App = () => (
   <>
@@ -85,16 +87,16 @@ const App = () => (
     <Badge variant="success">done</Badge>
     <Spinner label="Loading…" />
   </>
-)
+);
 
-render(<App />)
+render(<App />);
 ```
 
 Inputs report their value through `onChange`/`onSubmit`, and lists nest with a shape-distinct marker per level:
 
 ```tsx
-import { Text } from "ink"
-import { EmailInput, PasswordInput, UnorderedList } from "@rigerc/ink-ui"
+import {Text} from 'ink';
+import {EmailInput, PasswordInput, UnorderedList} from '@rigerc/ink-ui';
 
 const SignUp = () => (
   <>
@@ -114,24 +116,24 @@ const SignUp = () => (
       </UnorderedList.Item>
     </UnorderedList>
   </>
-)
+);
 ```
 
 Components stay presentational and controlled — they take `active`/`value` and render. The behaviour hooks supply the keyboard state to drive them, so the two compose without either forcing the other:
 
 ```tsx
-import { Tabs, useTabs, useListCursor } from "@rigerc/ink-ui"
+import {Tabs, useTabs, useListCursor} from '@rigerc/ink-ui';
 
 const items = [
-  { value: "open", label: "Open", count: 3 },
-  { value: "done", label: "Done" },
-]
+  {value: 'open', label: 'Open', count: 3},
+  {value: 'done', label: 'Done'},
+];
 
-const Inbox = ({ rows }) => {
-  const { active } = useTabs(items) // Tab or → forward, Shift+Tab or ← back, wraps
-  const { cursor } = useListCursor(rows.length) // ↑/↓ and k/j, clamps at the ends
-  return <Tabs active={active} items={items} />
-}
+const Inbox = ({rows}) => {
+  const {active} = useTabs(items); // Tab or → forward, Shift+Tab or ← back, wraps
+  const {cursor} = useListCursor(rows.length); // ↑/↓ and k/j, clamps at the ends
+  return <Tabs active={active} items={items} />;
+};
 ```
 
 Both take `{ isActive }` so a screen with several focus regions can gate them, and `useListCursor` takes `{ wrap }` for genuinely circular lists. `useTabs` wraps by default because a tab bar is a ring; `useListCursor` clamps because a list has ends.
@@ -139,7 +141,7 @@ Both take `{ isActive }` so a screen with several focus regions can gate them, a
 All components accept only the props they need — no theme provider or context required. Design tokens are plain objects:
 
 ```ts
-import { colors, spacing } from "@rigerc/ink-ui"
+import {colors, spacing} from '@rigerc/ink-ui';
 
 // colors.accent   → "#FF8C00"
 // colors.success  → "#5FD7A7"
@@ -189,5 +191,3 @@ frames; press `a` while focused to switch the glyph set.
 ## Design-only screen skill
 
 For screen planning and UX reviews, see the [Ink UI Screen Design skill](skills/ink-ui-screen-design/SKILL.md). It provides component selection guidance, Page and responsive layout patterns, keyboard/focus conventions, semantic visual tokens, screen-state design, and a critique checklist. It is a documentation-only skill; using it does not change the library's runtime behavior.
-
-

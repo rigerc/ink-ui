@@ -115,6 +115,7 @@
 | `SwitchValue` | [`src/components/switch.tsx`](../../../src/components/switch.tsx) |
 | `Symbols` | [`src/tokens.ts`](../../../src/tokens.ts) |
 | `TabItem` | [`src/components/tabs.tsx`](../../../src/components/tabs.tsx) |
+| `WidgetColor` | [`src/widget-color.ts`](../../../src/widget-color.ts) |
 
 ## Token families and keys
 

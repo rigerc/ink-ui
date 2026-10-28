@@ -1,0 +1,83 @@
+---
+title: Widget appearance
+description: Host-owned colors, glyphs and motion without a theme provider.
+---
+
+The library's default tokens remain unchanged. Applications with their own semantic palette or a terminal-native mode can pass appearance props to `SelectableRow`, `FooterHints`, `ConfirmInput`, `Spinner` and `StatusMessage`. These props are local to each widget; they do not mutate tokens or other mounted applications.
+
+Color props use the exported `WidgetColor` type:
+
+| Value | Meaning |
+| --- | --- |
+| Omitted or `undefined` | Preserve the widget's existing color default |
+| `null` | Use the terminal's default foreground, with no forced white or brand RGB |
+| An Ink color | Use a host semantic token, ANSI color or RGB value |
+
+Ink handles terminal color support and `NO_COLOR`. Choose glyphs and motion independently of color. `dimLabels={false}`, `dimLabel={false}` or `dimColor={false}` can keep secondary text at normal intensity for higher contrast.
+
+```tsx
+import {
+  SelectableRow, FooterHints, ConfirmInput, Spinner, StatusMessage,
+  type WidgetColor,
+} from '@rigerc/ink-ui';
+
+const terminalNative = true;
+const ascii = true;
+const reducedMotion = true;
+const focus: WidgetColor = terminalNative ? null : '#FFB000';
+const foreground: WidgetColor = terminalNative ? null : '#F5E6C8';
+
+<SelectableRow
+  active
+  marker={ascii ? '>' : '›'}
+  indent={0}
+  markerColor={focus}
+  textColor={foreground}
+>
+  Inspect recommendations
+</SelectableRow>;
+
+<FooterHints
+  hints={[[ascii ? 'Up/Down' : '↑↓', 'move']]}
+  page="nested"
+  backKey={ascii ? 'Esc' : '⌫'}
+  keyColor={foreground}
+  labelColor={foreground}
+  dimLabels={false}
+  columnGap={1}
+/>;
+
+<Spinner
+  label="Scanning workspace"
+  ascii={ascii}
+  animate={!reducedMotion}
+  color={focus}
+  labelColor={foreground}
+  dimLabel={false}
+/>;
+
+<StatusMessage icon={ascii ? '+' : '✓'} color={focus} textColor={foreground}>
+  Saved
+</StatusMessage>;
+
+<ConfirmInput
+  defaultChoice="cancel"
+  arrowKeys
+  color={foreground}
+  dimColor={false}
+  onConfirm={installReviewedPlan}
+  onCancel={returnToReview}
+/>;
+```
+
+The example assumes the host supplies `installReviewedPlan` and `returnToReview`. Appearance settings never authorize an operation.
+
+`SelectableRow` measures custom markers in terminal cells so inactive gutters remain aligned with ASCII strings or wide glyphs. `textColor` styles string/number children; rich children retain their own styles.
+
+`FooterHints` preserves each caller-supplied key verbatim. `backKey` changes only its automatic nested Back hint; `tailHints(page, help, backKey)` accepts the same optional key. Hints still wrap without blank rows; the host budgets the footer's height.
+
+`Spinner animate={false}` uses a static pending glyph, not a frozen animated frame. `staticFrame` can override that glyph. `NO_MOTION` and `REDUCE_MOTION` also stop its timer. Changing colors or ASCII mode does not change the caller's animation preference.
+
+`ConfirmInput arrowKeys` is opt-in. Left/Up selects Cancel and Right/Down selects Confirm; Enter submits the selected choice and y/n still submits directly. The capitalization cue tracks the current choice. Without `arrowKeys`, Enter keeps its existing default-choice behavior. The host owns Escape, Backspace and q and must stand down competing keyboard owners while confirmation is active. Set `defaultChoice="cancel"` for operations that need an explicit positive choice.
+
+These props cover the named widgets only. They are not a global light theme, and do not recolor nested rich children or the rest of the component library.

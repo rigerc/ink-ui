@@ -13,6 +13,7 @@
     "loading-screen",
     "key-value",
     "selectable-row",
-    "design-tokens"
+    "design-tokens",
+    "widget-appearance"
   ]
 }

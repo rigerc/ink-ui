@@ -3,7 +3,7 @@ title: ⏳ Spinner
 description: Animated dots spinner in accent colour, with an optional dimmed label.
 ---
 
-`<Spinner>` renders an animated dots spinner in the accent colour, with an optional dimmed label beside it. It builds on [ink-spinner](https://github.com/vadimdemedes/ink-spinner) and is ideal for indicating in-progress work.
+`<Spinner>` renders an animated dots spinner in the accent colour, with an optional dimmed label beside it. Its frames come from the shared motion tokens.
 
 ```tsx
 import { Spinner } from "@rigerc/ink-ui";
@@ -26,3 +26,9 @@ The spinner glyph is coloured with `colors.accent` (`#FF8C00`).
 ```tsx
 <Spinner />
 ```
+
+## Motion and host colors
+
+`ascii` chooses the ASCII frame set independently of color. `animate={false}`, `NO_MOTION` or `REDUCE_MOTION` displays a static pending glyph without creating a timer; `staticFrame` overrides that glyph. The label remains visible so static progress is meaningful.
+
+`color` and `labelColor` accept host colors or `null` for terminal-default foreground. Omitted colors retain the existing defaults. `dimLabel={false}` uses normal-intensity label text. See [widget appearance](./widget-appearance).

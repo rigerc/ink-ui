@@ -1,46 +1,75 @@
 // Ported from @inkjs/ui (MIT, Vadim Demedes — https://github.com/vadimdemedes/ink-ui)
 // and adapted to @rigerc/ink-ui tokens and conventions.
-import React from "react"
-import { Text, useInput } from "ink"
+import React, {useEffect, useState} from 'react';
+import {Text, useInput} from 'ink';
+import {resolveWidgetColor, type WidgetColor} from '../widget-color.js';
 
 type ConfirmInputProps = {
   // Which choice Enter selects, and which letter is shown capitalised.
-  defaultChoice?: "confirm" | "cancel"
-  onConfirm?: () => void
-  onCancel?: () => void
-  isDisabled?: boolean
-}
+  defaultChoice?: 'confirm' | 'cancel';
+  onConfirm?: () => void;
+  onCancel?: () => void;
+  isDisabled?: boolean;
+  /** Opt in to arrows changing the choice submitted by Enter. */
+  arrowKeys?: boolean;
+  /** Hint foreground; null uses the terminal default. */
+  color?: WidgetColor;
+  dimColor?: boolean;
+};
 
 export const ConfirmInput = ({
-  defaultChoice = "confirm",
+  defaultChoice = 'confirm',
   onConfirm,
   onCancel,
   isDisabled = false,
+  arrowKeys = false,
+  color,
+  dimColor = true,
 }: ConfirmInputProps) => {
+  const [choice, setChoice] = useState(defaultChoice);
+  useEffect(() => setChoice(defaultChoice), [defaultChoice]);
+  const selectedChoice = arrowKeys ? choice : defaultChoice;
+
   useInput(
     (input, key) => {
-      if (input.toLowerCase() === "y") {
-        onConfirm?.()
+      if (input.toLowerCase() === 'y') {
+        onConfirm?.();
 
-        return
+        return;
       }
 
-      if (input.toLowerCase() === "n") {
-        onCancel?.()
+      if (input.toLowerCase() === 'n') {
+        onCancel?.();
 
-        return
+        return;
+      }
+
+      if (arrowKeys && (key.leftArrow || key.upArrow)) {
+        setChoice('cancel');
+
+        return;
+      }
+
+      if (arrowKeys && (key.rightArrow || key.downArrow)) {
+        setChoice('confirm');
+
+        return;
       }
 
       if (key.return) {
-        if (defaultChoice === "confirm") onConfirm?.()
-        else onCancel?.()
+        if (selectedChoice === 'confirm') onConfirm?.();
+        else onCancel?.();
       }
     },
-    { isActive: !isDisabled },
-  )
+    {isActive: !isDisabled},
+  );
 
-  // The default choice is capitalised — a shape/case cue, not a colour one.
-  const hint = defaultChoice === "confirm" ? "(Y/n)" : "(y/N)"
+  // The selected choice is capitalised — a shape/case cue, not a colour one.
+  const hint = selectedChoice === 'confirm' ? '(Y/n)' : '(y/N)';
 
-  return <Text dimColor>{hint}</Text>
-}
+  return (
+    <Text color={resolveWidgetColor(color, undefined)} dimColor={dimColor}>
+      {hint}
+    </Text>
+  );
+};

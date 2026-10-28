@@ -434,8 +434,12 @@ row it counts.
 swaps in Nerd Font glyphs; the default `"text"` is safe everywhere. Components
 read it at render time, so calling it after mounting does nothing.
 
-**There is no theme provider and no context.** Components take only the props
-they need. Do not build a provider to pass tokens around — import them.
+**There is no theme provider.** Components take only the props they need.
+`SelectableRow`, `FooterHints`, `ConfirmInput`, `Spinner` and `StatusMessage`
+accept local appearance overrides for hosts with their own semantic palette.
+Omit a color to retain the house token; pass `null` for terminal-default
+foreground. Keep glyph and motion choices independent of color and do not
+mutate shared tokens. See `docs/widget-appearance.mdx`.
 
 **ESM only.** `import`, never `require`. Node ≥ 22, with `ink` ≥ 7 and
 `react` ≥ 19 as peer dependencies the consuming project installs itself.
@@ -546,7 +550,7 @@ Do not edit it by hand; the guidance above remains human-maintained.
 - **Runtime:** Node `>=22`, ES modules
 - **Peer dependencies:** `ink` >=7, `react` >=19
 - **Public API:** `src/index.ts`; build output/types: `dist/index.js` and `dist/index.d.ts`
-- **Source layout:** `src/components/` has 44 implementation modules and 33 adjacent test files; `docs/` has 13 documentation pages
+- **Source layout:** `src/components/` has 44 implementation modules and 33 adjacent test files; `docs/` has 14 documentation pages
 
 ### Available npm scripts
 
