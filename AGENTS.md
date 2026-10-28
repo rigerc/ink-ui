@@ -556,6 +556,8 @@ Do not edit it by hand; the guidance above remains human-maintained.
 | `npm run check:agents` | `node scripts/check-agents-md.mjs` |
 | `npm run demo` | `tsx src/demo/index.tsx` |
 | `npm run dev` | `tsup --watch` |
+| `npm run format` | `oxfmt .` |
+| `npm run format:check` | `oxfmt --check .` |
 | `npm run lint` | `oxlint` |
 | `npm run prepare` | `npm run build` |
 | `npm run test` | `vitest run` |

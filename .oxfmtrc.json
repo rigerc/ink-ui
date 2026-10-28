@@ -1,0 +1,24 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "singleQuote": true,
+  "bracketSpacing": false,
+  "ignorePatterns": [
+    "AGENTS.md",
+    "CHANGELOG.md",
+    "dist/**",
+    "coverage/**",
+    ".agent/**",
+    ".agents/**",
+    ".claude/**",
+    ".codex/**",
+    ".continue/**",
+    ".cursor/**",
+    ".gemini/**",
+    ".opencode/**",
+    ".pi/**",
+    ".roo/**",
+    ".windsurf/**",
+    ".serena/**",
+    "tools/oxlint/anti-slop/**"
+  ]
+}
