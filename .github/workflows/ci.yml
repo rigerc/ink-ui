@@ -28,10 +28,6 @@ jobs:
         with:
           node-version: '24'
           cache: npm
-      # TODO: Remove this once package-lock.json is regenerated and committed
-      # for the Ink 8 / React 19.3 migration; npm ci alone currently rejects it.
-      - name: Temporarily reconcile the migration lockfile
-        run: npm install --package-lock-only --ignore-scripts
       - run: npm ci
       - run: npm run typecheck
       - run: npm run check:agents
