@@ -5,7 +5,7 @@ import { existsSync, readFileSync, writeFileSync } from "node:fs"
 import { dirname, join, resolve, sep } from "node:path"
 import { fileURLToPath } from "node:url"
 
-const root = fileURLToPath(new URL("../", import.meta.url))
+const root = resolve(fileURLToPath(new URL("../", import.meta.url)))
 const generatedPath = "skills/ink-ui-screen-design/references/generated-api.md"
 const skillPath = "skills/ink-ui-screen-design/"
 
