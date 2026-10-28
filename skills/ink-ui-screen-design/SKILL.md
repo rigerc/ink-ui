@@ -13,6 +13,7 @@ Design calm, useful terminal screens using the actual visual system of [rigerc/i
 
 | Task | Reference |
 | --- | --- |
+| See current exported components, hooks, token keys and package compatibility | `references/generated-api.md` |
 | Pick components without rebuilding existing primitives | `references/components.md` |
 | Design Page regions, navigation hierarchy, multi-pane screens and narrow fallbacks | `references/layouts.md` |
 | Specify focus, quit/back behavior, search, key hints, prompts and wizards | `references/interactions.md` |
@@ -53,7 +54,7 @@ For a complete proposed screen, use all five references. For a focused question,
 
 ## Authority and upkeep
 
-The library's current `AGENTS.md` owns its design contract; `src/index.ts` and exported types own component availability. The library README and `docs/` can trail source changes. This skill is grounded in the rigerc/ink-ui repository as inspected on 2026-10-28, and favors source/exported definitions when names, behaviors or counts diverge. When implementation is explicitly requested, verify against current exports first.
+The generated API inventory is maintained by `npm run update:skill`; see [maintenance](MAINTENANCE.md) for checks and automation. The library's current `AGENTS.md` owns its design contract; `src/index.ts` and exported types own component availability. The library README and `docs/` can trail source changes. This skill is grounded in the rigerc/ink-ui repository as inspected on 2026-10-28, and favors source/exported definitions when names, behaviors or counts diverge. When implementation is explicitly requested, verify against current exports first.
 
 Inspired by the broader TUI screen-design skill and [gfargo/tui-design-skill](https://github.com/gfargo/tui-design-skill). This is design guidance, not a new library dependency.
 
