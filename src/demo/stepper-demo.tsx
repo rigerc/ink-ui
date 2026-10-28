@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react"
+import React, { useLayoutEffect, useRef, useState } from "react"
 import { Box, Text, useInput } from "ink"
 import {
   Step,
@@ -27,7 +27,7 @@ const StepBackKey = ({ backRef }: { backRef: BackRef }) => {
 
   // The demo owns its shortcuts at the root. Register the current step's
   // navigation handler without remounting an Ink input listener per step.
-  useEffect(() => {
+  useLayoutEffect(() => {
     backRef.current = isValidating ? null : goBack
     return () => {
       if (backRef.current === goBack) backRef.current = null
