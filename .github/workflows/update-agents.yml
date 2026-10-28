@@ -1,0 +1,50 @@
+name: Update AGENTS.md
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'AGENTS.md'
+      - 'package.json'
+      - 'src/**'
+      - 'docs/**'
+      - 'scripts/update-agents-md.mjs'
+      - '.github/workflows/update-agents.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+# Serialize writes to main and avoid canceling an in-progress commit.
+concurrency:
+  group: update-agents-main
+  cancel-in-progress: false
+
+jobs:
+  update:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+        # The job needs the checkout credentials to commit the refreshed file.
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+      - name: Regenerate repository context
+        run: node scripts/update-agents-md.mjs
+      - name: Check referenced public symbols
+        run: node scripts/check-agents-md.mjs
+      - name: Commit only when AGENTS.md changed
+        shell: bash
+        run: |
+          if git diff --quiet -- AGENTS.md; then
+            echo "AGENTS.md is already current."
+            exit 0
+          fi
+          git diff --check
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add AGENTS.md
+          git commit -m 'docs: refresh generated AGENTS.md context'
+          git push origin HEAD:main
