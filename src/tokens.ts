@@ -245,6 +245,7 @@ export const asciiSymbols: Symbols = {
 
 /** Border presets are style names accepted by Ink's Box borderStyle prop. */
 export type BorderStyle = "round" | "single" | "bold" | "double" | "classic"
+
 export const borders = {
   base: "round",
   focus: "bold",

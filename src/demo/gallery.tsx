@@ -14,10 +14,13 @@ export const Gallery = () => {
   useInput(
     (input, key) => {
       if (input === "q") return exit()
+
       if (key.upArrow || input === "k")
         setIndex((i) => (i - 1 + entries.length) % entries.length)
+
       if (key.downArrow || input === "j")
         setIndex((i) => (i + 1) % entries.length)
+
       if (key.return && current.interactive) setFocused(true)
     },
     { isActive: !focused },
@@ -33,9 +36,10 @@ export const Gallery = () => {
 
   const navHints: Hint[] = [
     ["↑↓", "navigate"],
-    ...(current.interactive ? ([["⏎", "focus"]] as Hint[]) : []),
+    ...(current.interactive ? ([["⏎", "focus"]] satisfies Hint[]) : []),
     ["q", "quit"],
   ]
+
   const focusHints: Hint[] = [
     ...(current.focusHints ?? []),
     ["esc", "gallery"],
@@ -51,6 +55,7 @@ export const Gallery = () => {
           {entries.map((entry, i) => {
             const showHeader =
               i === 0 || entries[i - 1]!.category !== entry.category
+
             return (
               <Box key={entry.name} flexDirection="column">
                 {showHeader ? (

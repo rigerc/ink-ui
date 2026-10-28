@@ -16,6 +16,7 @@ export const Spinner = ({ label, ascii = false }: SpinnerProps) => {
     const timer = setInterval(() => {
       setFrame((prev) => (prev + 1) % frames.length)
     }, motion.intervalMs)
+
     return () => clearInterval(timer)
   }, [ascii])
 

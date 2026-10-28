@@ -38,28 +38,38 @@ export const TextInput = ({
     (input, key) => {
       if (key.return) {
         onSubmit?.(value)
+
         return
       }
+
       if (key.escape) {
         onCancel?.()
+
         return
       }
+
       if (key.leftArrow) {
         setCursor((c) => Math.max(0, c - 1))
+
         return
       }
+
       if (key.rightArrow) {
         setCursor((c) => Math.min(value.length, c + 1))
+
         return
       }
+
       // Both backspace and delete remove the character before the cursor —
       // forward-delete isn't worth the ambiguity of which flag the terminal
       // sets for a single-line field.
       if (key.backspace || key.delete) {
         if (cursor === 0) return
         update(value.slice(0, cursor - 1) + value.slice(cursor), cursor - 1)
+
         return
       }
+
       if (input && !key.ctrl && !key.meta && !key.tab) {
         update(
           value.slice(0, cursor) + input + value.slice(cursor),
@@ -84,6 +94,7 @@ export const TextInput = ({
   const before = value.slice(0, cursor)
   const at = value.slice(cursor, cursor + 1) || " "
   const after = value.slice(cursor + 1)
+
   return (
     <Text>
       {before}

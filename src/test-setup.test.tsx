@@ -18,6 +18,7 @@ describe("cleanup between tests", () => {
     const { lastFrame } = render(
       <Toast message="Lingering" duration={40} onDone={onDone} />,
     )
+
     expect(lastFrame()).toContain("Lingering")
     expect(onDone).not.toHaveBeenCalled()
   })

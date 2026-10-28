@@ -47,9 +47,11 @@ export const Table = <T extends Record<string, unknown>>({
   headerColor = colors.muted,
 }: TableProps<T>) => {
   const terminalColumns = useTerminalColumns()
+
   const rows = data.map((row) =>
     columns.map((column) => cellText(row[column.key])),
   )
+
   const widths = resolveColumnWidths({
     columns,
     rows,

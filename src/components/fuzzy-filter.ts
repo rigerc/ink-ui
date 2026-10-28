@@ -6,10 +6,13 @@ import type { PaletteItem } from "./command-palette.js"
 // the reader typed on purpose and a subsequence hit is a guess on their behalf.
 const isSubsequence = (needle: string, haystack: string) => {
   let at = 0
+
   for (const ch of haystack) {
     if (ch === needle[at]) at++
+
     if (at === needle.length) return true
   }
+
   return needle.length === 0
 }
 
@@ -36,13 +39,17 @@ export const fuzzyFilter = (
   query: string,
 ): PaletteItem[] => {
   const q = query.trim().toLowerCase()
+
   if (!q) return items
   const substring: PaletteItem[] = []
   const subsequence: PaletteItem[] = []
+
   for (const item of items) {
     const hay = haystackOf(item)
+
     if (hay.includes(q)) substring.push(item)
     else if (isSubsequence(q, hay)) subsequence.push(item)
   }
+
   return [...substring, ...subsequence]
 }

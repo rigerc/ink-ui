@@ -25,6 +25,7 @@ type FilterBarProps = {
 export const FilterBar = ({ term, typing, caret, matches }: FilterBarProps) => {
   if (term === null) return null
   const at = Math.max(0, Math.min(caret ?? term.length, term.length))
+
   return (
     <Box>
       <Text color={colors.info}>{"/ "}</Text>

@@ -18,15 +18,20 @@ type OrderedListProps = { children: React.ReactNode }
 const OrderedListRoot = ({ children }: OrderedListProps) => {
   // Number only direct Item children; a nested list restarts its own count.
   let n = 0
+
   const numbered = React.Children.map(children, (child) => {
     if (React.isValidElement(child) && child.type === OrderedListItem) {
       n += 1
+
+      // SAFETY: The element type was checked against OrderedListItem above.
       return React.cloneElement(child as React.ReactElement<ItemProps>, {
         _index: n,
       })
     }
+
     return child
   })
+
   return <Box flexDirection="column">{numbered}</Box>
 }
 

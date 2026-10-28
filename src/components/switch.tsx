@@ -21,6 +21,7 @@ export const Switch = ({
   color = colors.accent,
 }: SwitchProps) => {
   const leftActive = value === "left"
+
   return (
     <Text>
       <Text

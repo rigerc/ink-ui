@@ -55,6 +55,7 @@ export const ScrollView = ({
   useLayoutEffect(() => {
     if (!ref.current) return
     const { height: h } = measureElement(ref.current)
+
     if (h > 0 && h !== height) setHeight(h)
   })
 
@@ -65,11 +66,16 @@ export const ScrollView = ({
     (input, key) => {
       if (key.downArrow || input === "j")
         setStart((s) => Math.min(maxStart, s + 1))
+
       if (key.upArrow || input === "k") setStart((s) => Math.max(0, s - 1))
+
       if (input === " " || key.pageDown || input === "f")
         setStart((s) => Math.min(maxStart, s + height))
+
       if (key.pageUp || input === "b") setStart((s) => Math.max(0, s - height))
+
       if (input === "g") setStart(0)
+
       if (input === "G") setStart(maxStart)
     },
     { isActive },

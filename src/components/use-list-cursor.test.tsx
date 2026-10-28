@@ -19,6 +19,7 @@ type HarnessProps = {
 
 const Harness = ({ length = 3, ...options }: HarnessProps) => {
   const { cursor } = useListCursor(length, options)
+
   return <Text>cursor:{cursor}</Text>
 }
 

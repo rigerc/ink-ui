@@ -33,6 +33,7 @@ export const ProgressBar = ({
 }: ProgressBarProps) => {
   const clamped = Math.max(0, Math.min(100, value))
   const filled = Math.round((clamped / 100) * width)
+
   return (
     <Text>
       <Text color={color}>{symbols.barFull.repeat(filled)}</Text>

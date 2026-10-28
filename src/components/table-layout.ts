@@ -1,6 +1,7 @@
 import stringWidth from "string-width"
 
 export type ColumnAlign = "left" | "center" | "right"
+
 export type ColumnOverflow = "wrap" | "truncate"
 
 export type LayoutColumn = {
@@ -49,12 +50,15 @@ const widestShrinkable = (widths: number[], floors: number[]) =>
 const shrinkToFit = (widths: number[], floors: number[], excess: number) => {
   const shrunk = [...widths]
   let remaining = excess
+
   while (remaining > 0) {
     const target = widestShrinkable(shrunk, floors)
+
     if (target === -1) break
     shrunk[target] = shrunk[target] - 1
     remaining -= 1
   }
+
   return shrunk
 }
 
@@ -79,8 +83,10 @@ export const resolveColumnWidths = ({
         rows.map((row) => row[index] ?? ""),
       ),
   )
+
   const gaps = gap * Math.max(columns.length - 1, 0)
   const excess = widths.reduce((total, width) => total + width, gaps) - maxWidth
+
   return excess > 0
     ? shrinkToFit(
         widths,

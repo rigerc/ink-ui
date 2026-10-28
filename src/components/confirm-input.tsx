@@ -21,12 +21,16 @@ export const ConfirmInput = ({
     (input, key) => {
       if (input.toLowerCase() === "y") {
         onConfirm?.()
+
         return
       }
+
       if (input.toLowerCase() === "n") {
         onCancel?.()
+
         return
       }
+
       if (key.return) {
         if (defaultChoice === "confirm") onConfirm?.()
         else onCancel?.()
@@ -37,5 +41,6 @@ export const ConfirmInput = ({
 
   // The default choice is capitalised — a shape/case cue, not a colour one.
   const hint = defaultChoice === "confirm" ? "(Y/n)" : "(y/N)"
+
   return <Text dimColor>{hint}</Text>
 }

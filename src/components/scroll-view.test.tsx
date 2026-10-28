@@ -20,6 +20,7 @@ describe("ScrollView", () => {
     const { stdin, lastFrame } = render(
       <ScrollView lines={lines} isActive={false} />,
     )
+
     expect(lastFrame()).toContain("L1")
     stdin.write(DOWN)
     await delay()

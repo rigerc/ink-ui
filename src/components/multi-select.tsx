@@ -19,6 +19,7 @@ type MultiSelectProps<T extends string> = {
 
 const windowStart = (cursor: number, total: number, count: number): number => {
   if (total <= count) return 0
+
   return Math.max(0, Math.min(cursor - Math.floor(count / 2), total - count))
 }
 
@@ -40,15 +41,19 @@ export const MultiSelect = <T extends string>({
     (input, key) => {
       if (key.upArrow)
         setCursor((i) => (i - 1 + options.length) % options.length)
+
       if (key.downArrow) setCursor((i) => (i + 1) % options.length)
+
       if (input === " ") {
         const value = options[cursor]!.value
         const next = new Set(selected)
+
         if (next.has(value)) next.delete(value)
         else next.add(value)
         setSelected(next)
         onChange?.([...next])
       }
+
       if (key.return) onSubmit?.([...selected])
     },
     { isActive: !isDisabled && options.length > 0 },
@@ -63,6 +68,7 @@ export const MultiSelect = <T extends string>({
       {visible.map((option, i) => {
         const active = start + i === cursor
         const on = selected.has(option.value)
+
         return (
           <SelectableRow key={option.value} active={active}>
             <Text bold={active} color={active ? colors.info : undefined}>

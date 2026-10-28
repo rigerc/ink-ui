@@ -13,6 +13,7 @@ import {
 } from "../index.js"
 
 type DemoProps = { focused: boolean }
+
 type Result = "completed" | "cancelled" | null
 
 /**
@@ -20,6 +21,7 @@ type Result = "completed" | "cancelled" | null
  * step-back shortcut so the Stepper never steals the host's Escape key.
  */
 type BackHandler = () => Promise<void>
+
 type BackRef = React.RefObject<BackHandler | null>
 
 const StepBackKey = ({ backRef }: { backRef: BackRef }) => {
@@ -29,10 +31,12 @@ const StepBackKey = ({ backRef }: { backRef: BackRef }) => {
   // navigation handler without remounting an Ink input listener per step.
   useLayoutEffect(() => {
     backRef.current = isValidating ? null : goBack
+
     return () => {
       if (backRef.current === goBack) backRef.current = null
     }
   }, [backRef, goBack, isValidating])
+
   return null
 }
 
@@ -52,15 +56,22 @@ export const StepperDemo = ({ focused }: DemoProps) => {
         setReady(false)
         setStepIndex(0)
         setRun((previous) => previous + 1)
+
         return
       }
+
       if (result) return
+
       if (input === "b") {
         void backRef.current?.()
+
         return
       }
+
       if (input === "a") setAscii((value) => !value)
+
       if (input === "v") setVertical((value) => !value)
+
       if (input === " " && stepIndex === 0) setReady((value) => !value)
     },
     { isActive: focused },

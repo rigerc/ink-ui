@@ -18,6 +18,7 @@ const SHIFT_TAB = "\u001B[Z" // CSI Z — Ink parses this as tab + shift
 
 const Harness = ({ initial }: { initial?: "open" | "done" | "all" }) => {
   const { active } = useTabs(items, initial ? { initial } : undefined)
+
   return <Text>active:{active}</Text>
 }
 
@@ -67,8 +68,10 @@ describe("useTabs", () => {
   it("ignores input when isActive is false", async () => {
     const Inactive = () => {
       const { active } = useTabs(items, { isActive: false })
+
       return <Text>active:{active}</Text>
     }
+
     const { stdin, lastFrame } = render(<Inactive />)
     stdin.write(TAB)
     await delay()
@@ -98,8 +101,10 @@ describe("useTabs arrows", () => {
   it("leaves the arrows alone when told to", async () => {
     const NoArrows = () => {
       const { active } = useTabs(items, { arrows: false })
+
       return <Text>active:{active}</Text>
     }
+
     const { stdin, lastFrame } = render(<NoArrows />)
     stdin.write(RIGHT)
     await delay()

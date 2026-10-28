@@ -23,9 +23,11 @@ describe("Select", () => {
 
   it("moves the cursor with arrow keys and fires onChange", async () => {
     const onChange = vi.fn()
+
     const { stdin, lastFrame } = render(
       <Select options={options} onChange={onChange} />,
     )
+
     stdin.write("\u001B[B") // down arrow
     await delay()
     expect(lastFrame()).toContain("❯ Second")
@@ -44,9 +46,11 @@ describe("Select", () => {
 
   it("wraps from first to last on up arrow", async () => {
     const onChange = vi.fn()
+
     const { stdin, lastFrame } = render(
       <Select options={options} onChange={onChange} />,
     )
+
     stdin.write("\u001B[A") // up from First wraps to Third
     await delay()
     expect(lastFrame()).toContain("❯ Third")

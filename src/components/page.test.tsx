@@ -19,6 +19,7 @@ describe("Page", () => {
         <Text>body</Text>
       </Page>,
     )
+
     const frame = lastFrame() ?? ""
     expect(frame).toMatch(/[╭╮╰╯]/)
     expect(frame).toContain("🎫 Jira   12 items  ·  @you  updated 2m ago  ╌╌╌╌")
@@ -33,6 +34,7 @@ describe("Page", () => {
         <Text>x</Text>
       </Page>,
     )
+
     expect(lastFrame() ?? "").toMatch(/o browser.*⌫ back.*\? help.*q quit/)
   })
 
@@ -42,13 +44,16 @@ describe("Page", () => {
         <Text>x</Text>
       </Page>,
     )
+
     const without = render(
       <Page title="A">
         <Text>x</Text>
       </Page>,
     )
+
     const lines = (r: typeof without) =>
       (r.lastFrame() ?? "").split("\n").length
+
     expect(withTabs.lastFrame()).toContain("TABS")
     expect(lines(withTabs) - lines(without)).toBe(2)
   })
@@ -59,11 +64,13 @@ describe("Page", () => {
         <Text>x</Text>
       </Page>,
     )
+
     const many = render(
       <Page title="A" count={127} user="me">
         <Text>x</Text>
       </Page>,
     )
+
     expect(one.lastFrame()).toContain("A    7 items  ·  @me")
     expect(many.lastFrame()).toContain("A  127 items  ·  @me")
     expect(
@@ -87,6 +94,7 @@ describe("Page", () => {
         <Text>x</Text>
       </Page>,
     )
+
     const line = (lastFrame() ?? "").split("\n")[1] ?? ""
     expect(line).toContain("● 2 new · r apply  ╌╌╌╌")
     expect(line).toMatch(/╌+ *│$/)
@@ -98,8 +106,10 @@ describe("Page", () => {
         <Text>x</Text>
       </Page>,
     )
+
     const line =
       (lastFrame() ?? "").split("\n").find((l) => l.includes("3 of 12")) ?? ""
+
     expect(line).toMatch(/3 of 12 │$/)
   })
   it("stays content-sized by default: as tall as its body, not the terminal", () => {
@@ -108,6 +118,7 @@ describe("Page", () => {
         <Text>x</Text>
       </Page>,
     )
+
     // Border, title row, the blank under it, the body, border.
     expect((lastFrame() ?? "").split("\n")).toHaveLength(5)
   })
@@ -118,10 +129,13 @@ describe("Page", () => {
    */
   it("fills the terminal with `fill`, and the rule reaches the real edge", () => {
     let size = { columns: 0, rows: 0 }
+
     const Probe = () => {
       size = useWindowSize()
+
       return null
     }
+
     const { lastFrame } = render(
       <>
         <Probe />
@@ -130,6 +144,7 @@ describe("Page", () => {
         </Page>
       </>,
     )
+
     const lines = (lastFrame() ?? "").split("\n")
     expect(lines).toHaveLength(size.rows)
     expect(stringWidth(lines[0] ?? "")).toBe(size.columns)
@@ -143,6 +158,7 @@ describe("Page", () => {
         <Text>x</Text>
       </Page>,
     )
+
     const lines = (lastFrame() ?? "").split("\n")
     expect(lines).toHaveLength(8)
     expect(stringWidth(lines[1] ?? "")).toBe(50)
@@ -164,12 +180,14 @@ describe("Page", () => {
       )
         .split("\n")
         .findIndex((l) => l.includes("body"))
+
     const frame =
       render(
         <Page title="Jira" filter={<Text>/ acme</Text>}>
           <Text>body</Text>
         </Page>,
       ).lastFrame() ?? ""
+
     expect(frame).toContain("/ acme")
     expect(bodyRow(<Text>/ acme</Text>)).toBe(bodyRow())
   })

@@ -22,14 +22,17 @@ describe("MultiSelect", () => {
     const { lastFrame } = render(
       <MultiSelect options={options} defaultValue={["second"]} />,
     )
+
     expect(lastFrame()).toContain("✓")
   })
 
   it("toggles selection with space and fires onChange", async () => {
     const onChange = vi.fn()
+
     const { stdin, lastFrame } = render(
       <MultiSelect options={options} onChange={onChange} />,
     )
+
     stdin.write(" ") // toggle First on
     await delay()
     expect(lastFrame()).toContain("✓")
@@ -38,9 +41,11 @@ describe("MultiSelect", () => {
 
   it("submits the selected values on Enter", async () => {
     const onSubmit = vi.fn()
+
     const { stdin } = render(
       <MultiSelect options={options} onSubmit={onSubmit} />,
     )
+
     stdin.write(" ") // First on
     await delay()
     stdin.write("\u001B[B") // down to Second

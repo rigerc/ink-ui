@@ -12,6 +12,7 @@ describe("Columns", () => {
         <Text>right</Text>
       </Columns>,
     )
+
     // Side by side means both land on the first rendered line, not stacked.
     const firstLine = (lastFrame() ?? "").split("\n")[0]
     expect(firstLine).toContain("left")

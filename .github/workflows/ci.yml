@@ -32,6 +32,10 @@ jobs:
       - run: npm run typecheck
       - run: npm run check:agents
       - run: npm test
+      - name: Test Pill with NO_COLOR inherited
+        run: npx vitest run src/components/pill.test.tsx
+        env:
+          NO_COLOR: '1'
       - run: npm run build
       - name: Verify published package contents
         shell: bash

@@ -19,6 +19,7 @@ describe("OrderedList", () => {
         </OrderedList.Item>
       </OrderedList>,
     )
+
     const frame = lastFrame()
     expect(frame).toContain("1. First")
     expect(frame).toContain("2. Second")
@@ -38,6 +39,7 @@ describe("OrderedList", () => {
         </OrderedList.Item>
       </OrderedList>,
     )
+
     const frame = lastFrame()
     expect(frame).toContain("1. Parent")
     expect(frame).toContain("1. Nested")

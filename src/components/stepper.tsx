@@ -91,11 +91,13 @@ export const StepperProgress = ({
       {steps.map(({ id, name }, index) => {
         const complete = index < currentStep
         const current = index === currentStep
+
         const marker = complete
           ? markers.success
           : current
             ? markers.pointer
             : markers.pending
+
         return (
           <Text
             key={id}
@@ -117,19 +119,23 @@ const StepperContext = createContext<StepContext | null>(null)
 
 export const useStepper = (): StepContext => {
   const context = useContext(StepperContext)
+
   if (!context) throw new Error("useStepper must be used inside Stepper")
+
   return context
 }
 
 /** Hints follow the FooterHints visual language; the host still owns Back. */
 export const StepperNavigation = () => {
   const { isFirst, isLast, isValidating, keyboardNav } = useStepper()
+
   if (isValidating) return <Text color={colors.muted}>Validating{symbols.ellipsis}</Text>
 
   const hints: Hint[] = [
-    ...(keyboardNav ? ([["↵", isLast ? "finish" : "next"]] as Hint[]) : []),
+    ...(keyboardNav ? ([["↵", isLast ? "finish" : "next"]] satisfies Hint[]) : []),
     ["⌫", isFirst ? "cancel" : "back"],
   ]
+
   return <FooterHints hints={hints} />
 }
 
@@ -142,13 +148,17 @@ const collectSteps = (children: ReactNode, prefix = ""): IndexedStep[] =>
     }
 
     const id = prefix + "/" + (child.key ?? index)
+
     if (child.type === Fragment) {
+      // SAFETY: A Fragment element carries its children in props.
       return collectSteps((child.props as { children: ReactNode }).children, id)
     }
+
     if (child.type !== Step) {
       throw new Error("Stepper children must be Step elements or fragments")
     }
 
+    // SAFETY: The element type was checked against Step above.
     return [{ id, element: child as ReactElement<StepProps> }]
   })
 
@@ -171,16 +181,20 @@ export const Stepper = ({
   renderProgress,
 }: StepperProps) => {
   const steps = collectSteps(children)
+
   const [position, setPosition] = useState<{ index: number; id: string | null }>({
     index: initialStep,
     id: null,
   })
+
   const trackedIndex =
     position.id === null ? -1 : steps.findIndex((item) => item.id === position.id)
+
   const currentStep = clamp(
     step ?? (trackedIndex < 0 ? position.index : trackedIndex),
     steps.length,
   )
+
   const active = steps[currentStep]
 
   const [isValidating, setIsValidating] = useState(false)
@@ -198,6 +212,7 @@ export const Stepper = ({
 
   useEffect(() => {
     mounted.current = true
+
     return () => {
       mounted.current = false
     }
@@ -230,12 +245,14 @@ export const Stepper = ({
         : direction === "next"
           ? currentStep + 1
           : currentStep - 1
+
     if (target === currentStep) return
 
     busy.current = true
     setIsValidating(true)
     setError(undefined)
     const origin = source.current
+
     const stillCurrent = () =>
       mounted.current &&
       source.current.id === origin.id &&
@@ -244,26 +261,31 @@ export const Stepper = ({
 
     try {
       await Promise.resolve()
+
       if (!stillCurrent()) return
 
       if (direction === "next") {
         const guard = active.element.props.canProceed ?? true
         const permitted = typeof guard === "function" ? await guard() : guard
+
         if (!permitted || !stillCurrent()) return
       }
 
       if (onExitStep && (await onExitStep(currentStep)) === false) return
+
       if (!stillCurrent()) return
 
       if (target < 0 || target >= steps.length) {
         ended.current = true
         setFinished(true)
+
         if (target < 0) onCancel?.()
         else onComplete()
       } else {
         if (step === undefined) {
           setPosition({ index: target, id: steps[target]!.id })
         }
+
         onStepChange?.(target)
         onEnterStep?.(target)
       }
@@ -302,11 +324,13 @@ export const Stepper = ({
   )
 
   if (!active || finished) return null
+
   const progress: StepperProgressProps = {
     steps: steps.map((item) => ({ id: item.id, name: item.element.props.name })),
     currentStep,
     ascii,
   }
+
   const content = active.element.props.children
 
   return (

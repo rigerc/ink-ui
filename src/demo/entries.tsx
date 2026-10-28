@@ -61,6 +61,7 @@ const colourOptions = [
 
 const TextInputDemo = ({ focused }: { focused: boolean }) => {
   const [value, setValue] = useState("")
+
   return (
     <Box flexDirection="column">
       <Box>
@@ -78,6 +79,7 @@ const TextInputDemo = ({ focused }: { focused: boolean }) => {
 
 const EmailInputDemo = ({ focused }: { focused: boolean }) => {
   const [value, setValue] = useState("")
+
   return (
     <Box flexDirection="column">
       <Box>
@@ -95,6 +97,7 @@ const EmailInputDemo = ({ focused }: { focused: boolean }) => {
 
 const PasswordInputDemo = ({ focused }: { focused: boolean }) => {
   const [value, setValue] = useState("")
+
   return (
     <Box flexDirection="column">
       <Box>
@@ -112,6 +115,7 @@ const PasswordInputDemo = ({ focused }: { focused: boolean }) => {
 
 const ConfirmInputDemo = ({ focused }: { focused: boolean }) => {
   const [result, setResult] = useState("—")
+
   return (
     <Box flexDirection="column">
       <Box>
@@ -129,6 +133,7 @@ const ConfirmInputDemo = ({ focused }: { focused: boolean }) => {
 
 const SelectDemo = ({ focused }: { focused: boolean }) => {
   const [value, setValue] = useState("red")
+
   return (
     <Box flexDirection="column">
       <Select
@@ -144,6 +149,7 @@ const SelectDemo = ({ focused }: { focused: boolean }) => {
 
 const MultiSelectDemo = ({ focused }: { focused: boolean }) => {
   const [values, setValues] = useState<string[]>(["red"])
+
   return (
     <Box flexDirection="column">
       <MultiSelect
@@ -160,6 +166,7 @@ const ScrollViewDemo = ({ focused }: { focused: boolean }) => {
   const lines = Array.from({ length: 40 }, (_, i) => ({
     text: `line ${i + 1} — scrollable content`,
   }))
+
   return (
     <Box flexDirection="column">
       <Box height={8} flexDirection="column">
@@ -176,16 +183,20 @@ const TabsDemo = ({ focused }: { focused: boolean }) => {
     { label: "Search", value: "search", icon: "▲" },
     { label: "Settings", value: "settings", icon: "●" },
   ]
+
   const [active, setActive] = useState("files")
   useInput(
     (_input, key) => {
       const i = items.findIndex((x) => x.value === active)
+
       if (key.leftArrow) setActive(items[Math.max(0, i - 1)]!.value)
+
       if (key.rightArrow)
         setActive(items[Math.min(items.length - 1, i + 1)]!.value)
     },
     { isActive: focused },
   )
+
   return (
     <Box flexDirection="column">
       <Tabs active={active} items={items} />
@@ -216,6 +227,7 @@ const TabsMarkerDemo = ({ focused }: { focused: boolean }) => {
   useEffect(() => {
     if (!news) return
     const id = setInterval(() => setFrame((f) => f + 1), MARKER_MS)
+
     return () => clearInterval(id)
   }, [news])
 
@@ -241,9 +253,12 @@ const TabsMarkerDemo = ({ focused }: { focused: boolean }) => {
   useInput(
     (input, key) => {
       const i = items.findIndex((x) => x.value === active)
+
       if (key.leftArrow) setActive(items[Math.max(0, i - 1)]!.value)
+
       if (key.rightArrow)
         setActive(items[Math.min(items.length - 1, i + 1)]!.value)
+
       if (input === "n") setNews((on) => !on)
     },
     { isActive: focused },
@@ -262,11 +277,14 @@ const SwitchDemo = ({ focused }: { focused: boolean }) => {
   useInput(
     (input, key) => {
       if (key.leftArrow) setValue("left")
+
       if (key.rightArrow) setValue("right")
+
       if (input === " ") setValue((v) => (v === "left" ? "right" : "left"))
     },
     { isActive: focused },
   )
+
   return (
     <Box flexDirection="column">
       <Switch left="Off" right="On" value={value} />
@@ -283,6 +301,7 @@ const ToggleDemo = ({ focused }: { focused: boolean }) => {
     },
     { isActive: focused },
   )
+
   return (
     <Box flexDirection="column">
       <Toggle label="Dark mode" on={on} />
@@ -299,6 +318,7 @@ const ToggleSwitchDemo = ({ focused }: { focused: boolean }) => {
     },
     { isActive: focused },
   )
+
   return (
     <Box flexDirection="column">
       <ToggleSwitch on={on} label={on ? "on" : "off"} />

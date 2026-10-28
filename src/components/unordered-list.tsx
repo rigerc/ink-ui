@@ -13,6 +13,7 @@ type ItemProps = { children: React.ReactNode }
 const UnorderedListItem = ({ children }: ItemProps) => {
   const depth = useContext(DepthContext)
   const marker = markers[Math.max(0, depth - 1) % markers.length]
+
   return (
     <Box flexDirection="row">
       <Text>{marker} </Text>
@@ -25,6 +26,7 @@ type UnorderedListProps = { children: React.ReactNode }
 
 const UnorderedListRoot = ({ children }: UnorderedListProps) => {
   const depth = useContext(DepthContext)
+
   return (
     <DepthContext.Provider value={depth + 1}>
       <Box flexDirection="column">{children}</Box>

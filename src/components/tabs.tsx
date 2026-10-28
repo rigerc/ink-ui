@@ -131,6 +131,7 @@ export const tabCountChipFill = (isActive: boolean): string =>
  */
 export const tabCountStyle = (isActive: boolean) => {
   const style = pillStyle(isActive ? "accent" : "muted", "tonal", isActive)
+
   return {
     bold: style.bold,
     color: style.ink,
@@ -148,9 +149,12 @@ const countContentOf = <T extends string>(
   item: TabItem<T>,
 ): string | undefined => {
   if (item.count === undefined) return undefined
+
   if (item.count === null)
     return process.env["NO_COLOR"] ? FOLDED_PENDING_COUNT : " –"
+
   if (item.total === undefined) return String(item.count)
+
   return `${item.count}/${item.total}`
 }
 
@@ -172,9 +176,13 @@ const chipTailOf = (content: string): string =>
 const fullPartsOf = <T extends string>(item: TabItem<T>): [string, string] => {
   const head =
     item.icon === undefined ? item.label : `${item.icon} ${item.label}`
+
   const content = countContentOf(item)
+
   if (content === undefined) return [head, ""]
+
   if (process.env["NO_COLOR"]) return [head, ` (${content})`]
+
   return [head, chipTailOf(content)]
 }
 
@@ -225,12 +233,15 @@ const foldedPartsOf = <T extends string>(
 ): [string, string] => {
   const icon = item.icon ?? ""
   const content = countContentOf(item)
+
   if (content === undefined) return [icon, ""]
+
   if (process.env["NO_COLOR"])
     return [
       icon,
       item.count === null ? ` ${FOLDED_PENDING_COUNT}` : ` ${content}`,
     ]
+
   return [icon, chipTailOf(content)]
 }
 
@@ -255,6 +266,7 @@ export const Tabs = <T extends string>({
   const cells = items.map((item) => {
     const [fullLabel, fullTail] = fullPartsOf(item)
     const [foldedLabel, foldedTail] = foldedPartsOf(item)
+
     return {
       key: item.value,
       marker: item.marker ?? "",
@@ -278,12 +290,15 @@ export const Tabs = <T extends string>({
     { type: "tab"; cell: (typeof cells)[number] } | { type: "divider" }
 
   const renderItems: RenderItem[] = []
+
   for (let i = 0; i < cells.length; i++) {
     const prevGroup = i > 0 ? cells[i - 1].group : undefined
     const currGroup = cells[i].group
+
     if (i > 0 && currGroup !== prevGroup) {
       renderItems.push({ type: "divider" })
     }
+
     renderItems.push({ type: "tab", cell: cells[i] })
   }
 
@@ -293,6 +308,7 @@ export const Tabs = <T extends string>({
   // when its own measured width says it must.
   const cellWidth = (marker: string, text: string) =>
     stringWidth(marker) + stringWidth(text)
+
   const fullWidth =
     renderItems.reduce(
       (sum, item) =>
@@ -305,6 +321,7 @@ export const Tabs = <T extends string>({
     GAP * Math.max(0, renderItems.length - 1)
 
   const folded = shouldFoldTabs(fullWidth, availableWidth)
+
   const textOf = (cell: (typeof cells)[number]) =>
     folded && !cell.isActive && cell.hasIcon ? cell.foldedText : cell.fullText
 
@@ -328,6 +345,7 @@ export const Tabs = <T extends string>({
   // cell — gutter, label, chip, gap — so the rule's start lands in the active
   // tab's own column even when earlier tabs carry chips of their own.
   const gutterOf = (cell: (typeof cells)[number]) => stringWidth(cell.marker)
+
   const labelOf = (cell: (typeof cells)[number]) =>
     stringWidth(
       folded && !cell.isActive && cell.hasIcon
@@ -342,6 +360,7 @@ export const Tabs = <T extends string>({
   // consume their width plus GAP like any other item.
   let x = 0
   let rule = { start: 0, width: 0 }
+
   for (const item of renderItems) {
     if (item.type === "tab") {
       if (item.cell.isActive)
@@ -365,10 +384,12 @@ export const Tabs = <T extends string>({
               </Box>
             )
           }
+
           const cell = item.cell
           const isFolded = folded && !cell.isActive && cell.hasIcon
           const labelText = isFolded ? cell.foldedLabel : cell.fullLabel
           const tailText = isFolded ? cell.foldedTail : cell.fullTail
+
           return (
             <Box key={cell.key}>
               {cell.marker ? (

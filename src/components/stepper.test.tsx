@@ -12,7 +12,9 @@ import {
 
 const settle = () => new Promise((resolve) => setTimeout(resolve, 30))
 
-const wizard = (current: { value?: StepContext }, options: {
+type CurrentStep = { value?: StepContext }
+
+const wizard = (current: CurrentStep, options: {
   onComplete?: () => void
   onCancel?: () => void
   onStepChange?: (index: number) => void
@@ -34,12 +36,14 @@ const wizard = (current: { value?: StepContext }, options: {
     <Step name="Details" canProceed={options.canProceed}>
       {(context) => {
         current.value = context
+
         return <Text>First page</Text>
       }}
     </Step>
     <Step name="Review">
       {(context) => {
         current.value = context
+
         return (
           <>
             <Text>Second page</Text>
@@ -53,7 +57,7 @@ const wizard = (current: { value?: StepContext }, options: {
 
 describe("Stepper", () => {
   it("shows the progress and mounts only the active step", () => {
-    const current: { value?: StepContext } = {}
+    const current: CurrentStep = {}
     const { lastFrame } = render(wizard(current))
     expect(lastFrame()).toContain("❯ 1. Details")
     expect(lastFrame()).toContain("○ 2. Review")
@@ -64,13 +68,15 @@ describe("Stepper", () => {
   })
 
   it("advances, invokes lifecycle callbacks and completes once", async () => {
-    const current: { value?: StepContext } = {}
+    const current: CurrentStep = {}
     const onStepChange = vi.fn()
     const onComplete = vi.fn()
     const onExitStep = vi.fn(() => true)
+
     const { lastFrame } = render(
       wizard(current, { onComplete, onStepChange, onExitStep }),
     )
+
     await current.value!.goNext()
     await settle()
     expect(lastFrame()).toContain("Second page")
@@ -85,14 +91,16 @@ describe("Stepper", () => {
   })
 
   it("prevents progression when async validation returns false", async () => {
-    const current: { value?: StepContext } = {}
+    const current: CurrentStep = {}
     const onExitStep = vi.fn(() => true)
+
     const { lastFrame } = render(
       wizard(current, {
         canProceed: async () => false,
         onExitStep,
       }),
     )
+
     await current.value!.goNext()
     await settle()
     expect(lastFrame()).toContain("First page")
@@ -100,8 +108,9 @@ describe("Stepper", () => {
   })
 
   it("reports rejected validation without advancing", async () => {
-    const current: { value?: StepContext } = {}
+    const current: CurrentStep = {}
     const onError = vi.fn()
+
     const { lastFrame } = render(
       wizard(current, {
         canProceed: async () => {
@@ -110,6 +119,7 @@ describe("Stepper", () => {
         onError,
       }),
     )
+
     await current.value!.goNext()
     await settle()
     expect(lastFrame()).toContain("Invalid details")
@@ -118,11 +128,13 @@ describe("Stepper", () => {
   })
 
   it("respects onExitStep veto and lets goTo skip canProceed", async () => {
-    const current: { value?: StepContext } = {}
+    const current: CurrentStep = {}
     const onExitStep = vi.fn(() => false)
+
     const ui = render(
       wizard(current, { canProceed: false, onExitStep }),
     )
+
     await current.value!.goTo(1)
     await settle()
     expect(ui.lastFrame()).toContain("First page")
@@ -136,7 +148,7 @@ describe("Stepper", () => {
   })
 
   it("supports a controlled step and reports requested navigation", async () => {
-    const current: { value?: StepContext } = {}
+    const current: CurrentStep = {}
     const onStepChange = vi.fn()
     const ui = render(wizard(current, { step: 0, onStepChange }))
     await current.value!.goNext()
@@ -150,7 +162,7 @@ describe("Stepper", () => {
   })
 
   it("goes back and cancels when already on the first step", async () => {
-    const current: { value?: StepContext } = {}
+    const current: CurrentStep = {}
     const onCancel = vi.fn()
     const { lastFrame } = render(wizard(current, { onCancel }))
     await current.value!.goNext()
@@ -164,14 +176,14 @@ describe("Stepper", () => {
   })
 
   it("does not capture Enter by default, but opts in when requested", async () => {
-    const current: { value?: StepContext } = {}
+    const current: CurrentStep = {}
     const ui = render(wizard(current))
     ui.stdin.write("\r")
     await settle()
     expect(ui.lastFrame()).toContain("First page")
     ui.unmount()
 
-    const enabled: { value?: StepContext } = {}
+    const enabled: CurrentStep = {}
     const focused = render(wizard(enabled, { keyboardNav: true }))
     focused.stdin.write("\r")
     await settle()
@@ -179,14 +191,21 @@ describe("Stepper", () => {
   })
 
   it("keeps a keyed step active when children reorder", async () => {
-    const current: { value?: StepContext } = {}
+    const current: CurrentStep = {}
+
     const view = (reversed: boolean) => {
       const elements = [
-        <Step key="a" name="A">{(ctx) => { current.value = ctx; return <Text>A page</Text> }}</Step>,
-        <Step key="b" name="B">{(ctx) => { current.value = ctx; return <Text>B page</Text> }}</Step>,
+        <Step key="a" name="A">{(ctx) => { current.value = ctx;
+
+ return <Text>A page</Text> }}</Step>,
+        <Step key="b" name="B">{(ctx) => { current.value = ctx;
+
+ return <Text>B page</Text> }}</Step>,
       ]
+
       return <Stepper onComplete={() => {}}>{reversed ? elements.reverse() : elements}</Stepper>
     }
+
     const ui = render(view(false))
     await current.value!.goNext()
     await settle()
@@ -209,6 +228,7 @@ describe("Stepper", () => {
         ]}
       />,
     )
+
     expect(lastFrame()).toContain("+ 1. One")
     expect(lastFrame()).toContain("+ 2. Two")
   })

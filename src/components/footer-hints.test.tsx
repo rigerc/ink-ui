@@ -34,13 +34,16 @@ describe("FooterHints", () => {
         <FooterHints hints={hints} />
       </Box>,
     )
+
     const lines = (lastFrame() ?? "").split("\n")
     // It must wrap at this width — otherwise the test isn't exercising anything.
     expect(lines.length).toBeGreaterThan(1)
     // No blank line may sit between the first and last non-empty rows.
     const firstContent = lines.findIndex((l) => l.trim())
+
     const lastContent =
       lines.length - 1 - [...lines].reverse().findIndex((l) => l.trim())
+
     const between = lines.slice(firstContent, lastContent + 1)
     expect(between.every((l) => l.trim())).toBe(true)
   })

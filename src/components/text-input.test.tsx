@@ -24,9 +24,11 @@ describe("TextInput", () => {
 
   it("removes the character before the cursor on backspace", async () => {
     const onChange = vi.fn()
+
     const { stdin } = render(
       <TextInput defaultValue="hi" onChange={onChange} />,
     )
+
     stdin.write(DEL)
     await delay()
     expect(onChange).toHaveBeenLastCalledWith("h")
@@ -34,9 +36,11 @@ describe("TextInput", () => {
 
   it("submits the current value on Enter", async () => {
     const onSubmit = vi.fn()
+
     const { stdin } = render(
       <TextInput defaultValue="ready" onSubmit={onSubmit} />,
     )
+
     stdin.write(CR)
     await delay()
     expect(onSubmit).toHaveBeenCalledWith("ready")
@@ -49,9 +53,11 @@ describe("TextInput.onCancel", () => {
   it("fires on esc and keeps the value", async () => {
     const onCancel = vi.fn()
     const onChange = vi.fn()
+
     const { stdin, lastFrame } = render(
       <TextInput defaultValue="draft" onCancel={onCancel} onChange={onChange} />,
     )
+
     stdin.write(ESC)
     await delay()
     expect(onCancel).toHaveBeenCalledOnce()

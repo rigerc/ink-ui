@@ -36,10 +36,12 @@ const Host = ({
   useInput(
     (input, key) => {
       if (key.escape && filter.active) return filter.clear()
+
       if (input === "c") onHotkey?.(input)
     },
     { isActive: !filter.typing },
   )
+
   return (
     <>
       <FilterBar
@@ -95,9 +97,11 @@ describe("useFilterMode", () => {
   it("keeps the filter on esc while typing, like ↵", async () => {
     const onHotkey = vi.fn()
     const onChange = vi.fn()
+
     const { stdin, lastFrame } = render(
       <Host onHotkey={onHotkey} onChange={onChange} />,
     )
+
     await press(stdin, "/", "p", ESC, "c")
     expect(lastFrame()).toContain("/ p")
     expect(lastFrame()).not.toContain("▏")
@@ -204,6 +208,7 @@ describe("FilterBar", () => {
     const { lastFrame } = render(
       <FilterBar term="ab" typing caret={1} matches={2} />,
     )
+
     expect(lastFrame()).toContain("/ ab   2 matches")
     expect(lastFrame()).not.toContain("▏")
   })

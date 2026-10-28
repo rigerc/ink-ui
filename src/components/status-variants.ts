@@ -28,10 +28,12 @@ const COLOR: Record<StatusVariant, string> = {
   info: colors.info,
 }
 
+type ResolvedStatus = { icon: string; color: string }
+
 // Resolved at render time so it honours the current icon mode.
 export const statusVariant = (
   variant: StatusVariant,
-): { icon: string; color: string } => ({
+): ResolvedStatus => ({
   icon: (getIconMode() === "nerd" ? NERD : UNICODE)[variant],
   color: COLOR[variant],
 })

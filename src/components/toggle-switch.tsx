@@ -30,6 +30,7 @@ export const ToggleSwitch = ({
   offColor = colors.muted,
 }: ToggleSwitchProps) => {
   const track = on ? onColor : offColor
+
   return (
     <Box columnGap={1}>
       <Text>

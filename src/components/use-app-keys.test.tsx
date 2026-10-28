@@ -13,6 +13,7 @@ type Opts = Parameters<typeof useAppKeys>[0]
 const Host = ({ opts, onExit }: { opts: Opts; onExit?: () => void }) => {
   const { exit } = useApp()
   useAppKeys({ ...opts, onQuit: opts?.onQuit ?? (() => (onExit?.(), exit())) })
+
   return <Text>host</Text>
 }
 
@@ -55,9 +56,11 @@ describe("useAppKeys", () => {
 
   it("treats a void return from onBack as handled", async () => {
     const onQuit = vi.fn()
+
     const { stdin } = render(
       <Host opts={{ onBack: () => {}, onQuit, atRoot: "quit" }} />,
     )
+
     stdin.write(ESC)
     await delay()
     expect(onQuit).not.toHaveBeenCalled()
@@ -66,9 +69,11 @@ describe("useAppKeys", () => {
   it("stands down while a text field has focus, so q types and backspace deletes", async () => {
     const onQuit = vi.fn()
     const onBack = vi.fn()
+
     const { stdin } = render(
       <Host opts={{ onQuit, onBack, isActive: false }} />,
     )
+
     stdin.write("q")
     stdin.write(DEL)
     await delay()

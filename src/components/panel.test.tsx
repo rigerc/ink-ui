@@ -11,6 +11,7 @@ describe("Panel", () => {
         <Text>content</Text>
       </Panel>,
     )
+
     const frame = lastFrame() ?? ""
     expect(frame).toContain("Jobs")
     expect(frame).toContain("content")
@@ -23,6 +24,7 @@ describe("Panel", () => {
         <Text>x</Text>
       </Panel>,
     )
+
     expect(lastFrame() ?? "").toContain("Jobs ●")
   })
 
@@ -32,6 +34,7 @@ describe("Panel", () => {
         <Text>bare</Text>
       </Panel>,
     )
+
     const frame = lastFrame() ?? ""
     expect(frame).toContain("bare")
     expect(frame).not.toContain("●")

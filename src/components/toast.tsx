@@ -26,12 +26,14 @@ export const Toast = ({
       setVisible(false)
       onDone?.()
     }, duration)
+
     return () => clearTimeout(timer)
   }, [duration])
 
   if (!visible) return null
 
   const { icon, color } = statusVariant(variant)
+
   return (
     <Box gap={1}>
       <Text color={color}>{icon}</Text>

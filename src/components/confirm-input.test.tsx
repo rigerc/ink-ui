@@ -35,6 +35,7 @@ describe("ConfirmInput", () => {
   it("Enter selects the default choice", async () => {
     const onConfirm = vi.fn()
     const onCancel = vi.fn()
+
     const { stdin } = render(
       <ConfirmInput
         defaultChoice="cancel"
@@ -42,6 +43,7 @@ describe("ConfirmInput", () => {
         onCancel={onCancel}
       />,
     )
+
     stdin.write(CR)
     await delay()
     expect(onCancel).toHaveBeenCalled()

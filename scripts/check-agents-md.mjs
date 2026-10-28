@@ -13,6 +13,7 @@ const guidance = readFileSync(new URL("../AGENTS.md", import.meta.url), "utf8")
 const cited = [...guidance.matchAll(/`([^`\n]+)`/g)].map(([, name]) => name)
 
 const isSymbol = (name) => /^(?:[A-Z][A-Za-z0-9]*|use[A-Z][A-Za-z0-9]*)$/.test(name)
+
 const missing = [
   ...new Set(cited.filter(isSymbol).filter((name) => !INK_OWNED.has(name) && !exported.has(name))),
 ]

@@ -11,6 +11,7 @@ describe("SelectableRow", () => {
         <SelectableRow>two</SelectableRow>
       </Box>,
     )
+
     const [first, second] = (lastFrame() ?? "").split("\n")
     expect(first).toContain("❯")
     expect(second).not.toContain("❯")
@@ -22,6 +23,7 @@ describe("SelectableRow", () => {
   // and so never caught it; the narrow wrapper here is load-bearing.
   it("keeps its gutter width when the content overflows the container", () => {
     const WIDTH = 40
+
     const { lastFrame } = render(
       <Box width={WIDTH} flexDirection="column">
         <SelectableRow>
@@ -40,6 +42,7 @@ describe("SelectableRow", () => {
 
   it("keeps the active gutter aligned with inactive ones when overflowing", () => {
     const WIDTH = 40
+
     const { lastFrame } = render(
       <Box width={WIDTH} flexDirection="column">
         <SelectableRow active>

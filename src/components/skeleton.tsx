@@ -5,17 +5,21 @@ import { colors, symbols, motion } from "../tokens.js"
 // One cell per frame: fast enough to read as motion, slow enough that the eye
 // can follow the band rather than seeing a flicker.
 const SHIMMER_FRAME_MS = motion.skeletonIntervalMs
+
 // The crest is seven cells across with two blended cells each side — wide
 // enough to find at row-scan speed, narrow enough to read as a band and not a
 // second bar.
 const CREST_HALF = 3
 const FALLOFF = 2
+
 // The head starts and ends this far past the bar's edge, so the band slides
 // fully in from nothing rather than popping into existence at cell zero.
 const LEAD = CREST_HALF + FALLOFF + 1
+
 // Frames of plain track between sweeps: the pause that says "loading", where
 // a ceaseless loop would say "busy".
 const PAUSE_FRAMES = 10
+
 // Frames each row lags the one above, so the wave travels down-and-across
 // instead of marching in lockstep.
 const ROW_LAG = 2
@@ -34,6 +38,7 @@ const blendHex = (from: string, to: string, t: number): string => {
   const [r2, g2, b2] = toRgb(to)
   const mix = (a: number, b: number) => Math.round(a + (b - a) * t)
   const hex = (n: number) => n.toString(16).padStart(2, "0")
+
   return `#${hex(mix(r1, r2))}${hex(mix(g1, g2))}${hex(mix(b1, b2))}`
 }
 
@@ -60,15 +65,19 @@ export const skeletonCellColor = (
   const travel = cells + LEAD * 2
   const cycle = travel + PAUSE_FRAMES
   const phase = (((frame - rowOffset) % cycle) + cycle) % cycle
+
   if (phase >= travel) return colors.track
   const distance = Math.abs(cell - (phase - LEAD))
+
   if (distance <= CREST_HALF) return colors.trackHighlight
+
   if (distance <= CREST_HALF + FALLOFF)
     return blendHex(
       colors.track,
       colors.trackHighlight,
       (CREST_HALF + FALLOFF + 1 - distance) / (FALLOFF + 1),
     )
+
   return colors.track
 }
 
@@ -82,7 +91,9 @@ export const skeletonCellColor = (
  */
 export const skeletonMotionEnabled = (animate: boolean): boolean => {
   if (!animate) return false
+
   if (process.env["NO_MOTION"] || process.env["REDUCE_MOTION"]) return false
+
   return process.stdout?.isTTY === true
 }
 
@@ -133,16 +144,19 @@ export const SkeletonBar = ({
 
   useEffect(() => {
     if (!active) return
+
     const timer = setInterval(
       () => setOwnFrame((f) => f + 1),
       SHIMMER_FRAME_MS,
     )
+
     return () => clearInterval(timer)
   }, [active])
 
   if (!controlled && !active)
     return <Text color={colors.track}>{symbols.barFull.repeat(cells)}</Text>
   const at = controlled ? frame : ownFrame
+
   return (
     <Text>
       {Array.from({ length: cells }, (_, i) => (
@@ -204,6 +218,7 @@ export const SkeletonRows = ({
   useLayoutEffect(() => {
     if (width !== undefined || !ref.current) return
     const { width: w } = measureElement(ref.current)
+
     if (w !== measured) setMeasured(w)
   })
 
@@ -213,20 +228,25 @@ export const SkeletonRows = ({
   useEffect(() => {
     if (!active) return
     const timer = setInterval(() => setFrame((f) => f + 1), SHIMMER_FRAME_MS)
+
     return () => clearInterval(timer)
   }, [active])
 
   const available = Math.max(0, (width ?? measured) - indent)
   const lines: Array<number | null> = []
+
   for (let i = 0; i < rows; i++) {
     const fraction = widths.length ? widths[i % widths.length]! : 1
     lines.push(Math.round(Math.max(0, Math.min(1, fraction)) * available))
+
     const closesGroup =
       gapEvery !== undefined && gapEvery > 0 && (i + 1) % gapEvery === 0
+
     if (closesGroup && i < rows - 1) lines.push(null)
   }
 
   let bar = 0
+
   return (
     <Box ref={ref} flexDirection="column">
       {lines.map((cells, i) => {
@@ -237,6 +257,7 @@ export const SkeletonRows = ({
             </Text>
           )
         const rowOffset = bar++ * ROW_LAG
+
         return (
           <Text key={i}>
             {" ".repeat(indent)}

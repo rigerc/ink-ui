@@ -26,7 +26,8 @@
     "check:agents": "node scripts/check-agents-md.mjs",
     "test": "vitest run",
     "test:watch": "vitest",
-    "prepare": "npm run build"
+    "prepare": "npm run build",
+    "lint": "oxlint"
   },
   "peerDependencies": {
     "ink": ">=7",
@@ -39,10 +40,12 @@
     "string-width": "8.2.2"
   },
   "devDependencies": {
+    "@oxlint/plugins": "1.90.0",
     "@types/node": "22.20.1",
     "@types/react": "19.3.0",
     "ink": "8.0.0",
     "ink-testing-library": "4.0.0",
+    "oxlint": "1.90.0",
     "react": "19.3.0",
     "react-devtools-core": "7.0.1",
     "tsup": "8.5.1",

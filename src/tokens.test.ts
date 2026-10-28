@@ -15,13 +15,15 @@ import {
 // downsample a hex on a 256-colour terminal: an exact grey goes to the
 // 24-step ramp, anything else rounds each channel onto the 6×6×6 cube.
 const toAnsi256 = (hex: string): number => {
-  const [red, green, blue] = [1, 3, 5].map((at) =>
-    parseInt(hex.slice(at, at + 2), 16),
-  ) as [number, number, number]
+  const red = parseInt(hex.slice(1, 3), 16)
+  const green = parseInt(hex.slice(3, 5), 16)
+  const blue = parseInt(hex.slice(5, 7), 16)
 
   if (red === green && green === blue) {
     if (red < 8) return 16
+
     if (red > 248) return 231
+
     return Math.round(((red - 8) / 247) * 24) + 232
   }
 
@@ -37,6 +39,7 @@ const isNeutral256 = (index: number): boolean => {
   if (index >= 232) return true
   const cube = index - 16
   const [r, g, b] = [Math.floor(cube / 36), Math.floor(cube / 6) % 6, cube % 6]
+
   return r === g && g === b
 }
 
@@ -46,7 +49,9 @@ const status = {
   error: colors.error,
   info: colors.info,
 }
+
 const identifiers = { ticket: colors.ticket, pr: colors.pr }
+
 const hues = {
   accent: colors.accent,
   ...identifiers,
@@ -121,14 +126,17 @@ describe("the never-share-a-hue pairs survive 256-colour downsampling", () => {
 const luminance = (hex: string): number => {
   const channel = (at: number) => {
     const c = parseInt(hex.slice(at, at + 2), 16) / 255
+
     return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4)
   }
+
   return 0.2126 * channel(1) + 0.7152 * channel(3) + 0.0722 * channel(5)
 }
 
 const contrast = (first: string, second: string): number => {
   const high = Math.max(luminance(first), luminance(second))
   const low = Math.min(luminance(first), luminance(second))
+
   return (high + 0.05) / (low + 0.05)
 }
 
@@ -146,6 +154,7 @@ describe("tonalColors", () => {
   it("covers the seven pill variants in both strengths", () => {
     for (const family of [tonalColors, tonalStrongColors]) {
       expect(Object.keys(family).sort()).toEqual([...variants].sort())
+
       for (const variant of variants) {
         expect(family[variant].fill).toMatch(/^#[0-9A-F]{6}$/)
         expect(family[variant].ink).toMatch(/^#[0-9A-F]{6}$/)
@@ -210,6 +219,7 @@ describe("colors", () => {
 
   it("is hex only and every value comes from the palette", () => {
     const paletteHexes = new Set<string>(Object.values(palette))
+
     for (const [key, value] of Object.entries(colors)) {
       expect(value, key).toMatch(/^#[0-9A-F]{6}$/)
       expect(paletteHexes.has(value), key).toBe(true)
@@ -220,9 +230,11 @@ describe("colors", () => {
 describe("terminal presentation tokens", () => {
   it("provides the same semantic glyph roles in Unicode and ASCII", () => {
     expect(Object.keys(symbols).sort()).toEqual(Object.keys(asciiSymbols).sort())
+
     for (const value of Object.values(asciiSymbols)) {
       expect([...value].every((character) => character.charCodeAt(0) >= 32 && character.charCodeAt(0) <= 126)).toBe(true)
     }
+
     expect(symbols.success).toBe("✓")
     expect(symbols.error).toBe("✗")
     expect(symbols.pointer).toBe("❯")

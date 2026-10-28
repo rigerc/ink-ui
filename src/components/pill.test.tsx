@@ -1,6 +1,6 @@
 import React from "react"
 import { render } from "ink-testing-library"
-import { describe, it, expect, afterEach } from "vitest"
+import { describe, it, expect, beforeEach, afterEach, vi } from "vitest"
 import { glyph } from "@kud/glyphs"
 import { Pill, pillWidth, inkFor, pillStyle } from "./pill.js"
 import { softColors } from "../tokens.js"
@@ -8,8 +8,12 @@ import { softColors } from "../tokens.js"
 const frameOf = (node: React.ReactElement) => render(node).lastFrame() ?? ""
 
 describe("Pill", () => {
+  beforeEach(() => {
+    vi.stubEnv("NO_COLOR", undefined)
+  })
+
   afterEach(() => {
-    delete process.env["NO_COLOR"]
+    vi.unstubAllEnvs()
   })
 
   it("renders its label between powerline caps", () => {
@@ -40,11 +44,13 @@ describe("Pill", () => {
   // would repaint GitHub's merged purple as a theme colour.
   it("takes an explicit fill over the variant", () => {
     process.env["NO_COLOR"] = "1"
+
     const frame = frameOf(
       <Pill variant="success" color="#A371F7">
         MERGED
       </Pill>,
     )
+
     expect(frame).toContain("[MERGED]")
   })
 
@@ -56,6 +62,7 @@ describe("Pill", () => {
         epic
       </Pill>,
     )
+
     expect(frame).toContain(glyph("plCapLeftThin") + "epic" + glyph("plCapRightThin"))
     expect(frame).not.toContain(glyph("plCapLeft"))
   })
@@ -79,7 +86,9 @@ describe("Pill", () => {
         epic
       </Pill>,
     )
+
     expect(frame).toContain(glyph("plCapLeft") + "epic" + glyph("plCapRight"))
+
     for (const fill of Object.values(softColors)) expect(inkFor(fill)).toBe("white")
   })
 
@@ -96,17 +105,20 @@ describe("Pill", () => {
         focus
       </Pill>,
     )
+
     expect(frame).toContain(glyph("plCapLeft") + "focus" + glyph("plCapRight"))
     expect(frame).not.toContain(glyph("plCapLeftThin"))
   })
 
   it("renders tonal in monochrome as brackets, like solid and soft", () => {
     process.env["NO_COLOR"] = "1"
+
     const frame = frameOf(
       <Pill tone="tonal" variant="accent">
         focus
       </Pill>,
     )
+
     expect(frame).toContain("[focus]")
     expect(frame).not.toContain(glyph("plCapLeft"))
   })
@@ -196,12 +208,14 @@ describe("pillWidth", () => {
   it("prices a tonal pill the same as every other tone", () => {
     for (const tone of ["solid", "soft", "outline", "tonal"] as const) {
       expect(pillWidth("focus")).toBe(7)
+
       const drawn =
         frameOf(
           <Pill tone={tone} variant="accent">
             focus
           </Pill>,
         ).split("\n")[0] ?? ""
+
       expect([...drawn].length).toBe(pillWidth("focus"))
     }
   })

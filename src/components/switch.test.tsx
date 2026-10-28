@@ -8,6 +8,7 @@ describe("Switch", () => {
     const { lastFrame } = render(
       <Switch left="work" right="home" value="left" />,
     )
+
     const frame = lastFrame() ?? ""
     expect(frame).toContain("work")
     expect(frame).toContain("home")
@@ -18,6 +19,7 @@ describe("Switch", () => {
     const { lastFrame } = render(
       <Switch left="work" right="home" value="right" />,
     )
+
     const frame = lastFrame() ?? ""
     expect(frame).toContain("○─●")
   })

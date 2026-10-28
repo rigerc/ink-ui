@@ -89,18 +89,22 @@ const isItemRow = (row: Row): row is { item: PaletteItem; index: number } =>
  */
 const rowsOf = (items: PaletteItem[], query: string): Row[] => {
   const grouped = query.trim() === "" && items.some((item) => item.group)
+
   if (!grouped) return items.map((item, index) => ({ item, index }))
   const rows: Row[] = []
   const seen: string[] = []
+
   for (const group of items.map((item) => item.group ?? "")) {
     if (!seen.includes(group)) seen.push(group)
   }
+
   for (const group of seen) {
     if (group) rows.push({ header: group })
     items.forEach((item, index) => {
       if ((item.group ?? "") === group) rows.push({ item, index })
     })
   }
+
   return rows
 }
 
@@ -117,6 +121,7 @@ const DEFAULT_HINTS: Hint[] = [
 // to the border — measured with string-width, never padEnd, so wide glyphs
 // price correctly.
 const spaces = (count: number) => " ".repeat(Math.max(0, count))
+
 const padEndWidth = (value: string, width: number) =>
   value + spaces(width - stringWidth(value))
 
@@ -148,6 +153,7 @@ export const CommandPalette = ({
     vimKeys: false,
     isActive,
   })
+
   // A new query is a new list: the cursor goes back to the first hit rather
   // than sitting on whatever index it held in the old one.
   useEffect(() => setCursor(0), [query, setCursor])
@@ -156,25 +162,33 @@ export const CommandPalette = ({
   const rows = rowsOf(items, query)
   const cursorRow = rows.findIndex((row) => isItemRow(row) && row.index === at)
   const budget = Math.max(1, maxRows)
+
   const start = Math.max(
     0,
     Math.min(cursorRow - Math.floor(budget / 2), rows.length - budget),
   )
+
   const visible = rows.slice(start, start + budget)
   const scrolls = rows.length > budget
   const hasMarkers = items.some((item) => item.marker)
   const inner = width - 2
+
   const headerTrail = (title: string) =>
     Math.max(2, inner - 5 - stringWidth(title))
+
   // Before the first keystroke there are no rows and no verdict yet: the
   // hint holds the slot so the box keeps its shape, padded like every line.
   const note: PaletteMessage | undefined =
     typeof message === "string" ? { text: message } : message
+
   const emptyLine =
     note ?? (query.trim() === "" && emptyHint ? { text: emptyHint } : undefined)
+
   const errorMark =
     emptyLine?.tone === "error" ? statusVariant("error") : undefined
+
   const counter = `${at + 1} of ${items.length}`
+
   const hintsWidth =
     hints.reduce(
       (total, [key, label]) =>
@@ -199,6 +213,7 @@ export const CommandPalette = ({
           onChange={onQueryChange}
           onSubmit={() => {
             const item = items[at]
+
             if (item) onSelect(item.id)
             else note?.onSubmit?.()
           }}
@@ -229,6 +244,7 @@ export const CommandPalette = ({
       {visible.map((row) => {
         if (!isItemRow(row)) {
           const title = row.header.toUpperCase()
+
           return (
             <Text key={`header:${row.header}`}>
               {" "}
@@ -240,8 +256,10 @@ export const CommandPalette = ({
             </Text>
           )
         }
+
         const { item } = row
         const active = row.index === at
+
         return (
           <Box key={item.id} width={inner}>
             <Box flexShrink={0}>

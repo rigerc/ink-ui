@@ -31,6 +31,7 @@ const StaticHost = ({
   onClose?: () => void
 }) => {
   const [query, setQuery] = useState("")
+
   return (
     <CommandPalette
       items={fuzzyFilter(tree, query)}
@@ -46,9 +47,11 @@ const StaticHost = ({
 /** A host that derives rows from the query — the launcher shape. */
 const DerivingHost = ({ onSelect = () => {} }) => {
   const [query, setQuery] = useState("")
+
   const key = /^[A-Z]+-\d+$/i.test(query.trim())
     ? query.trim().toUpperCase()
     : null
+
   const items: PaletteItem[] = key
     ? [
         {
@@ -64,6 +67,7 @@ const DerivingHost = ({ onSelect = () => {} }) => {
         { id: "browser", title: `Open ${key} in the browser` },
       ]
     : []
+
   return (
     <CommandPalette
       items={items}
@@ -163,6 +167,7 @@ describe("CommandPalette", () => {
   it("stands the keyboard down when isActive is false", async () => {
     const onQueryChange = vi.fn()
     const onSelect = vi.fn()
+
     const { stdin, lastFrame } = render(
       <CommandPalette
         items={tree}
@@ -172,6 +177,7 @@ describe("CommandPalette", () => {
         isActive={false}
       />,
     )
+
     stdin.write(DOWN)
     stdin.write("x")
     stdin.write("\r")
@@ -203,6 +209,7 @@ describe("CommandPalette", () => {
       id: `item-${i}`,
       title: `item ${i}`,
     }))
+
     const frame = plain(
       render(
         <CommandPalette
@@ -214,6 +221,7 @@ describe("CommandPalette", () => {
         />,
       ).lastFrame(),
     )
+
     expect(frame).toContain("1 of 30")
     expect(frame).not.toContain("item 29")
     const short = plain(render(<StaticHost />).lastFrame())
@@ -230,6 +238,7 @@ describe("CommandPalette overlay paint", () => {
   // still holds the host's character. Every line inside the box must
   // therefore carry no host character at all.
   const ROWS_ABOVE = 16
+
   const OverHost = ({
     width,
     char = "X",
@@ -247,15 +256,19 @@ describe("CommandPalette overlay paint", () => {
       <Text>{char.repeat(width + 10)}</Text>
     </Box>
   )
+
   const boxLines = (frame: string) => {
     const lines = plain(frame).split("\n")
     const top = lines.findIndex((line) => line.startsWith("╭"))
     const bottom = lines.findIndex((line) => line.startsWith("╰"))
+
     return lines.slice(top, bottom + 1)
   }
+
   const expectSealed = (frame: string | undefined, width: number) => {
     const lines = boxLines(plain(frame))
     expect(lines.length).toBeGreaterThan(2)
+
     for (const line of lines) {
       // The box is the only border on screen, so the first closing border
       // past the opening one ends its columns; the host fills the rest.
@@ -272,6 +285,7 @@ describe("CommandPalette overlay paint", () => {
         <StaticHost />
       </OverHost>,
     ).lastFrame()
+
     expectSealed(frame, 60)
     expect(plain(frame)).toMatch(/↑↓ move {2}⏎ select {2}esc close/)
   })
@@ -291,6 +305,7 @@ describe("CommandPalette overlay paint", () => {
         />
       </OverHost>,
     ).lastFrame()
+
     expectSealed(frame, 40)
   })
 
@@ -300,6 +315,7 @@ describe("CommandPalette overlay paint", () => {
         <StaticHost />
       </OverHost>,
     )
+
     stdin.write("co")
     await delay()
     const frame = plain(lastFrame())
@@ -312,6 +328,7 @@ describe("CommandPalette overlay paint", () => {
       id: `item-${i}`,
       title: `item ${i}`,
     }))
+
     const scrolled = render(
       <OverHost width={60}>
         <CommandPalette
@@ -323,6 +340,7 @@ describe("CommandPalette overlay paint", () => {
         />
       </OverHost>,
     ).lastFrame()
+
     expect(plain(scrolled)).toContain("1 of 30")
     expectSealed(scrolled, 60)
 
@@ -331,6 +349,7 @@ describe("CommandPalette overlay paint", () => {
         <DerivingHost />
       </OverHost>,
     )
+
     stdin.write("nope")
     await delay()
     const frame = plain(lastFrame())
@@ -350,6 +369,7 @@ describe("CommandPalette overlay paint", () => {
         />
       </OverHost>,
     ).lastFrame()
+
     expect(plain(idle)).toContain("type a ticket key")
     expectSealed(idle, 60)
   })
@@ -358,6 +378,7 @@ describe("CommandPalette overlay paint", () => {
     const Host = ({ initial }: { initial: string }) => {
       const [value, setValue] = useState(initial)
       const items = value === "a" ? [{ id: "a", title: "a hit" }] : []
+
       return (
         <CommandPalette
           items={items}
@@ -371,11 +392,13 @@ describe("CommandPalette overlay paint", () => {
         />
       )
     }
+
     const idle = render(
       <OverHost width={60}>
         <Host initial="" />
       </OverHost>,
     ).lastFrame()
+
     expect(plain(idle)).toContain("type a ticket key")
 
     const rows = render(
@@ -383,6 +406,7 @@ describe("CommandPalette overlay paint", () => {
         <Host initial="a" />
       </OverHost>,
     ).lastFrame()
+
     expect(plain(rows)).toContain("a hit")
     expect(plain(rows)).not.toContain("type a ticket key")
     expectSealed(rows, 60)
@@ -392,6 +416,7 @@ describe("CommandPalette overlay paint", () => {
         <Host initial="" />
       </OverHost>,
     )
+
     stdin.write("z")
     await delay()
     const frame = plain(lastFrame())
@@ -410,6 +435,7 @@ describe("CommandPalette overlay paint", () => {
         message={{ text: 'nothing for "x"', tone: "muted" }}
       />,
     ).lastFrame()
+
     expect(plain(frame)).toContain('nothing for "x"')
     expect(plain(frame)).not.toContain("✗")
   })
@@ -426,6 +452,7 @@ describe("CommandPalette overlay paint", () => {
         />
       </OverHost>,
     ).lastFrame()
+
     expect(plain(frame)).toContain("✗ couldn't look up acme/api#12")
     expectSealed(frame, 60)
   })
@@ -433,6 +460,7 @@ describe("CommandPalette overlay paint", () => {
   it("runs the message's onSubmit on Enter when there are no rows", async () => {
     const onSubmit = vi.fn()
     const onSelect = vi.fn()
+
     const { stdin } = render(
       <CommandPalette
         items={[]}
@@ -442,6 +470,7 @@ describe("CommandPalette overlay paint", () => {
         message={{ text: "failed", tone: "error", onSubmit }}
       />,
     )
+
     await delay()
     stdin.write("\r")
     await delay()
@@ -458,6 +487,7 @@ describe("fuzzyFilter", () => {
   it("ranks substring hits above subsequence hits", () => {
     const ids = fuzzyFilter(tree, "cfg").map((item) => item.id)
     expect(ids).toEqual(["config"])
+
     const mixed = fuzzyFilter(
       [
         { id: "a", title: "scaffold" },
@@ -465,6 +495,7 @@ describe("fuzzyFilter", () => {
       ],
       "sca",
     ).map((item) => item.id)
+
     expect(mixed).toEqual(["a", "b"])
   })
 

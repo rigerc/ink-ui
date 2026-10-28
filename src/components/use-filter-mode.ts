@@ -44,6 +44,7 @@ export const useFilterMode = ({
     term: null,
     caret: 0,
   })
+
   const [typing, setTyping] = useState(false)
   const { term, caret } = state
 
@@ -69,48 +70,63 @@ export const useFilterMode = ({
           // at the end, the way a field you just opened does.
           setState((s) => {
             const next = s.term ?? ""
+
             return { term: next, caret: next.length }
           })
           setTyping(true)
         }
+
         return
       }
+
       if (key.upArrow || key.downArrow) return
+
       // An empty term left behind is no filter at all, not a filter matching
       // everything that still needs an `esc` to get rid of.
       if (key.return || key.escape) {
         setState((s) => (!s.term ? { term: null, caret: 0 } : s))
+
         return setTyping(false)
       }
+
       if (key.ctrl && (input === "u" || input === "U"))
         return setState({ term: "", caret: 0 })
+
       if (key.leftArrow)
         return setState((s) => ({ ...s, caret: Math.max(0, s.caret - 1) }))
+
       if (key.rightArrow)
         return setState((s) => ({
           ...s,
           caret: Math.min((s.term ?? "").length, s.caret + 1),
         }))
+
       if (key.ctrl && (input === "a" || input === "A"))
         return setState((s) => ({ ...s, caret: 0 }))
+
       if (key.ctrl && (input === "e" || input === "E"))
         return setState((s) => ({ ...s, caret: (s.term ?? "").length }))
+
       // Both backspace and delete remove the character before the caret —
       // macOS sends DEL (127) for the key some terminals report as BS (8),
       // and forward-delete isn't worth the ambiguity for a single-line field.
       if (key.backspace || key.delete)
         return setState((s) => {
           const current = s.term ?? ""
+
           if (s.caret === 0) return { term: current, caret: 0 }
+
           return {
             term: current.slice(0, s.caret - 1) + current.slice(s.caret),
             caret: s.caret - 1,
           }
         })
+
       if (input && !key.ctrl && !key.meta && !key.tab)
         return setState((s) => {
           const current = s.term ?? ""
           const at = Math.min(s.caret, current.length)
+
           return {
             term: current.slice(0, at) + input + current.slice(at),
             caret: at + input.length,

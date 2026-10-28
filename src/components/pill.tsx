@@ -91,13 +91,18 @@ const INK: Record<PillVariant, string> = {
  */
 export const inkFor = (fill: string): string => {
   const hex = /^#([0-9a-f]{6})$/i.exec(fill)?.[1]
+
   if (!hex) return "white"
+
   const channel = (i: number) => {
     const c = parseInt(hex.slice(i, i + 2), 16) / 255
+
     return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4)
   }
+
   const luminance =
     0.2126 * channel(0) + 0.7152 * channel(2) + 0.0722 * channel(4)
+
   return (luminance + 0.05) / 0.05 >= 1.05 / (luminance + 0.05)
     ? "black"
     : "white"
@@ -116,23 +121,29 @@ export const inkFor = (fill: string): string => {
  * choice is unobservable through the component and has to be asserted here
  * or not at all, as `inkFor` already is.
  */
+type PillStyle = { fill: string; ink: string; bold: boolean }
+
 export const pillStyle = (
   variant: PillVariant,
   tone: PillTone,
   strong = false,
-): { fill: string; ink: string; bold: boolean } => {
+): PillStyle => {
   if (tone === "tonal") {
     const pair = strong ? tonalStrongColors[variant] : tonalColors[variant]
+
     return { fill: pair.fill, ink: pair.ink, bold: strong }
   }
+
   if (tone === "soft")
     return {
       fill: softColors[variant],
       ink: inkFor(softColors[variant]),
       bold: false,
     }
+
   if (tone === "outline")
     return { fill: FILL[variant], ink: FILL[variant], bold: false }
+
   return { fill: FILL[variant], ink: INK[variant], bold: false }
 }
 
@@ -183,6 +194,7 @@ export const Pill = ({
 }: PillProps) => {
   if (tone === "outline") {
     const fill = color ?? FILL[variant]
+
     return (
       <Text color={fill}>
         {glyph("plCapLeftThin")}
@@ -191,13 +203,16 @@ export const Pill = ({
       </Text>
     )
   }
+
   if (tone === "tonal") {
     // A caller mirroring an external palette may override the fill; the ink
     // stays the variant's tonal ink either way — a tint is already the
     // quietest form, and measuring a second ink for it would invent a tier.
     const style = pillStyle(variant, tone, strong)
     const fill = color ?? style.fill
+
     if (process.env["NO_COLOR"]) return <Text color={fill}>[{children}]</Text>
+
     return (
       <Text>
         <Text color={fill}>{glyph("plCapLeft")}</Text>
@@ -208,11 +223,15 @@ export const Pill = ({
       </Text>
     )
   }
+
   const fill =
     color ?? (tone === "soft" ? softColors[variant] : FILL[variant])
+
   const ink =
     tone === "soft" || color ? inkFor(fill) : INK[variant]
+
   if (process.env["NO_COLOR"]) return <Text color={fill}>[{children}]</Text>
+
   return (
     <Text>
       <Text color={fill}>{glyph("plCapLeft")}</Text>

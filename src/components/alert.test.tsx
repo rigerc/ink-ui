@@ -10,6 +10,7 @@ describe("Alert", () => {
         Something went wrong
       </Alert>,
     )
+
     const frame = lastFrame() ?? ""
     expect(frame).toContain("✗")
     expect(frame).toContain("Failed")

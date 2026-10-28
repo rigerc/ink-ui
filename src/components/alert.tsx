@@ -13,6 +13,7 @@ type AlertProps = {
 
 export const Alert = ({ variant = "info", title, children }: AlertProps) => {
   const { icon, color } = statusVariant(variant)
+
   return (
     <Box
       borderStyle={borders.base}

@@ -39,6 +39,7 @@ export const useTabs = <T extends string>(
       if (items.length === 0) return
       const backward = key.tab ? key.shift : arrows && key.leftArrow
       const forward = key.tab ? !key.shift : arrows && key.rightArrow
+
       if (!backward && !forward) return
       const current = items.findIndex((item) => item.value === active)
       // JS `%` takes the sign of the dividend, so a bare `(i - 1) % n` returns -1

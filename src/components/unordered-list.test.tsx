@@ -16,6 +16,7 @@ describe("UnorderedList", () => {
         </UnorderedList.Item>
       </UnorderedList>,
     )
+
     const frame = lastFrame()
     expect(frame).toContain("● Alpha")
     expect(frame).toContain("● Beta")
@@ -34,6 +35,7 @@ describe("UnorderedList", () => {
         </UnorderedList.Item>
       </UnorderedList>,
     )
+
     const frame = lastFrame()
     expect(frame).toContain("● Parent")
     expect(frame).toContain("○ Child")

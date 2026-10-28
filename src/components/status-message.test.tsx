@@ -8,6 +8,7 @@ describe("StatusMessage", () => {
     const { lastFrame } = render(
       <StatusMessage variant="success">Saved</StatusMessage>,
     )
+
     const frame = lastFrame() ?? ""
     expect(frame).toContain("✓")
     expect(frame).toContain("Saved")

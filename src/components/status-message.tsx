@@ -14,6 +14,7 @@ export const StatusMessage = ({
   children,
 }: StatusMessageProps) => {
   const { icon, color } = statusVariant(variant)
+
   return (
     <Box gap={1}>
       <Text color={color}>{icon}</Text>

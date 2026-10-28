@@ -22,7 +22,9 @@ export const buildAppleScript = (
     options.sound &&
       `sound name "${escape(typeof options.sound === "string" ? options.sound : "default")}"`,
   ].filter(Boolean)
+
   const suffix = clauses.length > 0 ? ` with ${clauses.join(" ")}` : ""
+
   return `display notification "${escape(message)}"${suffix}`
 }
 
@@ -31,9 +33,11 @@ export const buildAppleScript = (
 // terminal-notifier — a deliberate future extension point.
 export const notify = (message: string, options: NotifyOptions = {}): void => {
   if (process.platform !== "darwin") return
+
   const child = spawn("osascript", ["-e", buildAppleScript(message, options)], {
     stdio: "ignore",
   })
+
   child.on("error", () => {})
   child.unref()
 }

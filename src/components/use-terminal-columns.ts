@@ -11,6 +11,7 @@ export const knownTerminalColumns = (
     return undefined
 
   const columns = stdout.columns
+
   return typeof columns === "number" && Number.isFinite(columns) && columns > 0
     ? windowColumns
     : undefined
@@ -19,5 +20,6 @@ export const knownTerminalColumns = (
 export const useTerminalColumns = (): number | undefined => {
   const { stdout } = useStdout()
   const { columns } = useWindowSize()
+
   return knownTerminalColumns(stdout, columns)
 }

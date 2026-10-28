@@ -118,21 +118,25 @@ export const Page = ({
   const frameWidth = width ?? (fill ? terminal.columns : undefined)
   const frameHeight = height ?? (fill ? terminal.rows : undefined)
   const brand = icon ? `${icon} ${title}` : title
+
   const countSeg =
     count === undefined
       ? facts
         ? `   ${facts}  `
         : "  "
       : `  ${String(count).padStart(3)} ${noun}${count !== 1 ? "s" : ""}  ·  `
+
   const userSeg = user ? `@${user}  ` : ""
   const scopeSeg = scope ? `${scope}  ` : ""
   const alertSeg = alert ? `${alert}  ` : ""
   const statusSeg = status ? `${status.text}  ` : ""
   // Two borders, the left padding, and one cell of air before the right border.
   const inner = (frameWidth ?? 80) - 4
+
   const used = stringWidth(
     brand + countSeg + userSeg + scopeSeg + alertSeg + statusSeg,
   )
+
   const ruleWidth = Math.max(4, inner - used)
 
   return (

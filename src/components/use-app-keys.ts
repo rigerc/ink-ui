@@ -39,8 +39,10 @@ export const useAppKeys = ({
   useInput(
     (input, key) => {
       if (input === "q") return quit()
+
       if (key.escape || key.backspace || key.delete) {
         const handled = onBack ? onBack() !== false : false
+
         if (!handled && atRoot === "quit") quit()
       }
     },

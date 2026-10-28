@@ -24,10 +24,12 @@ vi.mock("ink", async (importOriginal) => {
   const React = await import("react")
   const store = globalThis as unknown as { __inkTextCalls: unknown[] }
   store.__inkTextCalls = []
+
   return {
     ...actual,
     Text: (props: any) => {
       store.__inkTextCalls.push(props)
+
       return React.createElement(actual.Text, props)
     },
   }
@@ -83,6 +85,7 @@ describe("Tabs", () => {
           items={[{ value: "open", label: "Open", count: 3 }]}
         />,
       ).lastFrame() ?? ""
+
     expect(frame).toBe(`Open ${chip("3")}\n────`)
     expect(stringWidth(`Open ${chip("3")}`)).toBe("Open (3)".length)
     expect(stringWidth(`Issues ${chip("20/97")}`)).toBe(
@@ -103,6 +106,7 @@ describe("Tabs", () => {
         items={[{ value: "issues", label: "Issues", count: 20, total: 97 }]}
       />,
     )
+
     const frame = lastFrame() ?? ""
     expect(frame).toContain(`Issues ${chip("20/97")}`)
     expect(frame).not.toContain("(")
@@ -121,6 +125,7 @@ describe("Tabs", () => {
         items={[{ value: "mine", label: "Mine", count: 8 }]}
       />,
     )
+
     const frame = lastFrame() ?? ""
     expect(frame).toContain(`Mine ${chip("8")}`)
     expect(frame).not.toContain("/")
@@ -136,6 +141,7 @@ describe("Tabs", () => {
         items={[{ value: "issues", label: "Issues", count: 20, total: 97 }]}
       />,
     )
+
     const frame = lastFrame() ?? ""
     const [labels, rules] = frame.split("\n")
     expect(rules).toBe("─".repeat("Issues".length))
@@ -164,9 +170,11 @@ describe("Tabs", () => {
     // sits exactly where it would beside a chipless first.
     const lineOf = (frame: string) =>
       frame.split("\n").find((l) => l.includes("Done")) ?? ""
+
     const withChip = lineOf(
       render(<Tabs active="open" items={items} />).lastFrame() ?? "",
     )
+
     const withoutChip = lineOf(
       render(
         <Tabs
@@ -178,6 +186,7 @@ describe("Tabs", () => {
         />,
       ).lastFrame() ?? "",
     )
+
     expect(withChip.indexOf("Done")).toBe(
       withoutChip.indexOf("Done") + stringWidth(` ${chip("3")}`),
     )
@@ -206,6 +215,7 @@ describe("Tabs markers", () => {
   it("draws the marker before its label", () => {
     const frame =
       render(<Tabs active="open" items={marked} />).lastFrame() ?? ""
+
     expect(frame).toContain(`● Open ${chip("3")}`)
   })
 
@@ -217,6 +227,7 @@ describe("Tabs markers", () => {
   it("underlines the label and neither the marker nor the chip", () => {
     const frame =
       render(<Tabs active="open" items={marked} />).lastFrame() ?? ""
+
     const [labels, rules] = frame.split("\n")
     expect(rules!.trim()).toBe("─".repeat("Open".length))
     expect(labels!.indexOf("Open")).toBe(rules!.indexOf("─"))
@@ -228,6 +239,7 @@ describe("Tabs markers", () => {
   it("keeps the rule aligned under its label", () => {
     const frame =
       render(<Tabs active="open" items={marked} />).lastFrame() ?? ""
+
     const [labels, rules] = frame.split("\n")
     expect(labels!.indexOf("Open")).toBe(rules!.indexOf("─"))
   })
@@ -242,9 +254,11 @@ describe("Tabs markers", () => {
   it("keeps a tab in the same column whether or not it is the marked one", () => {
     const lineOf = (frame: string) =>
       frame.split("\n").find((l) => l.includes("Done")) ?? ""
+
     const asMarked = lineOf(
       render(<Tabs active="open" items={marked} />).lastFrame() ?? "",
     )
+
     const asUnmarked = lineOf(
       render(
         <Tabs
@@ -256,6 +270,7 @@ describe("Tabs markers", () => {
         />,
       ).lastFrame() ?? "",
     )
+
     expect(asMarked.indexOf("Done")).toBe(asUnmarked.indexOf("Done"))
   })
 
@@ -278,6 +293,7 @@ describe("Tabs markers", () => {
           />,
         ).lastFrame() ?? ""
       ).split("\n")[0] ?? ""
+
     expect(row(null)).toContain(`Open ${chip(" –")}`)
     expect(row(null)).not.toContain("Open  ")
     expect(row(null)).not.toContain("0")
@@ -314,8 +330,10 @@ describe("Tabs groups", () => {
       { value: "qa", label: "QA", count: 22, group: "board" },
       { value: "off", label: "Off board", count: 4, group: "board" },
     ]
+
     const frame =
       render(<Tabs active="qa" items={sameGroup} />).lastFrame() ?? ""
+
     expect(frame).not.toContain("│")
   })
 
@@ -329,6 +347,7 @@ describe("Tabs groups", () => {
       { value: "a", label: "Alpha" },
       { value: "b", label: "Bravo", group: "one" },
     ]
+
     const frame = render(<Tabs active="a" items={mixed} />).lastFrame() ?? ""
     expect(frame).toContain("│")
   })
@@ -338,6 +357,7 @@ describe("Tabs groups", () => {
       { value: "a", label: "Alpha", group: "one" },
       { value: "b", label: "Bravo" },
     ]
+
     const frame = render(<Tabs active="a" items={mixed} />).lastFrame() ?? ""
     expect(frame).toContain("│")
   })
@@ -350,8 +370,10 @@ describe("Tabs groups", () => {
       { value: "d", label: "Delta", group: "two" },
       { value: "e", label: "Echo", group: "three" },
     ]
+
     const frame =
       render(<Tabs active="a" items={manyGroups} />).lastFrame() ?? ""
+
     const dividers = frame.split("│").length - 1
     expect(dividers).toBe(2)
   })
@@ -359,6 +381,7 @@ describe("Tabs groups", () => {
   it("keeps the underline aligned under the active label across dividers", () => {
     const frame =
       render(<Tabs active="prs" items={grouped} />).lastFrame() ?? ""
+
     const [labels, rules] = frame.split("\n")
     // "My PRs" label should align with its underline, chip or no chip.
     expect(labels!.indexOf("My PRs")).toBe(rules!.indexOf("─"))
@@ -374,6 +397,7 @@ describe("Tabs groups", () => {
   it("keeps the underline aligned when the active tab is after a divider", () => {
     const frame =
       render(<Tabs active="off" items={grouped} />).lastFrame() ?? ""
+
     const [labels, rules] = frame.split("\n")
     expect(labels!.indexOf("Off board")).toBe(rules!.indexOf("─"))
   })
@@ -389,9 +413,11 @@ describe("Tabs groups", () => {
       { value: "g", label: "Golf", group: "four" },
       { value: "h", label: "Hotel", group: "four" },
     ]
+
     // Total width with dividers > 80. Active is "Echo" (in group three, middle group).
     const frame =
       render(<Tabs active="e" items={overflowItems} />).lastFrame() ?? ""
+
     const [labels, rules] = frame.split("\n")
     expect(labels!.indexOf("Echo")).toBe(rules!.indexOf("─"))
   })
@@ -457,6 +483,7 @@ describe("Tabs icons", () => {
           ]}
         />,
       ).lastFrame() ?? ""
+
     expect(frame).toContain(`● ◆ Alpha ${chip("12")}`)
   })
 
@@ -465,6 +492,7 @@ describe("Tabs icons", () => {
       render(
         <Tabs active="alpha" items={iconItems} width={80} />,
       ).lastFrame() ?? ""
+
     expect(frame).toContain(`◆ Alpha ${chip("12")}`)
     expect(frame).toContain(`▲ Bravo ${chip("3")}`)
     expect(frame).toContain("● Charlie")
@@ -475,6 +503,7 @@ describe("Tabs icons", () => {
       render(
         <Tabs active="alpha" items={iconItems} width={80} />,
       ).lastFrame() ?? ""
+
     // The whole first line, so a gutter leak or a long rule fails here, not
     // three tests away.
     expect(frame).toBe(
@@ -490,6 +519,7 @@ describe("Tabs icons", () => {
       render(
         <Tabs active="bravo" items={iconItems} width={80} />,
       ).lastFrame() ?? ""
+
     expect(frame.split("\n")[1]!.trim()).toBe(
       "─".repeat(stringWidth("▲ Bravo")),
     )
@@ -501,6 +531,7 @@ describe("Tabs icons", () => {
   it("keeps a tab in the same column whether or not it is the marked one", () => {
     const lineOf = (frame: string) =>
       frame.split("\n").find((l) => l.includes("Charlie")) ?? ""
+
     const marked = [
       {
         value: "alpha",
@@ -513,9 +544,11 @@ describe("Tabs icons", () => {
       { value: "bravo", label: "Bravo", count: 3, icon: "▲", marker: "  " },
       { value: "charlie", label: "Charlie", icon: "●", marker: "  " },
     ]
+
     const asMarked = lineOf(
       render(<Tabs active="alpha" items={marked} />).lastFrame() ?? "",
     )
+
     const asUnmarked = lineOf(
       render(
         <Tabs
@@ -528,6 +561,7 @@ describe("Tabs icons", () => {
         />,
       ).lastFrame() ?? "",
     )
+
     expect(asMarked.indexOf("Charlie")).toBe(asUnmarked.indexOf("Charlie"))
   })
 
@@ -584,6 +618,7 @@ describe("Tabs count chip", () => {
   it("renders the chip as caps around the number run", () => {
     const frame =
       render(<Tabs active="open" items={items} />).lastFrame() ?? ""
+
     expect(frame).toBe(`Open ${chip("3")}  Done\n────`)
     const runs = textCalls()
     expect(
@@ -658,6 +693,7 @@ describe("Tabs count chip", () => {
           width={35}
         />,
       ).lastFrame() ?? ""
+
     expect(frame).toBe(`◆ Alpha ${chip("12")}  ▲ ${chip("3")}  ●\n───────`)
     const runs = textCalls()
     expect(
@@ -697,6 +733,7 @@ describe("Tabs count chip", () => {
           ]}
         />,
       ).lastFrame() ?? ""
+
     expect(pending.split("\n")[0]).toContain(`Open ${chip(" –")}`)
     expect(textCalls()).toContainEqual(
       expect.objectContaining({ children: " –" }),
@@ -724,8 +761,10 @@ describe("Tabs NO_COLOR", () => {
   // can toggle it per render.
   it("falls back to (n) with no caps", () => {
     process.env["NO_COLOR"] = "1"
+
     const frame =
       render(<Tabs active="open" items={items} />).lastFrame() ?? ""
+
     expect(frame).toContain("Open (3)")
     expect(frame).not.toContain(CAP_L)
     expect(frame).not.toContain(CAP_R)
@@ -733,6 +772,7 @@ describe("Tabs NO_COLOR", () => {
 
   it("falls back to (n/total) with no caps", () => {
     process.env["NO_COLOR"] = "1"
+
     const frame =
       render(
         <Tabs
@@ -740,12 +780,14 @@ describe("Tabs NO_COLOR", () => {
           items={[{ value: "issues", label: "Issues", count: 20, total: 97 }]}
         />,
       ).lastFrame() ?? ""
+
     expect(frame).toContain("Issues (20/97)")
     expect(frame).not.toContain(CAP_L)
   })
 
   it("falls back to (–) with no caps, one space off the label", () => {
     process.env["NO_COLOR"] = "1"
+
     const frame =
       render(
         <Tabs
@@ -756,6 +798,7 @@ describe("Tabs NO_COLOR", () => {
           ]}
         />,
       ).lastFrame() ?? ""
+
     expect(frame).toContain("Open (–)")
     expect(frame).not.toContain("Open  ")
     expect(frame).not.toContain(CAP_L)
@@ -763,6 +806,7 @@ describe("Tabs NO_COLOR", () => {
 
   it("measures the fallback form, so the fold decision agrees with it", () => {
     process.env["NO_COLOR"] = "1"
+
     const frame =
       render(
         <Tabs
@@ -775,6 +819,7 @@ describe("Tabs NO_COLOR", () => {
           width={35}
         />,
       ).lastFrame() ?? ""
+
     expect(frame).toBe("◆ Alpha (12)  ▲ 3  ●\n───────")
   })
 })
@@ -806,6 +851,7 @@ describe("Tabs narrow fold", () => {
       render(
         <Tabs active="alpha" items={foldItems} width={36} />,
       ).lastFrame() ?? ""
+
     expect(frame).toContain(`◆ Alpha ${chip("12")}`)
     expect(frame).toContain(`▲ Bravo ${chip("3")}`)
     expect(frame).toContain("● Charlie")
@@ -818,6 +864,7 @@ describe("Tabs narrow fold", () => {
       render(
         <Tabs active="alpha" items={foldItems} width={35} />,
       ).lastFrame() ?? ""
+
     expect(frame).toBe(`◆ Alpha ${chip("12")}  ▲ ${chip("3")}  ●\n───────`)
   })
 
@@ -826,6 +873,7 @@ describe("Tabs narrow fold", () => {
       render(
         <Tabs active="bravo" items={foldItems} width={35} />,
       ).lastFrame() ?? ""
+
     expect(frame).toContain(`▲ Bravo ${chip("3")}`)
     expect(frame).toContain(`◆ ${chip("12")}`)
     expect(frame).not.toContain("Alpha")
@@ -834,6 +882,7 @@ describe("Tabs narrow fold", () => {
   it("never folds a tab without an icon", () => {
     const frame =
       render(<Tabs active="open" items={items} width={5} />).lastFrame() ?? ""
+
     expect(frame).toContain(`Open ${chip("3")}`)
     expect(frame).toContain("Done")
   })
@@ -850,6 +899,7 @@ describe("Tabs narrow fold", () => {
           width={22}
         />,
       ).lastFrame() ?? ""
+
     expect(frame).toContain(`◆ ${chip("12")}`)
     expect(frame).toContain(`Plain ${chip("3")}`)
     expect(frame).not.toContain("Alpha")
@@ -874,6 +924,7 @@ describe("Tabs narrow fold", () => {
           width={10}
         />,
       ).lastFrame() ?? ""
+
     expect(frame).toContain(`◉ ${chip("20/97")}`)
     expect(frame).not.toContain("(20/97)")
     expect(frame).toContain(`▲ ${chip(" –")}`)
@@ -904,6 +955,7 @@ describe("Tabs narrow fold", () => {
           width={27}
         />,
       ).lastFrame() ?? ""
+
     expect(frame).toContain("│")
     expect(frame).toContain(`▲ ${chip("3")}`)
   })
@@ -913,6 +965,7 @@ describe("Tabs narrow fold", () => {
       render(
         <Tabs active="bravo" items={foldItems} width={35} />,
       ).lastFrame() ?? ""
+
     const [labels, rules] = frame.split("\n")
     expect(labels!.indexOf("▲")).toBe(rules!.indexOf("─"))
   })

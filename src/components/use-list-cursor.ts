@@ -34,9 +34,11 @@ export const useListCursor = (
     if (length === 0) return
     setCursor((current) => {
       const next = current + delta
+
       // Same signed-modulo trap as useTabs: `next % length` yields -1 rather than
       // wrapping when next is -1, so the length is added before the modulo.
       if (wrap) return (next + length) % length
+
       return Math.min(length - 1, Math.max(0, next))
     })
   }
@@ -44,6 +46,7 @@ export const useListCursor = (
   useInput(
     (input, key) => {
       if (key.upArrow || (vimKeys && input === "k")) moveCursor(-1)
+
       if (key.downArrow || (vimKeys && input === "j")) moveCursor(1)
     },
     { isActive },

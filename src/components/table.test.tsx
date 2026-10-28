@@ -17,6 +17,7 @@ describe("Table", () => {
         data={[{ name: "api", status: "ok" }]}
       />,
     )
+
     const [header, row] = lines(lastFrame())
     expect(header).toContain("Name")
     expect(header).toContain("Status")
@@ -34,10 +35,12 @@ describe("Table", () => {
         data={[{ program: "alpha bravo charlie" }]}
       />,
     )
+
     const [, ...body] = lines(lastFrame())
     expect(body.length).toBeGreaterThan(1)
     expect(body.join(" ")).toContain("alpha")
     expect(body.join(" ")).toContain("charlie")
+
     for (const line of body) expect(line.length).toBeLessThanOrEqual(10)
   })
 
@@ -49,6 +52,7 @@ describe("Table", () => {
         data={[{ program: "alpha bravo charlie" }]}
       />,
     )
+
     const body = lines(lastFrame()).slice(1)
     expect(body).toHaveLength(1)
     expect(body[0]).toContain("…")
@@ -69,6 +73,7 @@ describe("Table", () => {
         ]}
       />,
     )
+
     const body = lines(lastFrame()).slice(1)
     // The first row is three lines tall because its second cell wrapped; the
     // second row must start after all three, not overlap them.
@@ -94,6 +99,7 @@ describe("Table", () => {
         data={[{ left: "a", middle: "b", right: "c" }]}
       />,
     )
+
     const row = lines(lastFrame())[1] ?? ""
     expect(row.indexOf("a")).toBe(0)
     // Centre lands mid-column; right lands at its far edge. Both are measured
@@ -113,6 +119,7 @@ describe("Table", () => {
         data={[{ name: "api", program: "x".repeat(40) }]}
       />,
     )
+
     for (const line of lines(lastFrame())) expect(line.length).toBeLessThanOrEqual(20)
   })
 
@@ -127,6 +134,7 @@ describe("Table", () => {
         data={[{ name: "api", note: undefined }]}
       />,
     )
+
     expect(lastFrame()).not.toContain("undefined")
   })
 })

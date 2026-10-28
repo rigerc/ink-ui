@@ -8,7 +8,9 @@ const settle = () => new Promise((resolve) => setTimeout(resolve, 35))
 
 const preview = (name: string, focused: boolean) => {
   const entry = entries.find((item) => item.name === name)
+
   if (!entry) throw new Error(`Missing demo entry: ${name}`)
+
   return <>{entry.render(focused)}</>
 }
 
@@ -21,6 +23,7 @@ describe("interactive gallery demos", () => {
 
   it("demonstrates validation, back, completion, cancellation and restart", async () => {
     const ui = render(preview("Stepper", true))
+
     const expectFrame = async (text: string) => {
       // Navigation includes async guards and React/Ink rendering. Wait for the
       // resulting screen rather than relying on a fixed 35 ms delay.

@@ -25,6 +25,7 @@ type SelectProps<T extends string> = {
 // same scrolling shape the inbox's RepoPicker uses.
 const windowStart = (cursor: number, total: number, count: number): number => {
   if (total <= count) return 0
+
   return Math.max(0, Math.min(cursor - Math.floor(count / 2), total - count))
 }
 
@@ -48,7 +49,9 @@ export const Select = <T extends string>({
   useInput(
     (_input, key) => {
       if (key.upArrow) move(-1)
+
       if (key.downArrow) move(1)
+
       if (key.return) onSubmit?.(options[cursor]!.value)
     },
     { isActive: !isDisabled && options.length > 0 },
@@ -62,6 +65,7 @@ export const Select = <T extends string>({
     <Box flexDirection="column">
       {visible.map((option, i) => {
         const active = start + i === cursor
+
         return (
           <SelectableRow key={option.value} active={active}>
             <Text bold={active} color={active ? colors.info : undefined}>

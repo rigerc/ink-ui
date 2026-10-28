@@ -74,8 +74,10 @@ describe("skeletonMotionEnabled", () => {
 
   afterEach(() => {
     tty(wasTty)
+
     if (wasNoMotion === undefined) delete process.env["NO_MOTION"]
     else process.env["NO_MOTION"] = wasNoMotion
+
     if (wasReduceMotion === undefined) delete process.env["REDUCE_MOTION"]
     else process.env["REDUCE_MOTION"] = wasReduceMotion
   })
@@ -129,10 +131,12 @@ describe("SkeletonBar", () => {
       value: true,
       configurable: true,
     })
+
     try {
       const { lastFrame, frames } = render(
         <SkeletonBar width={5} animate={false} />,
       )
+
       expect(lastFrame()).toBe("█".repeat(5))
       await new Promise((r) => setTimeout(r, 150))
       expect(frames.length).toBe(1)
@@ -152,6 +156,7 @@ describe("SkeletonBar", () => {
       configurable: true,
     })
     process.env["NO_MOTION"] = "1"
+
     try {
       const { lastFrame, frames } = render(<SkeletonBar width={5} />)
       expect(lastFrame()).toBe("█".repeat(5))
@@ -162,6 +167,7 @@ describe("SkeletonBar", () => {
         value: wasTty,
         configurable: true,
       })
+
       if (wasNoMotion === undefined) delete process.env["NO_MOTION"]
       else process.env["NO_MOTION"] = wasNoMotion
     }
@@ -174,6 +180,7 @@ describe("SkeletonRows", () => {
       render(
         <SkeletonRows rows={5} widths={[1, 0.5, 0.25]} width={40} />,
       ).lastFrame() ?? ""
+
     expect(bars(frame())).toEqual([40, 20, 10, 40, 20])
     expect(frame()).toBe(frame())
   })
@@ -182,6 +189,7 @@ describe("SkeletonRows", () => {
     const { lastFrame } = render(
       <SkeletonRows rows={5} widths={[1]} gapEvery={2} width={10} />,
     )
+
     expect(bars(lastFrame() ?? "")).toEqual([10, 10, 0, 10, 10, 0, 10])
   })
 
@@ -189,6 +197,7 @@ describe("SkeletonRows", () => {
     const { lastFrame } = render(
       <SkeletonRows rows={1} widths={[0.5]} indent={4} width={24} />,
     )
+
     expect(lastFrame()).toBe(`    ${"█".repeat(10)}`)
   })
 
@@ -199,6 +208,7 @@ describe("SkeletonRows", () => {
         <SkeletonRows rows={2} widths={[1, 0.5]} />
       </Box>,
     )
+
     await settle()
     expect(bars(lastFrame() ?? "").slice(1)).toEqual([30, 15])
   })
@@ -207,6 +217,7 @@ describe("SkeletonRows", () => {
     const { lastFrame } = render(
       <SkeletonRows rows={2} widths={[1]} width={8} animate={false} />,
     )
+
     expect(bars(lastFrame() ?? "")).toEqual([8, 8])
   })
 })

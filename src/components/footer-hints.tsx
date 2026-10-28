@@ -22,8 +22,8 @@ export const tailHints = (
   page: "root" | "nested",
   help = true,
 ): Hint[] => [
-  ...(page === "nested" ? ([["⌫", "back"]] as Hint[]) : []),
-  ...(help ? ([["?", "help"]] as Hint[]) : []),
+  ...(page === "nested" ? ([["⌫", "back"]] satisfies Hint[]) : []),
+  ...(help ? ([["?", "help"]] satisfies Hint[]) : []),
   ["q", "quit"],
 ]
 
@@ -32,6 +32,7 @@ export const tailHints = (
 // hints also became 2 blank rows between hint lines, shoving the footer around.
 export const FooterHints = ({ hints, page, help = true }: FooterHintsProps) => {
   const all = page ? [...hints, ...tailHints(page, help)] : hints
+
   return (
     <Box columnGap={spacing.sm} rowGap={0} flexWrap="wrap">
       {all.map(([key, label]) => (

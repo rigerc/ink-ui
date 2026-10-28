@@ -35,12 +35,14 @@ export const EmailInput = ({
   // The domain fragment after "@", and the completion the best match implies.
   const at = value.indexOf("@")
   const domainFragment = at === -1 ? "" : value.slice(at + 1)
+
   const match =
     at !== -1 && domainFragment.length > 0
       ? domains.find(
           (d) => d.startsWith(domainFragment) && d !== domainFragment,
         )
       : undefined
+
   const suggestion = match ? match.slice(domainFragment.length) : ""
   // Only offer the completion when appending is unambiguous — cursor at the end.
   const showSuggestion = suggestion.length > 0 && cursor === value.length
@@ -55,26 +57,36 @@ export const EmailInput = ({
     (input, key) => {
       if (key.return) {
         onSubmit?.(value)
+
         return
       }
+
       // Tab accepts the domain completion, if one is showing.
       if (key.tab && showSuggestion) {
         update(value + suggestion, value.length + suggestion.length)
+
         return
       }
+
       if (key.leftArrow) {
         setCursor((c) => Math.max(0, c - 1))
+
         return
       }
+
       if (key.rightArrow) {
         setCursor((c) => Math.min(value.length, c + 1))
+
         return
       }
+
       if (key.backspace || key.delete) {
         if (cursor === 0) return
         update(value.slice(0, cursor - 1) + value.slice(cursor), cursor - 1)
+
         return
       }
+
       if (input && !key.ctrl && !key.meta && !key.tab) {
         update(
           value.slice(0, cursor) + input + value.slice(cursor),
@@ -111,6 +123,7 @@ export const EmailInput = ({
   const before = value.slice(0, cursor)
   const atChar = value.slice(cursor, cursor + 1) || " "
   const after = value.slice(cursor + 1)
+
   return (
     <Text>
       {before}
