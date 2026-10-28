@@ -32,6 +32,19 @@ export { OrderedList } from "./components/ordered-list.js"
 export { ScrollView } from "./components/scroll-view.js"
 export type { StyledLine, Span } from "./components/scroll-view.js"
 export { Tabs } from "./components/tabs.js"
+export {
+  Step,
+  Stepper,
+  StepperProgress,
+  StepperNavigation,
+  useStepper,
+} from "./components/stepper.js"
+export type {
+  StepProps,
+  StepContext,
+  StepperProps,
+  StepperProgressProps,
+} from "./components/stepper.js"
 export type { TabItem } from "./components/tabs.js"
 export { useTabs } from "./components/use-tabs.js"
 export { CommandPalette } from "./components/command-palette.js"
@@ -58,3 +71,6 @@ export { notify } from "./notify.js"
 export type { NotifyOptions } from "./notify.js"
 export { colors, softColors, tonalColors, tonalStrongColors, spacing, palette, priorityColors } from "./tokens.js"
 export type { Color, SoftColor, Spacing, Palette, PriorityColor } from "./tokens.js"
+
+export { symbols, asciiSymbols, borders, motion } from "./tokens.js"
+export type { Symbols, BorderStyle } from "./tokens.js"

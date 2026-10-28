@@ -1,5 +1,6 @@
 import React from "react"
 import { Box, Text } from "ink"
+import { spacing } from "../tokens.js"
 
 export type Hint = [key: string, label: string]
 
@@ -32,7 +33,7 @@ export const tailHints = (
 export const FooterHints = ({ hints, page, help = true }: FooterHintsProps) => {
   const all = page ? [...hints, ...tailHints(page, help)] : hints
   return (
-    <Box columnGap={2} rowGap={0} flexWrap="wrap">
+    <Box columnGap={spacing.sm} rowGap={0} flexWrap="wrap">
       {all.map(([key, label]) => (
         <Box key={key}>
           <Text color="white">{key}</Text>

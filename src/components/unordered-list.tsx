@@ -2,9 +2,10 @@
 // and adapted to @kud/ink-ui tokens and conventions.
 import React, { createContext, useContext } from "react"
 import { Box, Text } from "ink"
+import { symbols } from "../tokens.js"
 
 // Shape-distinct markers so nesting reads without relying on colour.
-const markers = ["●", "○", "▪", "▫"]
+const markers = [symbols.active, symbols.pending, symbols.nestedBullet, symbols.nestedBulletEmpty]
 const DepthContext = createContext(0)
 
 type ItemProps = { children: React.ReactNode }

@@ -1,7 +1,7 @@
 import React, { type ReactNode } from "react"
 import { Box, Text, useWindowSize } from "ink"
 import stringWidth from "string-width"
-import { colors } from "../tokens.js"
+import { colors, symbols, borders } from "../tokens.js"
 import { FooterHints, type Hint } from "./footer-hints.js"
 
 /**
@@ -140,7 +140,7 @@ export const Page = ({
       flexDirection="column"
       width={frameWidth}
       height={frameHeight}
-      borderStyle="round"
+      borderStyle={borders.base}
       borderColor={colors.muted}
       overflow="hidden"
     >
@@ -166,7 +166,7 @@ export const Page = ({
           </Text>
         ) : null}
         <Text color={colors.info} dimColor>
-          {"╌".repeat(ruleWidth)}
+          {symbols.rule.repeat(ruleWidth)}
         </Text>
       </Box>
       {filter ? <Box paddingLeft={2}>{filter}</Box> : null}

@@ -1,7 +1,7 @@
 import React from "react"
 import { Box, Text } from "ink"
 import type { ReactNode } from "react"
-import { colors } from "../tokens.js"
+import { colors, symbols, borders } from "../tokens.js"
 
 type PanelProps = {
   /** Optional title shown in the panel's header row. */
@@ -33,13 +33,13 @@ export const Panel = ({
     width={width}
     height={height}
     flexGrow={flexGrow}
-    borderStyle="round"
+    borderStyle={focused ? borders.focus : borders.base}
     borderColor={focused ? color : colors.muted}
     overflow="hidden"
   >
     {title && (
       <Text color={focused ? color : colors.muted} bold>
-        {focused ? `${title} ●` : title}
+        {focused ? `${title} ${symbols.active}` : title}
       </Text>
     )}
     {children}

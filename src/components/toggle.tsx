@@ -1,6 +1,6 @@
 import React from "react"
 import { Text } from "ink"
-import { colors } from "../tokens.js"
+import { colors, symbols } from "../tokens.js"
 
 type ToggleProps = {
   label: string
@@ -13,6 +13,6 @@ type ToggleProps = {
 // keypress that flips `on`.
 export const Toggle = ({ label, on, color = colors.accent }: ToggleProps) => (
   <Text color={on ? color : undefined} dimColor={!on}>
-    {label} {on ? "●" : "○"}
+    {label} {on ? symbols.active : symbols.pending}
   </Text>
 )

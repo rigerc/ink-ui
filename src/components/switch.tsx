@@ -1,6 +1,6 @@
 import React from "react"
 import { Text } from "ink"
-import { colors } from "../tokens.js"
+import { colors, symbols } from "../tokens.js"
 
 export type SwitchValue = "left" | "right"
 
@@ -32,11 +32,11 @@ export const Switch = ({
       </Text>
       <Text> </Text>
       <Text color={leftActive ? color : colors.muted}>
-        {leftActive ? "●" : "○"}
+        {leftActive ? symbols.active : symbols.pending}
       </Text>
-      <Text color={colors.muted}>─</Text>
+      <Text color={colors.muted}>{symbols.line}</Text>
       <Text color={!leftActive ? color : colors.muted}>
-        {!leftActive ? "●" : "○"}
+        {!leftActive ? symbols.active : symbols.pending}
       </Text>
       <Text> </Text>
       <Text

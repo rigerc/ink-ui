@@ -506,3 +506,31 @@ component needs a `.test.tsx` beside it, and the public surface is whatever
 `npm run build` and `npm run check:agents` before committing; the last one
 fails the moment this file cites a symbol the index does not export, so cite
 nothing before it ships.
+
+
+## Stepper: host-owned escape
+
+`Stepper` is a wizard, not a second keyboard owner. It leaves Enter unbound
+unless `keyboardNav` is explicitly enabled (only safe without an input
+claiming Enter). It never claims `esc`, `backspace`, or `q`. Route
+the host's one `useAppKeys({ onBack })` peel to
+`useStepper().goBack()` through the active step or host bridge; calling
+`goBack()` from the first step cancels. Provide explicit keys for dynamic
+`Step` children.
+
+`StepperProgress` uses the **existing** `colors` and new `symbols`
+exports from `src/tokens.ts`. `Stepper` errors use `StatusMessage`
+and its navigation hints use `FooterHints`. The token file also exports
+`asciiSymbols`, `borders`, and `motion`; there is no parallel theme
+provider or second palette.
+
+## Shared visual tokens
+
+Use `symbols`, `asciiSymbols`, `borders`, and `motion` from
+`src/tokens.ts` in all shared UI components instead of duplicating
+semantic glyphs, border styles, or animation constants. The status
+glyphs come from `statusVariant`, which preserves its Nerd Font mode.
+Use `symbols.active` / `symbols.pending` for toggle states,
+`symbols.pointer` for selection, and `symbols.line` /
+`symbols.rule` for separators. Preserve specialized brand symbols and
+caller-provided key hints rather than force-fitting them to other roles.

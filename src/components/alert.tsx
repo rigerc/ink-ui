@@ -3,6 +3,7 @@
 import React from "react"
 import { Box, Text } from "ink"
 import { statusVariant, type StatusVariant } from "./status-variants.js"
+import { borders, spacing } from "../tokens.js"
 
 type AlertProps = {
   variant?: StatusVariant
@@ -14,12 +15,12 @@ export const Alert = ({ variant = "info", title, children }: AlertProps) => {
   const { icon, color } = statusVariant(variant)
   return (
     <Box
-      borderStyle="round"
+      borderStyle={borders.base}
       borderColor={color}
-      paddingX={1}
+      paddingX={spacing.xs}
       flexDirection="column"
     >
-      <Box gap={1}>
+      <Box gap={spacing.xs}>
         <Text color={color}>{icon}</Text>
         {title ? (
           <Text bold color={color}>

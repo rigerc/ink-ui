@@ -1,6 +1,6 @@
 import React from "react"
 import { Box, Text } from "ink"
-import { colors } from "../tokens.js"
+import { colors, symbols } from "../tokens.js"
 
 type ToggleSwitchProps = {
   on: boolean
@@ -27,7 +27,7 @@ export const ToggleSwitch = ({
   on,
   label,
   onColor = colors.success,
-  offColor = "gray",
+  offColor = colors.muted,
 }: ToggleSwitchProps) => {
   const track = on ? onColor : offColor
   return (
@@ -35,7 +35,7 @@ export const ToggleSwitch = ({
       <Text>
         <Text color={track}>{CAP_LEFT}</Text>
         <Text backgroundColor={track} color="black">
-          {on ? " ●" : "● "}
+          {on ? ` ${symbols.active}` : `${symbols.active} `}
         </Text>
         <Text color={track}>{CAP_RIGHT}</Text>
       </Text>

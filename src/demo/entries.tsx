@@ -24,6 +24,9 @@ import {
   ScrollView,
   Select,
   SelectableRow,
+  Step,
+  Stepper,
+  StepperNavigation,
   Spinner,
   StatusMessage,
   Switch,
@@ -302,6 +305,26 @@ const ToggleSwitchDemo = ({ focused }: { focused: boolean }) => {
   )
 }
 
+
+const StepperDemo = ({ focused }: { focused: boolean }) => {
+  const [done, setDone] = useState(false)
+  return done ? (
+    <Text>Wizard complete.</Text>
+  ) : (
+    <Stepper onComplete={() => setDone(true)} keyboardNav={focused}>
+      <Step name="Details">
+        <Text>Enter to review the details.</Text>
+      </Step>
+      <Step name="Review">
+        <>
+          <Text>Enter to finish.</Text>
+          <StepperNavigation />
+        </>
+      </Step>
+    </Stepper>
+  )
+}
+
 // ── registry ──────────────────────────────────────────────────────────
 
 export const entries: DemoEntry[] = [
@@ -423,6 +446,12 @@ export const entries: DemoEntry[] = [
     category: "Selection",
     interactive: true,
     render: (f) => <TabsMarkerDemo focused={f} />,
+  },
+  {
+    name: "Stepper",
+    category: "Selection",
+    interactive: true,
+    render: (f) => <StepperDemo focused={f} />,
   },
   {
     name: "Switch",

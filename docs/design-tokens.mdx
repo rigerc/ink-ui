@@ -61,3 +61,55 @@ import { spacing } from "@kud/ink-ui";
 
 <Box marginBottom={spacing.md}>…</Box>;
 ```
+
+
+## Symbols, borders and motion
+
+The token system also provides semantic terminal glyphs, accessible ASCII
+fallbacks, border presets, and motion settings. These extend the existing
+`src/tokens.ts` module; **no theme provider or alternate palette is required**.
+
+```tsx
+import {
+  colors,
+  spacing,
+  symbols,
+  asciiSymbols,
+  borders,
+  motion,
+} from "@kud/ink-ui"
+
+// Stepper uses colors.success / colors.accent / colors.muted and symbols.
+<Text color={colors.success}>{symbols.success} Completed</Text>
+<Box borderStyle={borders.base} borderColor={colors.muted} padding={spacing.xs}>
+  <Text>Ready</Text>
+</Box>
+
+// Fallback for environments that only support ASCII glyphs:
+<Text>{asciiSymbols.pointer} Pending</Text>
+```
+
+The symbol keys include `success`, `error`, `warn`, `info`,
+`active`, `pending`, `pointer`, checked/unchecked boxes, `bullet`,
+`nestedBullet` / `nestedBulletEmpty`, `caret`, `ellipsis`,
+`line`, `verticalLine`, `rule`, and filled/empty bars. `borders` defines `base`, `focus`,
+and `ascii` styles for Ink's `borderStyle`. `motion` supplies Unicode
+and ASCII spinner frames plus `intervalMs` (spinner animation) and
+`skeletonIntervalMs` (skeleton shimmer). `Spinner` accepts `ascii` to
+switch to the ASCII frame set without changing other components. Consumers choose their appropriate glyph set; the library's
+existing `setIconMode` remains available for Nerd Font icons.
+
+These semantic tokens are used throughout the existing components:
+`StatusMessage` and `Alert` resolve icons through `statusVariant`;
+`Select`, `MultiSelect`, `SelectableRow`, `Toggle`, `Switch`,
+`ToggleSwitch`, `UnorderedList`, `Panel`, and `CommandPalette`
+share cursor/selection symbols; `ProgressBar` and `SkeletonBar`
+use the bar glyph; `Page`, `Tabs`, `FilterBar`, and
+`CommandPalette` use line/caret tokens; bordered components use
+`borders`; and `Spinner` / `SkeletonRows` use `motion`.
+Specialized brand icons and keyboard hints remain caller-defined.
+
+The existing `colors`, `softColors`, `tonalColors`,
+`tonalStrongColors`, `priorityColors`, and `spacing` are unchanged.
+`NO_COLOR` continues to be handled by Ink/terminal color support; it
+does not change the semantic meaning of the symbols.

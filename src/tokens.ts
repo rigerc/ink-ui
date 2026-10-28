@@ -166,3 +166,96 @@ export const spacing = {
 } as const
 
 export type Spacing = (typeof spacing)[keyof typeof spacing]
+
+/**
+ * Semantic terminal glyphs, inspired by the token categories in rigerc/nosey.
+ * The default glyphs match ink-ui's existing StatusMessage and Select
+ * conventions. Shape carries meaning; color only reinforces it.
+ */
+export type Symbols = {
+  /** Filled state marker used by switches, toggles and focused panels. */
+  active: string
+  /** Nested square markers for lists. */
+  nestedBullet: string
+  nestedBulletEmpty: string
+  /** Dotted horizontal rule for page headers. */
+  rule: string
+  /** Terminal input caret. */
+  caret: string
+  /** Vertical group separator. */
+  verticalLine: string
+  success: string
+  error: string
+  warn: string
+  info: string
+  pointer: string
+  checkboxChecked: string
+  checkboxUnchecked: string
+  bullet: string
+  pending: string
+  ellipsis: string
+  line: string
+  barFull: string
+  barEmpty: string
+}
+
+export const symbols: Symbols = {
+  active: "●",
+  nestedBullet: "▪",
+  nestedBulletEmpty: "▫",
+  rule: "╌",
+  caret: "▏",
+  verticalLine: "│",
+  success: "✓",
+  error: "✗",
+  warn: "⚠",
+  info: "ℹ",
+  pointer: "❯",
+  checkboxChecked: "◼",
+  checkboxUnchecked: "◻",
+  bullet: "•",
+  pending: "○",
+  ellipsis: "…",
+  line: "─",
+  barFull: "█",
+  barEmpty: "░",
+}
+
+export const asciiSymbols: Symbols = {
+  active: "*",
+  nestedBullet: "+",
+  nestedBulletEmpty: "-",
+  rule: "-",
+  caret: "|",
+  verticalLine: "|",
+  success: "+",
+  error: "x",
+  warn: "!",
+  info: "i",
+  pointer: ">",
+  checkboxChecked: "[x]",
+  checkboxUnchecked: "[ ]",
+  bullet: "*",
+  pending: "o",
+  ellipsis: "...",
+  line: "-",
+  barFull: "#",
+  barEmpty: "-",
+}
+
+/** Border presets are style names accepted by Ink's Box borderStyle prop. */
+export type BorderStyle = "round" | "single" | "bold" | "double" | "classic"
+export const borders = {
+  base: "round",
+  focus: "bold",
+  ascii: "classic",
+} as const satisfies Record<string, BorderStyle>
+
+/** Motion and fallback frames are visual tokens, not animation state. */
+export const motion = {
+  spinner: ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"],
+  asciiSpinner: ["-", "\\", "|", "/"],
+  intervalMs: 80,
+  /** Skeleton shimmer has a faster independent rhythm. */
+  skeletonIntervalMs: 70,
+} as const

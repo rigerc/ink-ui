@@ -5,6 +5,10 @@ import {
   priorityColors,
   tonalColors,
   tonalStrongColors,
+  symbols,
+  asciiSymbols,
+  borders,
+  motion,
 } from "./tokens.js"
 
 // Mirrors ansi-styles 6 `rgbToAnsi256`, which chalk (and so Ink) uses to
@@ -210,5 +214,33 @@ describe("colors", () => {
       expect(value, key).toMatch(/^#[0-9A-F]{6}$/)
       expect(paletteHexes.has(value), key).toBe(true)
     }
+  })
+})
+
+describe("terminal presentation tokens", () => {
+  it("provides the same semantic glyph roles in Unicode and ASCII", () => {
+    expect(Object.keys(symbols).sort()).toEqual(Object.keys(asciiSymbols).sort())
+    for (const value of Object.values(asciiSymbols)) {
+      expect([...value].every((character) => character.charCodeAt(0) >= 32 && character.charCodeAt(0) <= 126)).toBe(true)
+    }
+    expect(symbols.success).toBe("✓")
+    expect(symbols.error).toBe("✗")
+    expect(symbols.pointer).toBe("❯")
+    expect(symbols.active).toBe("●")
+    expect(symbols.pending).toBe("○")
+    expect(symbols.rule).toBe("╌")
+    expect(symbols.line).toBe("─")
+    expect(symbols.verticalLine).toBe("│")
+    expect(symbols.caret).toBe("▏")
+    expect(symbols.nestedBullet).toBe("▪")
+    expect(symbols.nestedBulletEmpty).toBe("▫")
+  })
+
+  it("exposes Ink-compatible border styles and non-empty spinner frames", () => {
+    expect(borders).toEqual({ base: "round", focus: "bold", ascii: "classic" })
+    expect(motion.intervalMs).toBeGreaterThan(0)
+    expect(motion.skeletonIntervalMs).toBe(70)
+    expect(motion.spinner.length).toBeGreaterThan(0)
+    expect(motion.asciiSpinner.every((frame) => frame.length > 0)).toBe(true)
   })
 })

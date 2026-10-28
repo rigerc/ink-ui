@@ -3,7 +3,7 @@ import { Box, Text } from "ink"
 import { useTerminalColumns } from "./use-terminal-columns.js"
 import stringWidth from "string-width"
 import { glyph } from "@kud/glyphs"
-import { colors } from "../tokens.js"
+import { colors, spacing, symbols } from "../tokens.js"
 import { Pill, pillStyle } from "./pill.js"
 
 export type TabItem<T extends string = string> = {
@@ -104,13 +104,13 @@ type TabsProps<T extends string> = {
 }
 
 /** Columns between one tab and the next, on both rows. They must agree. */
-const GAP = 2
+const GAP = spacing.sm
 
 /** A count not yet known, folded under NO_COLOR: the dash alone, without the pending width. */
 const FOLDED_PENDING_COUNT = "–"
 
 /** Divider rendered between groups: a single pipe. The Box gap={GAP} adds 2 spaces on each side. */
-const DIVIDER = "│"
+const DIVIDER = symbols.verticalLine
 const DIVIDER_WIDTH = 1
 
 /**
@@ -404,7 +404,7 @@ export const Tabs = <T extends string>({
           parked on feat/tabs-underline-animation. */}
       <Box>
         <Text color={colors.accent}>
-          {" ".repeat(rule.start) + "─".repeat(rule.width)}
+          {" ".repeat(rule.start) + symbols.line.repeat(rule.width)}
         </Text>
       </Box>
     </Box>
