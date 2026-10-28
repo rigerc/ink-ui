@@ -27,7 +27,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "prepare": "npm run build",
-    "lint": "oxlint"
+    "lint": "oxlint",
+    "update:agents": "node scripts/update-agents-md.mjs"
   },
   "peerDependencies": {
     "ink": ">=7",
