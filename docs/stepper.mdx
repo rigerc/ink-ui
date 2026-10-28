@@ -1,0 +1,62 @@
+---
+title: Stepper
+description: A declarative, validation-aware multi-step wizard for Ink.
+---
+
+`Stepper` mounts only the current `Step`. Each step can block progression
+with a synchronous or asynchronous `canProceed`, and callers can control
+navigation through `useStepper` or render-prop context.
+
+```tsx
+import { Text } from "ink"
+import { Step, Stepper, StepperNavigation } from "@kud/ink-ui"
+
+<Stepper
+  onComplete={() => save()}
+  onCancel={() => close()}
+  onStepChange={(index) => trackStep(index)}
+>
+  <Step name="Details" canProceed={() => validateDetails()}>
+    {({ goNext }) => <Text>Fill in details, then call goNext()</Text>}
+  </Step>
+  <Step name="Review">
+    {({ goBack, goNext }) => (
+      <>
+        <Text>Review and confirm</Text>
+        <StepperNavigation />
+      </>
+    )}
+  </Step>
+</Stepper>
+```
+
+## Navigation
+
+`goNext()` checks `canProceed` and `onExitStep`. `goBack()` and
+`goTo(index)` skip `canProceed` but still call `onExitStep`.
+Returning `false` from `onExitStep` vetoes a transition; thrown errors
+appear below the step and are forwarded to `onError`. Calls are locked
+while async validation is in progress. Navigating beyond the last step
+invokes `onComplete`, while going back from the first invokes `onCancel`.
+
+`step` makes the position controlled; without it, `initialStep` selects
+the starting index. `onStepChange` reports requested transitions for both
+modes. Use explicit React keys when conditionally inserting or reordering steps.
+
+**Keyboard ownership:** `keyboardNav` is **false by default**.
+Enable it only if no nested input claims Enter. It handles Enter to advance;
+it **does not bind** Escape, Backspace or `q`. Those belong to the host's
+single `useAppKeys`. In the host's back handler, call `goBack()` (or
+`cancel()` to cancel directly); disable the Stepper's Enter shortcut while
+a text field owns input.
+
+## Progress and themes
+
+The built-in `StepperProgress` uses semantic tokens from `useTheme()`
+for complete/current/pending states, and shows distinct symbols so the
+meaning does not depend on color. Set `showProgress={false}` to hide it, or
+pass `renderProgress={(props) => <StepperProgress {...props} orientation="vertical" />}`.
+An optional `StepperNavigation` displays hints without claiming keys.
+
+See [Theme tokens](./design-tokens) for the optional `ThemeProvider`
+and ASCII/monochrome support.

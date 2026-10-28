@@ -16,13 +16,13 @@
 - **27 ready-made components**, pre-styled and ready to drop in:
   - **Inputs** — `TextInput`, `EmailInput` (domain completion), `PasswordInput` (masked), `ConfirmInput`
   - **Lists** — `UnorderedList`, `OrderedList` (both nestable), `Table`
-  - **Selection & navigation** — `Select`, `MultiSelect`, `Tabs`, `Switch`, `Toggle`, `SelectableRow`
+  - **Selection & navigation** — `Select`, `MultiSelect`, `Tabs`, `Stepper`, `Switch`, `Toggle`, `SelectableRow`
   - **Status & feedback** — `Spinner`, `ProgressBar`, `SkeletonBar`, `SkeletonRows`, `StatusMessage`, `Alert`, `Badge`, `Toast`
   - **Layout & chrome** — `Banner`, `Header`, `Panel` (bordered pane, optional focus state), `Columns`, `FooterHints`, `KeyValue`, `LoadingScreen`, `ScrollView`
 - **Behaviour hooks** — `useTabs` and `useListCursor` own the keyboard state that every consumer used to hand-roll, so Tab/Shift+Tab and arrow/vim navigation behave the same everywhere
 - **Full [@inkjs/ui](https://github.com/vadimdemedes/ink-ui) parity** — every upstream component has an equivalent, plus a dozen more the design system adds on top
 - **Colourblind-safe by design** — state is signalled by shape, case, and glyph, never colour alone
-- **Design tokens included** — a shared colour palette (`colors`) and spacing scale (`spacing`) to keep every screen consistent
+- **Design tokens included** — a shared palette (`colors`) and spacing (`spacing`), plus optional theme-aware semantic colors, symbols, borders, and motion via `ThemeProvider`
 - **Full TypeScript support** — ships compiled output with `.d.ts` declarations for every component and token type
 - **ESM only, zero config** — no runtime bundling step; just import and render
 - **Peer-dependency light** — only requires `ink ≥ 7` and `react ≥ 19`

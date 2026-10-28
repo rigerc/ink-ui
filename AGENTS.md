@@ -506,3 +506,15 @@ component needs a `.test.tsx` beside it, and the public surface is whatever
 `npm run build` and `npm run check:agents` before committing; the last one
 fails the moment this file cites a symbol the index does not export, so cite
 nothing before it ships.
+
+
+## Stepper: host-owned escape
+
+`Stepper` is a wizard, not a second keyboard owner. It leaves Enter unbound
+unless `keyboardNav` is explicitly enabled (only safe without an input
+claiming Enter). It never claims `esc`, `backspace`, or `q`. Route the
+host's one `useAppKeys({ onBack })` peel to `useStepper().goBack()` through
+the active step or host bridge; `goBack()` cancels from the first step.
+Provide explicit keys for dynamic `Step` children. The tokens used by new
+wizard chrome come from `ThemeProvider`/`useTheme`; existing static
+`colors` and `spacing` are retained for legacy code.

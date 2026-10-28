@@ -61,3 +61,43 @@ import { spacing } from "@kud/ink-ui";
 
 <Box marginBottom={spacing.md}>…</Box>;
 ```
+
+
+## Theme-aware tokens
+
+The existing `colors`, `palette`, and `spacing` remain stable for
+existing applications. New components may use a theme's **semantic roles**
+(`primary`, `accent`, `success`, `warn`, `danger`, `info`, `muted`),
+symbols, borders, and motion settings.
+
+```tsx
+import {
+  ThemeProvider,
+  Stepper,
+  Step,
+  useTheme,
+  themes,
+} from "@kud/ink-ui"
+
+// Built-in themes: dark (default), light, contrast, mono.
+<ThemeProvider theme="light" ascii={false}>
+  <Stepper onComplete={() => {}}>
+    <Step name="Start">Start here</Step>
+    <Step name="Finish">Finish here</Step>
+  </Stepper>
+</ThemeProvider>
+
+// Inside a theme-aware component:
+const { color, symbols, border, motion, mono } = useTheme()
+```
+
+`ThemeProvider` also accepts a complete custom `Theme` object (for example
+`{ ...themes.dark, color: { ...themes.dark.color, primary: "#00B5D8" } }`).
+`ascii` swaps symbols, spinner glyphs, and border tokens for conservative
+terminals. `NO_COLOR` always selects `mono`, regardless of the chosen
+theme. A provider is optional: `useTheme` defaults to dark (or mono under
+`NO_COLOR`).
+
+Theme roles are additive: legacy components that use `colors` continue
+using the established static palette, and new theme-aware components such
+as `Stepper` read from the provider.

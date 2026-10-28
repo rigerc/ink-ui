@@ -32,6 +32,19 @@ export { OrderedList } from "./components/ordered-list.js"
 export { ScrollView } from "./components/scroll-view.js"
 export type { StyledLine, Span } from "./components/scroll-view.js"
 export { Tabs } from "./components/tabs.js"
+export {
+  Step,
+  Stepper,
+  StepperProgress,
+  StepperNavigation,
+  useStepper,
+} from "./components/stepper.js"
+export type {
+  StepProps,
+  StepContext,
+  StepperProps,
+  StepperProgressProps,
+} from "./components/stepper.js"
 export type { TabItem } from "./components/tabs.js"
 export { useTabs } from "./components/use-tabs.js"
 export { CommandPalette } from "./components/command-palette.js"
@@ -58,3 +71,23 @@ export { notify } from "./notify.js"
 export type { NotifyOptions } from "./notify.js"
 export { colors, softColors, tonalColors, tonalStrongColors, spacing, palette, priorityColors } from "./tokens.js"
 export type { Color, SoftColor, Spacing, Palette, PriorityColor } from "./tokens.js"
+
+export { ThemeProvider, useTheme, useTone } from "./theme/context.js"
+export type { ThemeProviderProps } from "./theme/context.js"
+export { themes, applyAscii } from "./theme/themes.js"
+export {
+  themeNames,
+  tones,
+  unicodeSymbols,
+  asciiSymbols,
+  unicodeSpinner,
+  asciiSpinner,
+} from "./theme/tokens.js"
+export type {
+  Theme,
+  ThemeName,
+  ThemePalette,
+  Tone,
+  BorderName,
+  Symbols,
+} from "./theme/tokens.js"
