@@ -8,6 +8,7 @@ import { fileURLToPath } from "node:url"
 const root = fileURLToPath(new URL("../", import.meta.url))
 const generatedPath = "skills/ink-ui-screen-design/references/generated-api.md"
 const skillPath = "skills/ink-ui-screen-design/"
+
 const authoredFiles = [
   "SKILL.md",
   "references/components.md",
@@ -16,6 +17,7 @@ const authoredFiles = [
   "references/visual-states.md",
   "references/review.md",
 ]
+
 const tick = String.fromCharCode(96)
 const read = (path) => readFileSync(join(root, path), "utf8")
 const code = (value) => tick + value + tick
@@ -27,6 +29,7 @@ function publicExports() {
   for (const match of source.matchAll(/export\s+(type\s+)?\{([^}]+)\}\s+from\s+"([^"]+)"/g)) {
     const isType = Boolean(match[1])
     const module = match[3].replace(/^\.\//, "").replace(/\.js$/, "")
+
     const sourcePath = ["src/" + module + ".tsx", "src/" + module + ".ts"]
       .find((path) => existsSync(join(root, path)))
 
@@ -52,6 +55,7 @@ function tokenKeys(name) {
   if (!match) throw new Error("Cannot inspect exported token family: " + name)
 
   const keys = []
+
   for (const entry of match[1].matchAll(/^  ([A-Za-z][A-Za-z0-9]*):/gm)) {
     keys.push(entry[1])
   }
@@ -74,6 +78,7 @@ function renderReference() {
   const other = values.filter((entry) => !/^[A-Z][a-z]/.test(entry.name) && !/^use[A-Z]/.test(entry.name))
   const types = records.filter((entry) => entry.isType)
   const tokenFamilies = values.filter((entry) => entry.module === "tokens")
+
   const peers = Object.entries(pkg.peerDependencies ?? {})
     .map(([name, range]) => code(name + " " + range))
     .join(", ")
@@ -134,6 +139,7 @@ function validateLinks(path, problems) {
     if (!target || /^(https?:|mailto:)/.test(target)) continue
 
     const absolute = resolve(root, dirname(path), target)
+
     if (!absolute.startsWith(root + sep) || !existsSync(absolute)) {
       problems.push(path + ": missing local link " + target)
     }
@@ -165,6 +171,7 @@ function checkGenerated(problems) {
 }
 
 const mode = process.argv[2] ?? "--check"
+
 if (!["--write", "--check", "--check-generated"].includes(mode)) {
   throw new Error("Usage: node scripts/sync-skill.mjs [--write|--check|--check-generated]")
 }
