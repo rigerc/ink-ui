@@ -437,7 +437,7 @@ read it at render time, so calling it after mounting does nothing.
 **There is no theme provider and no context.** Components take only the props
 they need. Do not build a provider to pass tokens around — import them.
 
-**ESM only.** `import`, never `require`. Node ≥ 20, with `ink` ≥ 7 and
+**ESM only.** `import`, never `require`. Node ≥ 22, with `ink` ≥ 7 and
 `react` ≥ 19 as peer dependencies the consuming project installs itself.
 
 ## Traps
@@ -534,3 +534,33 @@ Use `symbols.active` / `symbols.pending` for toggle states,
 `symbols.pointer` for selection, and `symbols.line` /
 `symbols.rule` for separators. Preserve specialized brand symbols and
 caller-provided key hints rather than force-fitting them to other roles.
+
+<!-- BEGIN GENERATED REPOSITORY CONTEXT -->
+
+## Live repository reference (generated)
+
+This section is updated from the codebase by `npm run update:agents`.
+Do not edit it by hand; the guidance above remains human-maintained.
+
+- **Package:** `@rigerc/ink-ui` v0.41.1
+- **Runtime:** Node `>=22`, ES modules
+- **Peer dependencies:** `ink` >=7, `react` >=19
+- **Public API:** `src/index.ts`; build output/types: `dist/index.js` and `dist/index.d.ts`
+- **Source layout:** `src/components/` has 44 implementation modules and 33 adjacent test files; `docs/` has 13 documentation pages
+
+### Available npm scripts
+
+| Command | package.json definition |
+| --- | --- |
+| `npm run build` | `tsup` |
+| `npm run check:agents` | `node scripts/check-agents-md.mjs` |
+| `npm run demo` | `tsx src/demo/index.tsx` |
+| `npm run dev` | `tsup --watch` |
+| `npm run lint` | `oxlint` |
+| `npm run prepare` | `npm run build` |
+| `npm run test` | `vitest run` |
+| `npm run test:watch` | `vitest` |
+| `npm run typecheck` | `tsc --noEmit` |
+| `npm run update:agents` | `node scripts/update-agents-md.mjs` |
+
+<!-- END GENERATED REPOSITORY CONTEXT -->
