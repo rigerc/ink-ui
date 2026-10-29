@@ -4,6 +4,15 @@ All notable changes to this project are documented here.
 
 ---
 
+## 0.43.0 — 2026-10-30
+
+- Add `Link`, a hyperlink that degrades to a readable label plus URL on terminals without OSC 8 support, with terminal detection exported as `supportsHyperlinks`.
+- Add `Divider`, a width-aware rule with an optional label and character, and `dividerLine` for laying one out without rendering.
+- Add `KeybindingHelp`, a grouped two-column legend panel that renders the host's own bindings and binds no keys.
+- Add `TaskList` and `Task`, a running/succeeded/warned/failed checklist with nested details and a spinner that honours motion opt-out.
+
+---
+
 ## 0.42.0 — 2026-10-29
 
 - Add local color overrides and explicit terminal-default foreground to selectable rows, footer hints, confirmations, spinners and status messages without changing existing defaults.

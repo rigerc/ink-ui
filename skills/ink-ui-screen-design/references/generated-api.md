@@ -3,7 +3,7 @@
 > Automatically derived from source. Do not edit by hand. Run `npm run update:skill` to refresh.
 > Design recommendations in the other references remain human-maintained.
 
-**Package:** `@rigerc/ink-ui` · **Version:** `0.42.0` · **Peers:** `ink >=7`, `react >=19`
+**Package:** `@rigerc/ink-ui` · **Version:** `0.43.0` · **Peers:** `ink >=7`, `react >=19`
 
 ## Exported components
 

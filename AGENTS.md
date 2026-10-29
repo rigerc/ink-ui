@@ -546,7 +546,7 @@ caller-provided key hints rather than force-fitting them to other roles.
 This section is updated from the codebase by `npm run update:agents`.
 Do not edit it by hand; the guidance above remains human-maintained.
 
-- **Package:** `@rigerc/ink-ui` v0.42.0
+- **Package:** `@rigerc/ink-ui` v0.43.0
 - **Runtime:** Node `>=22`, ES modules
 - **Peer dependencies:** `ink` >=7, `react` >=19
 - **Public API:** `src/index.ts`; build output/types: `dist/index.js` and `dist/index.d.ts`
