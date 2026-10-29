@@ -4,7 +4,7 @@ All notable changes to this project are documented here.
 
 ---
 
-## Unreleased
+## 0.42.0 — 2026-10-29
 
 - Add local color overrides and explicit terminal-default foreground to selectable rows, footer hints, confirmations, spinners and status messages without changing existing defaults.
 - Add measured custom-marker gutters and compact indentation, configurable ASCII Back hints, optional arrow-key confirmation and static reduced-motion spinners.
