@@ -29,6 +29,7 @@ export const flattenTree = (
   expandedIds: ReadonlySet<string> = new Set(),
 ): FlatTreeNode[] => {
   const output: FlatTreeNode[] = []
+
   const walk = (siblings: readonly TreeNode[], depth: number, ancestors: boolean[], visiting: Set<TreeNode>) => {
     siblings.forEach((node, index) => {
       // Skip cyclic references rather than recursing indefinitely.
@@ -37,6 +38,7 @@ export const flattenTree = (
       const hasChildren = Boolean(node.children?.length)
       const expanded = hasChildren && expandedIds.has(node.id)
       output.push({node, depth, hasChildren, expanded, isLast, ancestorHasNext: ancestors})
+
       if (expanded) {
         visiting.add(node)
         walk(node.children!, depth + 1, depth === 0 ? [] : [...ancestors, !isLast], visiting)
@@ -44,7 +46,9 @@ export const flattenTree = (
       }
     })
   }
+
   walk(nodes, 0, [], new Set())
+
   return output
 }
 
@@ -87,8 +91,10 @@ export const TreeView = ({
         const prefix = row.ancestorHasNext
           .map((more) => more ? (ascii ? "|" : "│") + " ".repeat(cell - 1) : " ".repeat(cell))
           .join("") + (row.depth > 0 ? (ascii ? (row.isLast ? "`--" : "+--") : (row.isLast ? "└──" : "├──")) + " " : "")
+
         const glyph = row.hasChildren ? (row.expanded ? (ascii ? "v" : "▾") : (ascii ? ">" : "▸")) : (ascii ? "-" : "·")
         const selected = row.node.id === selectedId
+
         return (
           <SelectableRow active={selected} indent={0}>
             <Box flexShrink={0}><Text color={colors.muted}>{prefix + glyph + " "}</Text></Box>

@@ -34,12 +34,19 @@ export const ensureVisible = (
   const size = Math.max(1, Math.floor(height) || 1)
   const limit = Math.max(0, length - size)
   const current = clamp(start, 0, limit)
+
   if (length === 0 || !Number.isFinite(index) || index < 0) return current
   const target = clamp(index, 0, length - 1)
+
   if (target < current) return target
+
   if (target >= current + size) return Math.min(limit, target - size + 1)
+
   return current
 }
+
+const isTextRow = (value: React.ReactNode): value is string | number =>
+  typeof value === "string" || typeof value === "number"
 
 export const VirtualList = <T,>({
   items,
@@ -54,9 +61,11 @@ export const VirtualList = <T,>({
 }: VirtualListProps<T>) => {
   const size = Number.isFinite(height) ? Math.max(1, Math.floor(height)) : 1
   const length = items.length
+
   const [start, setStart] = useState(() =>
     ensureVisible(0, selectedIndex ?? initialIndex, length, size),
   )
+
   const limit = Math.max(0, length - size)
   const visibleStart = clamp(start, 0, limit)
 
@@ -72,14 +81,16 @@ export const VirtualList = <T,>({
   }), [length, size])
 
   const visible = items.slice(visibleStart, visibleStart + size)
+
   return (
     <Box flexDirection="column">
       {length === 0 ? <Text color={colors.muted}>{emptyText}</Text> : visible.map((item, i) => {
         const index = visibleStart + i
         const rendered = renderItem(item, index)
+
         return (
           <Box key={getKey?.(item, index) ?? index} flexDirection="column">
-            {typeof rendered === "string" || typeof rendered === "number" ? <Text>{rendered}</Text> : rendered}
+            {isTextRow(rendered) ? <Text>{rendered}</Text> : rendered}
           </Box>
         )
       })}

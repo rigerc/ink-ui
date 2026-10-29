@@ -9,6 +9,7 @@ describe("VirtualList", () => {
   it("renders a bounded window around an initial selection", () => {
     const frame = render(<VirtualList items={data} height={4} selectedIndex={20}
       renderItem={(item) => item}/>).lastFrame() ?? ""
+
     expect(frame).toContain("item 20")
     expect(frame).not.toContain("item 10")
     expect(frame).not.toContain("item 29")
@@ -26,8 +27,10 @@ describe("VirtualList", () => {
   })
   it("exposes scrollToIndex without owning keyboard input", async () => {
     const ref = createRef<VirtualListHandle>()
+
     const ui = render(<VirtualList ref={ref} items={data} height={3}
       renderItem={(item) => item}/>)
+
     ref.current!.scrollToIndex(28)
     await new Promise((resolve) => setTimeout(resolve, 40))
     expect(ui.lastFrame()).toContain("item 28")

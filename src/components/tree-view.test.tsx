@@ -29,6 +29,7 @@ describe("TreeView", () => {
   it("supports ASCII fallback and a bounded viewport", () => {
     const frame = render(<TreeView nodes={nodes} expandedIds={new Set(["src", "lib"])}
       selectedId="b" ascii maxVisible={2}/>).lastFrame() ?? ""
+
     expect(frame).toContain("b.ts")
     expect(frame).not.toContain("docs")
   })
