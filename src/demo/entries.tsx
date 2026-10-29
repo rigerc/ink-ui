@@ -2,10 +2,10 @@
 // Interactive components render live but inert until focused (isActive/isDisabled
 // gated on `focused`); parent-controlled ones (Tabs/Switch/Toggle) wire their
 // own input in focus mode.
-import React, { useEffect, useState } from "react"
-import { Box, Text, useInput } from "ink"
-import { StepperDemo } from "./stepper-demo.js"
-import { TokensDemo } from "./tokens-demo.js"
+import React, {useEffect, useState} from 'react';
+import {Box, Text, useInput} from 'ink';
+import {StepperDemo} from './stepper-demo.js';
+import {TokensDemo} from './tokens-demo.js';
 import {
   Alert,
   Link,
@@ -44,82 +44,70 @@ import {
   colors,
   type Hint,
   type SwitchValue,
-} from "../index.js"
+} from '../index.js';
 
 export type DemoEntry = {
-  name: string
-  category: string
-  interactive: boolean
+  name: string;
+  category: string;
+  interactive: boolean;
   /** Extra shortcuts shown when a demo owns the keyboard. */
-  focusHints?: Hint[]
-  render: (focused: boolean) => React.ReactNode
-}
+  focusHints?: Hint[];
+  render: (focused: boolean) => React.ReactNode;
+};
 
 const colourOptions = [
-  { label: "Red", value: "red" },
-  { label: "Green", value: "green" },
-  { label: "Blue", value: "blue" },
-  { label: "Amber", value: "amber" },
-]
+  {label: 'Red', value: 'red'},
+  {label: 'Green', value: 'green'},
+  {label: 'Blue', value: 'blue'},
+  {label: 'Amber', value: 'amber'},
+];
 
 // ── interactive wrappers ──────────────────────────────────────────────
 
-const TextInputDemo = ({ focused }: { focused: boolean }) => {
-  const [value, setValue] = useState("")
+const TextInputDemo = ({focused}: {focused: boolean}) => {
+  const [value, setValue] = useState('');
 
   return (
     <Box flexDirection="column">
       <Box>
-        <Text dimColor>{"› "}</Text>
-        <TextInput
-          placeholder="Type here…"
-          onChange={setValue}
-          isDisabled={!focused}
-        />
+        <Text dimColor>{'› '}</Text>
+        <TextInput placeholder="Type here…" onChange={setValue} isDisabled={!focused} />
       </Box>
       <Text dimColor>value: {JSON.stringify(value)}</Text>
     </Box>
-  )
-}
+  );
+};
 
-const EmailInputDemo = ({ focused }: { focused: boolean }) => {
-  const [value, setValue] = useState("")
+const EmailInputDemo = ({focused}: {focused: boolean}) => {
+  const [value, setValue] = useState('');
 
   return (
     <Box flexDirection="column">
       <Box>
-        <Text dimColor>{"› "}</Text>
-        <EmailInput
-          placeholder="you@example.com"
-          onChange={setValue}
-          isDisabled={!focused}
-        />
+        <Text dimColor>{'› '}</Text>
+        <EmailInput placeholder="you@example.com" onChange={setValue} isDisabled={!focused} />
       </Box>
       <Text dimColor>value: {JSON.stringify(value)} · Tab completes</Text>
     </Box>
-  )
-}
+  );
+};
 
-const PasswordInputDemo = ({ focused }: { focused: boolean }) => {
-  const [value, setValue] = useState("")
+const PasswordInputDemo = ({focused}: {focused: boolean}) => {
+  const [value, setValue] = useState('');
 
   return (
     <Box flexDirection="column">
       <Box>
-        <Text dimColor>{"› "}</Text>
-        <PasswordInput
-          placeholder="Password"
-          onChange={setValue}
-          isDisabled={!focused}
-        />
+        <Text dimColor>{'› '}</Text>
+        <PasswordInput placeholder="Password" onChange={setValue} isDisabled={!focused} />
       </Box>
       <Text dimColor>length: {value.length}</Text>
     </Box>
-  )
-}
+  );
+};
 
-const ConfirmInputDemo = ({ focused }: { focused: boolean }) => {
-  const [result, setResult] = useState("—")
+const ConfirmInputDemo = ({focused}: {focused: boolean}) => {
+  const [result, setResult] = useState('—');
 
   return (
     <Box flexDirection="column">
@@ -127,17 +115,17 @@ const ConfirmInputDemo = ({ focused }: { focused: boolean }) => {
         <Text>Proceed? </Text>
         <ConfirmInput
           isDisabled={!focused}
-          onConfirm={() => setResult("confirmed")}
-          onCancel={() => setResult("cancelled")}
+          onConfirm={() => setResult('confirmed')}
+          onCancel={() => setResult('cancelled')}
         />
       </Box>
       <Text dimColor>result: {result}</Text>
     </Box>
-  )
-}
+  );
+};
 
-const SelectDemo = ({ focused }: { focused: boolean }) => {
-  const [value, setValue] = useState("red")
+const SelectDemo = ({focused}: {focused: boolean}) => {
+  const [value, setValue] = useState('red');
 
   return (
     <Box flexDirection="column">
@@ -149,28 +137,24 @@ const SelectDemo = ({ focused }: { focused: boolean }) => {
       />
       <Text dimColor>selected: {value}</Text>
     </Box>
-  )
-}
+  );
+};
 
-const MultiSelectDemo = ({ focused }: { focused: boolean }) => {
-  const [values, setValues] = useState<string[]>(["red"])
+const MultiSelectDemo = ({focused}: {focused: boolean}) => {
+  const [values, setValues] = useState<string[]>(['red']);
 
   return (
     <Box flexDirection="column">
-      <MultiSelect
-        options={colourOptions}
-        onChange={setValues}
-        isDisabled={!focused}
-      />
-      <Text dimColor>selected: {values.join(", ") || "—"}</Text>
+      <MultiSelect options={colourOptions} onChange={setValues} isDisabled={!focused} />
+      <Text dimColor>selected: {values.join(', ') || '—'}</Text>
     </Box>
-  )
-}
+  );
+};
 
-const ScrollViewDemo = ({ focused }: { focused: boolean }) => {
-  const lines = Array.from({ length: 40 }, (_, i) => ({
+const ScrollViewDemo = ({focused}: {focused: boolean}) => {
+  const lines = Array.from({length: 40}, (_, i) => ({
     text: `line ${i + 1} — scrollable content`,
-  }))
+  }));
 
   return (
     <Box flexDirection="column">
@@ -179,36 +163,35 @@ const ScrollViewDemo = ({ focused }: { focused: boolean }) => {
       </Box>
       <Text dimColor>↑↓ / j k / space to scroll when focused</Text>
     </Box>
-  )
-}
+  );
+};
 
-const TabsDemo = ({ focused }: { focused: boolean }) => {
+const TabsDemo = ({focused}: {focused: boolean}) => {
   const items = [
-    { label: "Files", value: "files", icon: "◆" },
-    { label: "Search", value: "search", icon: "▲" },
-    { label: "Settings", value: "settings", icon: "●" },
-  ]
+    {label: 'Files', value: 'files', icon: '◆'},
+    {label: 'Search', value: 'search', icon: '▲'},
+    {label: 'Settings', value: 'settings', icon: '●'},
+  ];
 
-  const [active, setActive] = useState("files")
+  const [active, setActive] = useState('files');
   useInput(
     (_input, key) => {
-      const i = items.findIndex((x) => x.value === active)
+      const i = items.findIndex((x) => x.value === active);
 
-      if (key.leftArrow) setActive(items[Math.max(0, i - 1)]!.value)
+      if (key.leftArrow) setActive(items[Math.max(0, i - 1)]!.value);
 
-      if (key.rightArrow)
-        setActive(items[Math.min(items.length - 1, i + 1)]!.value)
+      if (key.rightArrow) setActive(items[Math.min(items.length - 1, i + 1)]!.value);
     },
-    { isActive: focused },
-  )
+    {isActive: focused},
+  );
 
   return (
     <Box flexDirection="column">
       <Tabs active={active} items={items} />
       <Text dimColor>← → to switch tab</Text>
     </Box>
-  )
-}
+  );
+};
 
 // The marker cell, which is the least discoverable thing in the package: a
 // field with a twelve-line doc comment nobody opens. Static, it looks like a
@@ -218,153 +201,151 @@ const TabsDemo = ({ focused }: { focused: boolean }) => {
 // are the caller's — `Tabs` reserves the cell and never looks inside it — so a
 // gallery that had to borrow a consumer's vocabulary to make this legible would
 // be evidence the vocabulary belonged here. It doesn't, and this shows why.
-const MARKER_PULSE = ["◦", "•", "●", "•"]
-const MARKER_MS = 150
+const MARKER_PULSE = ['◦', '•', '●', '•'];
+const MARKER_MS = 150;
 
-const TabsMarkerDemo = ({ focused }: { focused: boolean }) => {
-  const [active, setActive] = useState("inbox")
-  const [news, setNews] = useState(true)
-  const [frame, setFrame] = useState(0)
+const TabsMarkerDemo = ({focused}: {focused: boolean}) => {
+  const [active, setActive] = useState('inbox');
+  const [news, setNews] = useState(true);
+  const [frame, setFrame] = useState(0);
 
   // Demo-local, like every other entry's state — the registry has no notion of
   // time and needs none. It runs only while there is something to pulse, which
   // is the same gate a real host applies.
   useEffect(() => {
-    if (!news) return
-    const id = setInterval(() => setFrame((f) => f + 1), MARKER_MS)
+    if (!news) return;
+    const id = setInterval(() => setFrame((f) => f + 1), MARKER_MS);
 
-    return () => clearInterval(id)
-  }, [news])
+    return () => clearInterval(id);
+  }, [news]);
 
   // TWO columns on every tab, marked or not. That is the whole contract: a bar
   // that widens when news lands is a bar you have to re-find, and it moves at
   // exactly the moment you are trying to read it. Press n and watch the labels
   // stay put.
   const marker = (marked: boolean) =>
-    marked ? `${MARKER_PULSE[frame % MARKER_PULSE.length]} ` : "  "
+    marked ? `${MARKER_PULSE[frame % MARKER_PULSE.length]} ` : '  ';
 
   const items = [
-    { label: "Inbox", value: "inbox", count: 4, marker: marker(false) },
+    {label: 'Inbox', value: 'inbox', count: 4, marker: marker(false)},
     {
-      label: "Review",
-      value: "review",
+      label: 'Review',
+      value: 'review',
       count: 2,
       marker: marker(news),
       markerColor: colors.accent,
     },
-    { label: "Done", value: "done", marker: marker(false) },
-  ]
+    {label: 'Done', value: 'done', marker: marker(false)},
+  ];
 
   useInput(
     (input, key) => {
-      const i = items.findIndex((x) => x.value === active)
+      const i = items.findIndex((x) => x.value === active);
 
-      if (key.leftArrow) setActive(items[Math.max(0, i - 1)]!.value)
+      if (key.leftArrow) setActive(items[Math.max(0, i - 1)]!.value);
 
-      if (key.rightArrow)
-        setActive(items[Math.min(items.length - 1, i + 1)]!.value)
+      if (key.rightArrow) setActive(items[Math.min(items.length - 1, i + 1)]!.value);
 
-      if (input === "n") setNews((on) => !on)
+      if (input === 'n') setNews((on) => !on);
     },
-    { isActive: focused },
-  )
+    {isActive: focused},
+  );
 
   return (
     <Box flexDirection="column">
       <Tabs active={active} items={items} />
       <Text dimColor>← → to switch tab · n to toggle the marker</Text>
     </Box>
-  )
-}
+  );
+};
 
-const SwitchDemo = ({ focused }: { focused: boolean }) => {
-  const [value, setValue] = useState<SwitchValue>("left")
+const SwitchDemo = ({focused}: {focused: boolean}) => {
+  const [value, setValue] = useState<SwitchValue>('left');
   useInput(
     (input, key) => {
-      if (key.leftArrow) setValue("left")
+      if (key.leftArrow) setValue('left');
 
-      if (key.rightArrow) setValue("right")
+      if (key.rightArrow) setValue('right');
 
-      if (input === " ") setValue((v) => (v === "left" ? "right" : "left"))
+      if (input === ' ') setValue((v) => (v === 'left' ? 'right' : 'left'));
     },
-    { isActive: focused },
-  )
+    {isActive: focused},
+  );
 
   return (
     <Box flexDirection="column">
       <Switch left="Off" right="On" value={value} />
       <Text dimColor>← → / space</Text>
     </Box>
-  )
-}
+  );
+};
 
-const ToggleDemo = ({ focused }: { focused: boolean }) => {
-  const [on, setOn] = useState(false)
+const ToggleDemo = ({focused}: {focused: boolean}) => {
+  const [on, setOn] = useState(false);
   useInput(
     (input) => {
-      if (input === " ") setOn((o) => !o)
+      if (input === ' ') setOn((o) => !o);
     },
-    { isActive: focused },
-  )
+    {isActive: focused},
+  );
 
   return (
     <Box flexDirection="column">
       <Toggle label="Dark mode" on={on} />
       <Text dimColor>space to toggle</Text>
     </Box>
-  )
-}
+  );
+};
 
-const ToggleSwitchDemo = ({ focused }: { focused: boolean }) => {
-  const [on, setOn] = useState(true)
+const ToggleSwitchDemo = ({focused}: {focused: boolean}) => {
+  const [on, setOn] = useState(true);
   useInput(
     (input) => {
-      if (input === " ") setOn((o) => !o)
+      if (input === ' ') setOn((o) => !o);
     },
-    { isActive: focused },
-  )
+    {isActive: focused},
+  );
 
   return (
     <Box flexDirection="column">
-      <ToggleSwitch on={on} label={on ? "on" : "off"} />
+      <ToggleSwitch on={on} label={on ? 'on' : 'off'} />
       <Text dimColor>space to toggle</Text>
     </Box>
-  )
-}
-
+  );
+};
 
 // ── registry ──────────────────────────────────────────────────────────
 
 export const entries: DemoEntry[] = [
   // Inputs
   {
-    name: "TextInput",
-    category: "Inputs",
+    name: 'TextInput',
+    category: 'Inputs',
     interactive: true,
     render: (f) => <TextInputDemo focused={f} />,
   },
   {
-    name: "EmailInput",
-    category: "Inputs",
+    name: 'EmailInput',
+    category: 'Inputs',
     interactive: true,
     render: (f) => <EmailInputDemo focused={f} />,
   },
   {
-    name: "PasswordInput",
-    category: "Inputs",
+    name: 'PasswordInput',
+    category: 'Inputs',
     interactive: true,
     render: (f) => <PasswordInputDemo focused={f} />,
   },
   {
-    name: "ConfirmInput",
-    category: "Inputs",
+    name: 'ConfirmInput',
+    category: 'Inputs',
     interactive: true,
     render: (f) => <ConfirmInputDemo focused={f} />,
   },
   // Lists
   {
-    name: "UnorderedList",
-    category: "Lists",
+    name: 'UnorderedList',
+    category: 'Lists',
     interactive: false,
     render: () => (
       <UnorderedList>
@@ -386,8 +367,8 @@ export const entries: DemoEntry[] = [
     ),
   },
   {
-    name: "OrderedList",
-    category: "Lists",
+    name: 'OrderedList',
+    category: 'Lists',
     interactive: false,
     render: () => (
       <OrderedList>
@@ -404,119 +385,135 @@ export const entries: DemoEntry[] = [
     ),
   },
   {
-    name: "Table",
-    category: "Lists",
+    name: 'Table',
+    category: 'Lists',
     interactive: false,
     render: () => (
       <Table
         data={[
           {
-            name: "TextInput",
-            notes: "cursor, masking and submit on enter",
-            tests: "4",
+            name: 'TextInput',
+            notes: 'cursor, masking and submit on enter',
+            tests: '4',
           },
           {
-            name: "MultiSelect",
-            notes: "space toggles, enter confirms",
-            tests: "3",
+            name: 'MultiSelect',
+            notes: 'space toggles, enter confirms',
+            tests: '3',
           },
-          { name: "ScrollView", notes: "windowed list", tests: "2" },
+          {name: 'ScrollView', notes: 'windowed list', tests: '2'},
         ]}
         columns={[
-          { key: "name", header: "Component", width: 14 },
-          { key: "notes", header: "Notes", width: 22, overflow: "wrap" },
-          { key: "tests", header: "Tests", width: 6, align: "right" },
+          {key: 'name', header: 'Component', width: 14},
+          {key: 'notes', header: 'Notes', width: 22, overflow: 'wrap'},
+          {key: 'tests', header: 'Tests', width: 6, align: 'right'},
         ]}
       />
     ),
   },
   {
-    name: "Link",
-    category: "Lists",
+    name: 'Link',
+    category: 'Lists',
     interactive: false,
     render: () => <Link url="https://github.com/rigerc/ink-ui">Repository</Link>,
   },
   {
-    name: "Divider",
-    category: "Lists",
+    name: 'Divider',
+    category: 'Lists',
     interactive: false,
     render: () => <Divider width={40} label="Recent activity" />,
   },
   {
-    name: "KeybindingHelp",
-    category: "Lists",
+    name: 'KeybindingHelp',
+    category: 'Lists',
     interactive: false,
-    render: () => <KeybindingHelp columns={1} groups={[
-      {title: "Navigation", bindings: [["j/k", "move"], ["enter", "select"]]},
-      {title: "Actions", bindings: [["r", "refresh"]]},
-    ]} />,
+    render: () => (
+      <KeybindingHelp
+        columns={1}
+        groups={[
+          {
+            title: 'Navigation',
+            bindings: [
+              ['j/k', 'move'],
+              ['enter', 'select'],
+            ],
+          },
+          {title: 'Actions', bindings: [['r', 'refresh']]},
+        ]}
+      />
+    ),
   },
   {
-    name: "TaskList",
-    category: "Lists",
+    name: 'TaskList',
+    category: 'Lists',
     interactive: false,
     render: () => (
       <TaskList>
         <Task label="Build" state="running" animate={false}>
-          <Task label="Compile" state="success"/>
-          <Task label="Check" state="pending"/>
+          <Task label="Compile" state="success" />
+          <Task label="Check" state="pending" />
         </Task>
       </TaskList>
     ),
   },
   // Selection & navigation
   {
-    name: "Select",
-    category: "Selection",
+    name: 'Select',
+    category: 'Selection',
     interactive: true,
     render: (f) => <SelectDemo focused={f} />,
   },
   {
-    name: "MultiSelect",
-    category: "Selection",
+    name: 'MultiSelect',
+    category: 'Selection',
     interactive: true,
     render: (f) => <MultiSelectDemo focused={f} />,
   },
   {
-    name: "Tabs",
-    category: "Selection",
+    name: 'Tabs',
+    category: 'Selection',
     interactive: true,
     render: (f) => <TabsDemo focused={f} />,
   },
   {
-    name: "Tabs · marker",
-    category: "Selection",
+    name: 'Tabs · marker',
+    category: 'Selection',
     interactive: true,
     render: (f) => <TabsMarkerDemo focused={f} />,
   },
   {
-    name: "Stepper",
-    category: "Selection",
+    name: 'Stepper',
+    category: 'Selection',
     interactive: true,
-    focusHints: [["↵", "next"], ["b", "step back"], ["a", "ASCII"], ["v", "layout"]],
+    focusHints: [
+      ['↵', 'next'],
+      ['b', 'step back'],
+      ['a', 'ASCII'],
+      ['v', 'layout'],
+    ],
     render: (f) => <StepperDemo focused={f} />,
   },
   {
-    name: "Switch",
-    category: "Selection",
+    name: 'Switch',
+    category: 'Selection',
     interactive: true,
     render: (f) => <SwitchDemo focused={f} />,
   },
   {
-    name: "Toggle",
-    category: "Selection",
+    name: 'Toggle',
+    category: 'Selection',
     interactive: true,
     render: (f) => <ToggleDemo focused={f} />,
   },
   {
-    name: "ToggleSwitch",
-    category: "Selection",
+    name: 'ToggleSwitch',
+    category: 'Selection',
     interactive: true,
     render: (f) => <ToggleSwitchDemo focused={f} />,
   },
   {
-    name: "SelectableRow",
-    category: "Selection",
+    name: 'SelectableRow',
+    category: 'Selection',
     interactive: false,
     render: () => (
       <Box flexDirection="column">
@@ -531,14 +528,14 @@ export const entries: DemoEntry[] = [
   },
   // Status & feedback
   {
-    name: "Spinner",
-    category: "Status",
+    name: 'Spinner',
+    category: 'Status',
     interactive: false,
     render: () => <Spinner label="Working…" />,
   },
   {
-    name: "ProgressBar",
-    category: "Status",
+    name: 'ProgressBar',
+    category: 'Status',
     interactive: false,
     render: () => (
       <Box flexDirection="column">
@@ -549,8 +546,8 @@ export const entries: DemoEntry[] = [
     ),
   },
   {
-    name: "StatusMessage",
-    category: "Status",
+    name: 'StatusMessage',
+    category: 'Status',
     interactive: false,
     render: () => (
       <Box flexDirection="column">
@@ -561,8 +558,8 @@ export const entries: DemoEntry[] = [
     ),
   },
   {
-    name: "Alert",
-    category: "Status",
+    name: 'Alert',
+    category: 'Status',
     interactive: false,
     render: () => (
       <Alert variant="warning" title="Heads up">
@@ -571,8 +568,8 @@ export const entries: DemoEntry[] = [
     ),
   },
   {
-    name: "Badge",
-    category: "Status",
+    name: 'Badge',
+    category: 'Status',
     interactive: false,
     render: () => (
       <Box gap={1}>
@@ -584,8 +581,8 @@ export const entries: DemoEntry[] = [
     ),
   },
   {
-    name: "Pill",
-    category: "Status",
+    name: 'Pill',
+    category: 'Status',
     interactive: false,
     render: () => (
       <Box gap={1}>
@@ -596,12 +593,22 @@ export const entries: DemoEntry[] = [
         {/* The law: solid says something happened, soft says what it is.
             A type sits beside an event so the difference is visible, not told;
             group is the epic, off the accent so the key keeps orange. */}
-        <Pill tone="soft" variant="group">epic</Pill>
-        <Pill tone="soft" variant="success">story</Pill>
-        <Pill tone="soft" variant="error">bug</Pill>
-        <Pill tone="soft" variant="muted">subtask</Pill>
+        <Pill tone="soft" variant="group">
+          epic
+        </Pill>
+        <Pill tone="soft" variant="success">
+          story
+        </Pill>
+        <Pill tone="soft" variant="error">
+          bug
+        </Pill>
+        <Pill tone="soft" variant="muted">
+          subtask
+        </Pill>
         {/* Outline: the same classification on a ground where any fill is too much. */}
-        <Pill tone="outline" variant="error">bug</Pill>
+        <Pill tone="outline" variant="error">
+          bug
+        </Pill>
         {/* The escape hatch, shown in the gallery so the ink it picks for a
             fill is something you can look at rather than take on trust —
             GitHub's merged purple is the case it exists for. */}
@@ -610,29 +617,27 @@ export const entries: DemoEntry[] = [
     ),
   },
   {
-    name: "Toast",
-    category: "Status",
+    name: 'Toast',
+    category: 'Status',
     interactive: false,
-    render: () => (
-      <Toast message="Saved to disk" variant="success" duration={999999} />
-    ),
+    render: () => <Toast message="Saved to disk" variant="success" duration={999999} />,
   },
   // Layout & chrome
   {
-    name: "Banner",
-    category: "Layout",
+    name: 'Banner',
+    category: 'Layout',
     interactive: false,
     render: () => <Banner title="my-tool" subtitle="v1.0.0" icon="⚡" />,
   },
   {
-    name: "Header",
-    category: "Layout",
+    name: 'Header',
+    category: 'Layout',
     interactive: false,
     render: () => <Header subtitle="3 files changed">Status</Header>,
   },
   {
-    name: "Panel",
-    category: "Layout",
+    name: 'Panel',
+    category: 'Layout',
     interactive: false,
     render: () => (
       <Panel title="Jobs" color="cyan" focused>
@@ -642,8 +647,8 @@ export const entries: DemoEntry[] = [
     ),
   },
   {
-    name: "Columns",
-    category: "Layout",
+    name: 'Columns',
+    category: 'Layout',
     interactive: false,
     render: () => (
       <Columns>
@@ -658,22 +663,22 @@ export const entries: DemoEntry[] = [
     ),
   },
   {
-    name: "FooterHints",
-    category: "Layout",
+    name: 'FooterHints',
+    category: 'Layout',
     interactive: false,
     render: () => (
       <FooterHints
         hints={[
-          ["↑↓", "navigate"],
-          ["⏎", "select"],
-          ["q", "quit"],
+          ['↑↓', 'navigate'],
+          ['⏎', 'select'],
+          ['q', 'quit'],
         ]}
       />
     ),
   },
   {
-    name: "KeyValue",
-    category: "Layout",
+    name: 'KeyValue',
+    category: 'Layout',
     interactive: false,
     render: () => (
       <Box flexDirection="column">
@@ -684,22 +689,22 @@ export const entries: DemoEntry[] = [
     ),
   },
   {
-    name: "LoadingScreen",
-    category: "Layout",
+    name: 'LoadingScreen',
+    category: 'Layout',
     interactive: false,
     render: () => <LoadingScreen label="Loading components…" />,
   },
   {
-    name: "ScrollView",
-    category: "Layout",
+    name: 'ScrollView',
+    category: 'Layout',
     interactive: true,
     render: (f) => <ScrollViewDemo focused={f} />,
   },
   {
-    name: "Design tokens",
-    category: "Tokens",
+    name: 'Design tokens',
+    category: 'Tokens',
     interactive: true,
-    focusHints: [["a", "ASCII / Unicode"]],
+    focusHints: [['a', 'ASCII / Unicode']],
     render: (f) => <TokensDemo focused={f} />,
   },
-]
+];
