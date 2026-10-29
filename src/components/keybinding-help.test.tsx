@@ -28,6 +28,7 @@ describe('KeybindingHelp', () => {
   it('supports multiple columns', () => {
     const frame =
       render(<KeybindingHelp groups={groups} columns={2} width={60} />).lastFrame() ?? '';
+
     expect(frame).toContain('Navigation');
     expect(frame).toContain('Actions');
   });

@@ -28,6 +28,7 @@ describe('TaskList', () => {
           <Task label="Hidden" />
         </Task>,
       ).lastFrame() ?? '';
+
     expect(frame).toContain('Parent');
     expect(frame).not.toContain('Hidden');
   });

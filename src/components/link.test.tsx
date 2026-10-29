@@ -29,6 +29,7 @@ describe('Link', () => {
           Unsafe
         </Link>,
       ).lastFrame() ?? '';
+
     expect(frame).toContain('javascript:alert(1)');
     expect(frame).not.toContain('\u001b]8;;');
   });
