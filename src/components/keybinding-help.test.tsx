@@ -1,11 +1,11 @@
 import React from "react"
 import {render} from "ink-testing-library"
 import {describe, expect, it} from "vitest"
-import {KeybindingHelp} from "./keybinding-help.js"
+import {KeybindingHelp, type KeyBindingGroup} from "./keybinding-help.js"
 
-const groups = [
-  {title: "Navigation", bindings: [["j/k", "move"], ["Enter", "open"]] as [string,string][]},
-  {title: "Actions", bindings: [["r", "reload"]] as [string,string][]},
+const groups: KeyBindingGroup[] = [
+  {title: "Navigation", bindings: [["j/k", "move"], ["Enter", "open"]]},
+  {title: "Actions", bindings: [["r", "reload"]]},
 ]
 
 describe("KeybindingHelp", () => {

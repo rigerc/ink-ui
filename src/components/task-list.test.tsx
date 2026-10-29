@@ -14,6 +14,7 @@ describe("TaskList", () => {
         <Task label="Review" state="warning"/>
       </TaskList>
     ).lastFrame() ?? ""
+
     expect(frame).toContain("Build")
     expect(frame).toContain("✓ Compile")
     expect(frame).toContain("✗ Test")

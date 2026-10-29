@@ -11,11 +11,24 @@ type LinkProps = {
   hyperlinks?: boolean
 }
 
+const withoutControls = (value: string): string => {
+  let output = ""
+
+  for (const char of value) {
+    const code = char.charCodeAt(0)
+
+    if (code >= 32 && code !== 127) output += char
+  }
+
+  return output
+}
+
 const isSafeUrl = (url: string): boolean => {
   try {
     const parsed = new URL(url)
+
     return (parsed.protocol === "https:" || parsed.protocol === "http:" || parsed.protocol === "mailto:") &&
-      !/[\x00-\x1f\x7f]/.test(url)
+      withoutControls(url) === url
   } catch {
     return false
   }
@@ -26,8 +39,11 @@ export const supportsHyperlinks = (
   isTTY: boolean = Boolean(process.stdout.isTTY),
 ): boolean => {
   if (env.FORCE_HYPERLINK === "0" || env.NO_HYPERLINK === "1") return false
+
   if (env.FORCE_HYPERLINK === "1") return true
+
   if (!isTTY || env.TERM === "dumb") return false
+
   return Boolean(
     env.WT_SESSION ||
     env.KITTY_WINDOW_ID ||
@@ -46,7 +62,7 @@ export const Link = ({
   fallback = "url",
   hyperlinks,
 }: LinkProps) => {
-  const visibleUrl = url.replace(/[\x00-\x1f\x7f]/g, "")
+  const visibleUrl = withoutControls(url)
   const valid = isSafeUrl(url)
   const active = valid && (hyperlinks ?? supportsHyperlinks())
   const open = "\u001b]8;;" + url + "\u001b\\"

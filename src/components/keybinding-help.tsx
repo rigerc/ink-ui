@@ -29,7 +29,7 @@ export const KeybindingHelp = ({
 }: KeybindingHelpProps) => {
   if (!visible) return null
   const count = Math.max(1, Math.min(groups.length || 1, Math.floor(columns) || 1))
-  const arranged = Array.from({length: count}, () => [] as KeyBindingGroup[])
+  const arranged: KeyBindingGroup[][] = Array.from({length: count}, () => [])
   groups.forEach((group, index) => arranged[index % count]!.push(group))
 
   return (
@@ -39,6 +39,7 @@ export const KeybindingHelp = ({
           <Box key={index} flexDirection="column" flexGrow={1} flexBasis={0}>
             {column.map((group, i) => {
               const keyWidth = Math.max(0, ...group.bindings.map(([key]) => stringWidth(key)))
+
               return (
                 <Box key={i} flexDirection="column" marginBottom={1}>
                   <Text bold color={colors.secondary}>{group.title}</Text>
