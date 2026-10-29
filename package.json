@@ -52,7 +52,7 @@
     "ink-testing-library": "4.0.0",
     "oxfmt": "0.74.0",
     "oxlint": "1.90.0",
-    "react": "19.3.0",
+    "react": "19.3.1",
     "react-devtools-core": "7.0.1",
     "tsup": "8.5.1",
     "tsx": "4.23.1",
