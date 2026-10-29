@@ -28,6 +28,7 @@ describe('TreeView', () => {
       render(
         <TreeView nodes={nodes} expandedIds={new Set(['src'])} selectedId="a" />,
       ).lastFrame() ?? '';
+
     expect(frame).toContain('▾ src');
     expect(frame).toContain('a.ts');
     expect(frame).toContain('▸ lib');

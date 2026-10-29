@@ -112,6 +112,7 @@ export const TreeView = ({
           : ascii
             ? '-'
             : '·';
+
         const selected = row.node.id === selectedId;
 
         return (

@@ -54,10 +54,12 @@ export const Table = <T extends Record<string, unknown>>({
 
   const selectionGutter = selectedIndex === undefined ? 0 : 2;
   const count = maxVisible === undefined ? data.length : Math.max(1, Math.floor(maxVisible) || 1);
+
   const target =
     selectedIndex === undefined || !Number.isFinite(selectedIndex)
       ? 0
       : Math.max(0, Math.min(data.length - 1, Math.floor(selectedIndex)));
+
   const start = Math.max(0, Math.min(target - Math.floor(count / 2), data.length - count));
   const visible = rows.slice(start, start + count);
 
