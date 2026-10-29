@@ -29,6 +29,8 @@ import {
   PasswordInput,
   ProgressBar,
   ScrollView,
+  VirtualList,
+  TreeView,
   Select,
   SelectableRow,
   Spinner,
@@ -454,6 +456,41 @@ export const entries: DemoEntry[] = [
           <Task label="Check" state="pending" />
         </Task>
       </TaskList>
+    ),
+  },
+  {
+    name: 'VirtualList',
+    category: 'Lists',
+    interactive: false,
+    render: () => (
+      <VirtualList
+        items={Array.from({length: 50}, (_, i) => 'entry ' + i)}
+        height={5}
+        selectedIndex={24}
+        renderItem={(item) => <Text>{item}</Text>}
+      />
+    ),
+  },
+  {
+    name: 'TreeView',
+    category: 'Lists',
+    interactive: false,
+    render: () => (
+      <TreeView
+        expandedIds={new Set(['src'])}
+        selectedId="index"
+        nodes={[
+          {
+            id: 'src',
+            label: 'src',
+            children: [
+              {id: 'index', label: 'index.ts'},
+              {id: 'ui', label: 'components'},
+            ],
+          },
+          {id: 'docs', label: 'docs'},
+        ]}
+      />
     ),
   },
   // Selection & navigation

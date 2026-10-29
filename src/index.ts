@@ -150,3 +150,11 @@ export type {KeyBindingGroup} from './components/keybinding-help.js';
 export {TaskList, Task} from './components/task-list.js';
 
 export type {TaskState} from './components/task-list.js';
+
+export {VirtualList} from './components/virtual-list.js';
+
+export type {VirtualListHandle} from './components/virtual-list.js';
+
+export {TreeView, flattenTree} from './components/tree-view.js';
+
+export type {TreeNode, FlatTreeNode} from './components/tree-view.js';

@@ -17,6 +17,8 @@
     "divider",
     "keybinding-help",
     "task-list",
+    "virtual-list",
+    "tree-view",
     "design-tokens",
     "widget-appearance"
   ]

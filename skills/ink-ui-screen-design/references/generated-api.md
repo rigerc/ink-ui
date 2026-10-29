@@ -51,8 +51,10 @@
 | `Toast` | [`src/components/toast.tsx`](../../../src/components/toast.tsx) |
 | `Toggle` | [`src/components/toggle.tsx`](../../../src/components/toggle.tsx) |
 | `ToggleSwitch` | [`src/components/toggle-switch.tsx`](../../../src/components/toggle-switch.tsx) |
+| `TreeView` | [`src/components/tree-view.tsx`](../../../src/components/tree-view.tsx) |
 | `UnorderedList` | [`src/components/unordered-list.tsx`](../../../src/components/unordered-list.tsx) |
 | `UpdateBanner` | [`src/components/update-banner.tsx`](../../../src/components/update-banner.tsx) |
+| `VirtualList` | [`src/components/virtual-list.tsx`](../../../src/components/virtual-list.tsx) |
 
 ## Exported behavior hooks
 
@@ -71,6 +73,7 @@
 | `asciiSymbols` | [`src/tokens.ts`](../../../src/tokens.ts) |
 | `borders` | [`src/tokens.ts`](../../../src/tokens.ts) |
 | `colors` | [`src/tokens.ts`](../../../src/tokens.ts) |
+| `flattenTree` | [`src/components/tree-view.tsx`](../../../src/components/tree-view.tsx) |
 | `fuzzyFilter` | [`src/components/fuzzy-filter.ts`](../../../src/components/fuzzy-filter.ts) |
 | `getIconMode` | [`src/icon-mode.ts`](../../../src/icon-mode.ts) |
 | `motion` | [`src/tokens.ts`](../../../src/tokens.ts) |
@@ -97,6 +100,7 @@
 | `Column` | [`src/components/table.tsx`](../../../src/components/table.tsx) |
 | `ColumnAlign` | [`src/components/table.tsx`](../../../src/components/table.tsx) |
 | `ColumnOverflow` | [`src/components/table.tsx`](../../../src/components/table.tsx) |
+| `FlatTreeNode` | [`src/components/tree-view.tsx`](../../../src/components/tree-view.tsx) |
 | `Hint` | [`src/components/footer-hints.tsx`](../../../src/components/footer-hints.tsx) |
 | `IconMode` | [`src/icon-mode.ts`](../../../src/icon-mode.ts) |
 | `KeyBindingGroup` | [`src/components/keybinding-help.tsx`](../../../src/components/keybinding-help.tsx) |
@@ -122,6 +126,8 @@
 | `Symbols` | [`src/tokens.ts`](../../../src/tokens.ts) |
 | `TabItem` | [`src/components/tabs.tsx`](../../../src/components/tabs.tsx) |
 | `TaskState` | [`src/components/task-list.tsx`](../../../src/components/task-list.tsx) |
+| `TreeNode` | [`src/components/tree-view.tsx`](../../../src/components/tree-view.tsx) |
+| `VirtualListHandle` | [`src/components/virtual-list.tsx`](../../../src/components/virtual-list.tsx) |
 | `WidgetColor` | [`src/widget-color.ts`](../../../src/widget-color.ts) |
 
 ## Token families and keys

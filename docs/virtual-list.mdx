@@ -1,0 +1,22 @@
+---
+title: VirtualList
+description: Controlled, fixed-height viewport for large lists of React rows.
+---
+
+```tsx
+import {VirtualList, useListCursor} from "@rigerc/ink-ui"
+import {Text} from "ink"
+
+const items = Array.from({length: 1000}, (_, index) => "item " + index)
+const {cursor} = useListCursor(items.length)
+
+<VirtualList
+  items={items}
+  height={12}
+  selectedIndex={cursor}
+  getKey={(item) => item}
+  renderItem={(item) => <Text>{item}</Text>}
+/>
+```
+
+`VirtualList` is presentational: it does **not** bind navigation keys. Its `height` counts item rows; `showIndicator` adds a separate position line. It supports `initialIndex`, `emptyText`, and a ref with `scrollToIndex(index)`. Use stable `getKey` identities when data changes. Items should render as fixed-height rows; variable-height rows are not measured.
