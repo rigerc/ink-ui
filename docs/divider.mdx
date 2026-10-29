@@ -1,0 +1,13 @@
+---
+title: Divider
+description: Width-aware, optionally labelled terminal separator.
+---
+
+```tsx
+import {Divider} from "@rigerc/ink-ui"
+
+<Divider label="Files" width={40}/>
+<Divider width={20} character="-"/>
+```
+
+`width` is measured in terminal cells. Set it when the divider is inside a narrow panel; otherwise the terminal width is used (80 columns in non-TTY capture). The default rule glyph is `symbols.line`.

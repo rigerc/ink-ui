@@ -8,6 +8,11 @@ import {StepperDemo} from './stepper-demo.js';
 import {TokensDemo} from './tokens-demo.js';
 import {
   Alert,
+  Link,
+  Divider,
+  KeybindingHelp,
+  TaskList,
+  Task,
   Badge,
   Pill,
   Banner,
@@ -406,6 +411,51 @@ export const entries: DemoEntry[] = [
           {key: 'tests', header: 'Tests', width: 6, align: 'right'},
         ]}
       />
+    ),
+  },
+  {
+    name: 'Link',
+    category: 'Lists',
+    interactive: false,
+    render: () => <Link url="https://github.com/rigerc/ink-ui">Repository</Link>,
+  },
+  {
+    name: 'Divider',
+    category: 'Lists',
+    interactive: false,
+    render: () => <Divider width={40} label="Recent activity" />,
+  },
+  {
+    name: 'KeybindingHelp',
+    category: 'Lists',
+    interactive: false,
+    render: () => (
+      <KeybindingHelp
+        columns={1}
+        groups={[
+          {
+            title: 'Navigation',
+            bindings: [
+              ['j/k', 'move'],
+              ['enter', 'select'],
+            ],
+          },
+          {title: 'Actions', bindings: [['r', 'refresh']]},
+        ]}
+      />
+    ),
+  },
+  {
+    name: 'TaskList',
+    category: 'Lists',
+    interactive: false,
+    render: () => (
+      <TaskList>
+        <Task label="Build" state="running" animate={false}>
+          <Task label="Compile" state="success" />
+          <Task label="Check" state="pending" />
+        </Task>
+      </TaskList>
     ),
   },
   {

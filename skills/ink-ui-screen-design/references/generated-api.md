@@ -3,7 +3,7 @@
 > Automatically derived from source. Do not edit by hand. Run `npm run update:skill` to refresh.
 > Design recommendations in the other references remain human-maintained.
 
-**Package:** `@rigerc/ink-ui` · **Version:** `0.42.0` · **Peers:** `ink >=7`, `react >=19`
+**Package:** `@rigerc/ink-ui` · **Version:** `0.43.0` · **Peers:** `ink >=7`, `react >=19`
 
 ## Exported components
 
@@ -15,11 +15,14 @@
 | `Columns` | [`src/components/columns.tsx`](../../../src/components/columns.tsx) |
 | `CommandPalette` | [`src/components/command-palette.tsx`](../../../src/components/command-palette.tsx) |
 | `ConfirmInput` | [`src/components/confirm-input.tsx`](../../../src/components/confirm-input.tsx) |
+| `Divider` | [`src/components/divider.tsx`](../../../src/components/divider.tsx) |
 | `EmailInput` | [`src/components/email-input.tsx`](../../../src/components/email-input.tsx) |
 | `FilterBar` | [`src/components/filter-bar.tsx`](../../../src/components/filter-bar.tsx) |
 | `FooterHints` | [`src/components/footer-hints.tsx`](../../../src/components/footer-hints.tsx) |
 | `Header` | [`src/components/header.tsx`](../../../src/components/header.tsx) |
+| `KeybindingHelp` | [`src/components/keybinding-help.tsx`](../../../src/components/keybinding-help.tsx) |
 | `KeyValue` | [`src/components/key-value.tsx`](../../../src/components/key-value.tsx) |
+| `Link` | [`src/components/link.tsx`](../../../src/components/link.tsx) |
 | `LoadingScreen` | [`src/components/loading-screen.tsx`](../../../src/components/loading-screen.tsx) |
 | `MultiSelect` | [`src/components/multi-select.tsx`](../../../src/components/multi-select.tsx) |
 | `OrderedList` | [`src/components/ordered-list.tsx`](../../../src/components/ordered-list.tsx) |
@@ -42,6 +45,8 @@
 | `Switch` | [`src/components/switch.tsx`](../../../src/components/switch.tsx) |
 | `Table` | [`src/components/table.tsx`](../../../src/components/table.tsx) |
 | `Tabs` | [`src/components/tabs.tsx`](../../../src/components/tabs.tsx) |
+| `Task` | [`src/components/task-list.tsx`](../../../src/components/task-list.tsx) |
+| `TaskList` | [`src/components/task-list.tsx`](../../../src/components/task-list.tsx) |
 | `TextInput` | [`src/components/text-input.tsx`](../../../src/components/text-input.tsx) |
 | `Toast` | [`src/components/toast.tsx`](../../../src/components/toast.tsx) |
 | `Toggle` | [`src/components/toggle.tsx`](../../../src/components/toggle.tsx) |
@@ -98,6 +103,7 @@
 | `FlatTreeNode` | [`src/components/tree-view.tsx`](../../../src/components/tree-view.tsx) |
 | `Hint` | [`src/components/footer-hints.tsx`](../../../src/components/footer-hints.tsx) |
 | `IconMode` | [`src/icon-mode.ts`](../../../src/icon-mode.ts) |
+| `KeyBindingGroup` | [`src/components/keybinding-help.tsx`](../../../src/components/keybinding-help.tsx) |
 | `NotifyOptions` | [`src/notify.ts`](../../../src/notify.ts) |
 | `PageStatus` | [`src/components/page.tsx`](../../../src/components/page.tsx) |
 | `Palette` | [`src/tokens.ts`](../../../src/tokens.ts) |
@@ -119,6 +125,7 @@
 | `SwitchValue` | [`src/components/switch.tsx`](../../../src/components/switch.tsx) |
 | `Symbols` | [`src/tokens.ts`](../../../src/tokens.ts) |
 | `TabItem` | [`src/components/tabs.tsx`](../../../src/components/tabs.tsx) |
+| `TaskState` | [`src/components/task-list.tsx`](../../../src/components/task-list.tsx) |
 | `TreeNode` | [`src/components/tree-view.tsx`](../../../src/components/tree-view.tsx) |
 | `VirtualListHandle` | [`src/components/virtual-list.tsx`](../../../src/components/virtual-list.tsx) |
 | `WidgetColor` | [`src/widget-color.ts`](../../../src/widget-color.ts) |

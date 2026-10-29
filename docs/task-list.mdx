@@ -1,0 +1,17 @@
+---
+title: TaskList
+description: Hierarchical execution states.
+---
+
+```tsx
+import {TaskList, Task} from "@rigerc/ink-ui"
+
+<TaskList>
+  <Task label="Build" state="running">
+    <Task label="Compile" state="success"/>
+    <Task label="Tests" state="pending"/>
+  </Task>
+</TaskList>
+```
+
+States: `pending`, `running`, `success`, `warning`, `error`. `Task` supports `expanded` and `animate`. Motion respects `NO_MOTION` and `REDUCE_MOTION` through the existing `Spinner`.

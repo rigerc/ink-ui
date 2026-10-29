@@ -139,6 +139,18 @@ export type {Symbols, BorderStyle} from './tokens.js';
 
 export type {WidgetColor} from './widget-color.js';
 
+export {Link} from './components/link.js';
+
+export {Divider} from './components/divider.js';
+
+export {KeybindingHelp} from './components/keybinding-help.js';
+
+export type {KeyBindingGroup} from './components/keybinding-help.js';
+
+export {TaskList, Task} from './components/task-list.js';
+
+export type {TaskState} from './components/task-list.js';
+
 export {VirtualList} from './components/virtual-list.js';
 
 export type {VirtualListHandle} from './components/virtual-list.js';
