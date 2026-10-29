@@ -1,0 +1,16 @@
+---
+title: KeybindingHelp
+description: Grouped, presentational keyboard shortcut reference.
+---
+
+```tsx
+import {KeybindingHelp} from "@rigerc/ink-ui"
+
+<KeybindingHelp
+  title="Help"
+  columns={2}
+  groups={[{title: "Navigation", bindings: [["j/k", "move"], ["Enter", "open"]]}]}
+/>
+```
+
+`KeybindingHelp` never binds input. The host owns `?`, Escape and layer focus. Set `visible={false}` to hide. `groups` uses the same key/description tuple as `FooterHints`; optional props include `title`, `columns`, `width` and `visible`.
