@@ -1,0 +1,31 @@
+name: Temporary formatter output
+on:
+  push:
+    branches:
+      - feat/pr1-core-primitives-20261030
+permissions:
+  contents: read
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - name: Print formatted source excerpts for application to the PR
+        shell: bash
+        run: |
+          files=("src/components/link.tsx" "src/components/link.test.tsx" "src/components/divider.tsx" "src/components/divider.test.tsx" "src/components/keybinding-help.tsx" "src/components/keybinding-help.test.tsx" "src/components/task-list.tsx" "src/components/task-list.test.tsx" "src/demo/entries.tsx" "src/index.ts")
+          ./node_modules/.bin/oxfmt "${files[@]}"
+          node --input-type=module -e '
+            import {readFileSync} from "node:fs";
+            for (const path of process.argv.slice(1)) {
+              const encoded = encodeURIComponent(readFileSync(path, "utf8"));
+              for (let pos = 0; pos < encoded.length; pos += 1000) {
+                console.log("FMT|" + path + "|" + pos + "|" + encoded.slice(pos, pos + 1000));
+              }
+            }
+          ' "${files[@]}"
