@@ -1,0 +1,16 @@
+---
+title: TreeView
+description: Presentational hierarchical data with expansion and selection.
+---
+
+```tsx
+import {TreeView, flattenTree} from "@rigerc/ink-ui"
+
+const nodes = [{id: "src", label: "src", children: [
+  {id: "main", label: "index.ts"},
+]}]
+
+<TreeView nodes={nodes} expandedIds={new Set(["src"])} selectedId="main" maxVisible={10}/>
+```
+
+Use `flattenTree(nodes, expandedIds)` to derive the visible cursor order; the host owns Arrow/Enter/Escape handlers and updates the expansion set. `TreeView` supports `ascii`, `indent`, `renderNode`, `emptyText` and optional `maxVisible` for bounded rendering. Node IDs must be unique and stable.

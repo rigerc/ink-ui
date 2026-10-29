@@ -138,3 +138,11 @@ export {symbols, asciiSymbols, borders, motion} from './tokens.js';
 export type {Symbols, BorderStyle} from './tokens.js';
 
 export type {WidgetColor} from './widget-color.js';
+
+export {VirtualList} from './components/virtual-list.js';
+
+export type {VirtualListHandle} from './components/virtual-list.js';
+
+export {TreeView, flattenTree} from './components/tree-view.js';
+
+export type {TreeNode, FlatTreeNode} from './components/tree-view.js';

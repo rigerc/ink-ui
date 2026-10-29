@@ -1,7 +1,7 @@
 import React from "react"
 import { Box, Text } from "ink"
 import { useTerminalColumns } from "./use-terminal-columns.js"
-import { colors } from "../tokens.js"
+import { colors, symbols } from "../tokens.js"
 import {
   resolveColumnWidths,
   type ColumnAlign,
@@ -25,6 +25,11 @@ type TableProps<T extends Record<string, unknown>> = {
   gap?: number
   maxWidth?: number
   headerColor?: string
+  /** Presentational selection: reserve a marker gutter on every row. */
+  selectedIndex?: number
+  /** Windowed row count, independent of header and optional indicators. */
+  maxVisible?: number
+  emptyText?: string
 }
 
 // Used only when nothing else can say how wide the terminal is — a piped or
@@ -43,6 +48,9 @@ export const Table = <T extends Record<string, unknown>>({
   gap = 2,
   maxWidth,
   headerColor = colors.muted,
+  selectedIndex,
+  maxVisible,
+  emptyText = "No data",
 }: TableProps<T>) => {
   const terminalColumns = useTerminalColumns()
 
@@ -50,11 +58,17 @@ export const Table = <T extends Record<string, unknown>>({
     columns.map((column) => String(row[column.key] ?? "")),
   )
 
+  const selectionGutter = selectedIndex === undefined ? 0 : 2
+  const count = maxVisible === undefined ? data.length : Math.max(1, Math.floor(maxVisible) || 1)
+  const target = selectedIndex === undefined || !Number.isFinite(selectedIndex) ? 0 : Math.max(0, Math.min(data.length - 1, Math.floor(selectedIndex)))
+  const start = Math.max(0, Math.min(target - Math.floor(count / 2), data.length - count))
+  const visible = rows.slice(start, start + count)
+
   const widths = resolveColumnWidths({
     columns,
     rows,
     gap,
-    maxWidth: maxWidth ?? terminalColumns ?? FALLBACK_TERMINAL_WIDTH,
+    maxWidth: Math.max(1, (maxWidth ?? terminalColumns ?? FALLBACK_TERMINAL_WIDTH) - selectionGutter),
   })
 
   // flexShrink={0} is what keeps every row's columns lining up: the widths were
@@ -75,6 +89,7 @@ export const Table = <T extends Record<string, unknown>>({
   return (
     <Box flexDirection="column">
       <Box gap={gap}>
+        {selectionGutter > 0 ? <Box width={2} flexShrink={0}><Text>{"  "}</Text></Box> : null}
         {columns.map((column, index) =>
           cell(
             column,
@@ -85,19 +100,26 @@ export const Table = <T extends Record<string, unknown>>({
           ),
         )}
       </Box>
-      {rows.map((cells, rowIndex) => (
-        <Box key={rowIndex} gap={gap}>
+      {visible.map((cells, rowIndex) => (
+        <Box key={start + rowIndex} gap={gap} backgroundColor={selectedIndex === start + rowIndex ? colors.selection : undefined}>
+          {selectionGutter > 0 ? (
+            <Box width={2} flexShrink={0}><Text color={colors.info}>{selectedIndex === start + rowIndex ? symbols.pointer + " " : "  "}</Text></Box>
+          ) : null}
           {columns.map((column, index) =>
             cell(
               column,
               index,
-              <Text wrap={column.overflow === "wrap" ? "wrap" : "truncate-end"}>
+              <Text bold={selectedIndex === start + rowIndex} wrap={column.overflow === "wrap" ? "wrap" : "truncate-end"}>
                 {cells[index]}
               </Text>,
             ),
           )}
         </Box>
       ))}
+      {data.length === 0 ? <Text color={colors.muted}>{emptyText}</Text> : null}
+      {maxVisible !== undefined && data.length > count ? (
+        <Text color={colors.muted}>{String(start + 1) + "–" + String(start + visible.length) + " / " + String(data.length)}</Text>
+      ) : null}
     </Box>
   )
 }

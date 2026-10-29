@@ -137,4 +137,21 @@ describe("Table", () => {
 
     expect(lastFrame()).not.toContain("undefined")
   })
+  it("windows rows while preserving a selected-row marker", () => {
+    const data = Array.from({length: 20}, (_, i) => ({name: "entry" + i}))
+    const frame = render(
+      <Table columns={[{key: "name", header: "Name"}]} data={data}
+        maxVisible={4} selectedIndex={15} maxWidth={25}/>
+    ).lastFrame() ?? ""
+    expect(frame).toContain("entry15")
+    expect(frame).not.toContain("entry0")
+    expect(frame).toContain("❯")
+    expect(frame).toContain("/ 20")
+  })
+
+  it("renders a useful empty state", () => {
+    const frame = render(<Table columns={[{key: "name", header: "Name"}]}
+      data={[]} emptyText="Nothing here"/>).lastFrame() ?? ""
+    expect(frame).toContain("Nothing here")
+  })
 })

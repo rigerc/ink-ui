@@ -13,6 +13,8 @@
     "loading-screen",
     "key-value",
     "selectable-row",
+    "virtual-list",
+    "tree-view",
     "design-tokens",
     "widget-appearance"
   ]

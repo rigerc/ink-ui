@@ -550,7 +550,7 @@ Do not edit it by hand; the guidance above remains human-maintained.
 - **Runtime:** Node `>=22`, ES modules
 - **Peer dependencies:** `ink` >=7, `react` >=19
 - **Public API:** `src/index.ts`; build output/types: `dist/index.js` and `dist/index.d.ts`
-- **Source layout:** `src/components/` has 44 implementation modules and 33 adjacent test files; `docs/` has 14 documentation pages
+- **Source layout:** `src/components/` has 46 implementation modules and 35 adjacent test files; `docs/` has 16 documentation pages
 
 ### Available npm scripts
 

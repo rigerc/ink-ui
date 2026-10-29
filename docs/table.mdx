@@ -76,3 +76,7 @@ A wide, wrapping column beside fixed ones:
   data={items}
 />
 ```
+
+## Selected rows and windowing
+
+`selectedIndex` is a zero-based, host-controlled selection. It highlights the active row, adds a pointer glyph, and reserves the same gutter on every row. `maxVisible` limits body rows and shows an additional position indicator; width calculations still inspect the full dataset. Empty data renders `emptyText` (default: `No data`). Neither feature binds keyboard input.
