@@ -1,0 +1,15 @@
+---
+title: Link
+description: Terminal hyperlinks with a readable fallback.
+---
+
+`Link` renders OSC 8 hyperlinks on supported terminals and appends the URL on other terminals.
+
+```tsx
+import {Link} from "@rigerc/ink-ui"
+
+<Link url="https://github.com">GitHub</Link>
+<Link url="https://github.com" fallback="label">GitHub</Link>
+```
+
+Props: `url` (required), `children`, `fallback?: "url" | "label"`, and `hyperlinks?: boolean` for explicit feature override. Unsafe URL schemes are never made clickable.
