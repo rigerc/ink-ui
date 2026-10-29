@@ -46,6 +46,7 @@ export const Link = ({
   fallback = "url",
   hyperlinks,
 }: LinkProps) => {
+  const visibleUrl = url.replace(/[\x00-\x1f\x7f]/g, "")
   const valid = isSafeUrl(url)
   const active = valid && (hyperlinks ?? supportsHyperlinks())
   const open = "\u001b]8;;" + url + "\u001b\\"
@@ -54,7 +55,7 @@ export const Link = ({
   return (
     <Text color={colors.link} underline>
       {active ? <>{open}{children}{close}</> : children}
-      {!active && fallback === "url" && url ? <Text dimColor>{" (" + url + ")"}</Text> : null}
+      {!active && fallback === "url" && url ? <Text dimColor>{" (" + visibleUrl + ")"}</Text> : null}
     </Text>
   )
 }
