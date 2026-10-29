@@ -86,7 +86,7 @@ export const TreeView = ({
       renderItem={(row) => {
         const prefix = row.ancestorHasNext
           .map((more) => more ? (ascii ? "|" : "│") + " ".repeat(cell - 1) : " ".repeat(cell))
-          .join("") + (row.depth > 0 ? (ascii ? (row.isLast ? "\\--" : "+--") : (row.isLast ? "└──" : "├──")) + " " : "")
+          .join("") + (row.depth > 0 ? (ascii ? (row.isLast ? "`--" : "+--") : (row.isLast ? "└──" : "├──")) + " " : "")
         const glyph = row.hasChildren ? (row.expanded ? (ascii ? "v" : "▾") : (ascii ? ">" : "▸")) : (ascii ? "-" : "·")
         const selected = row.node.id === selectedId
         return (
