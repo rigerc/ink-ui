@@ -1,66 +1,62 @@
-export { Banner } from "./components/banner.js"
+export {Banner} from './components/banner.js';
 
-export { Badge } from "./components/badge.js"
+export {Badge} from './components/badge.js';
 
-export type { BadgeVariant } from "./components/badge.js"
+export type {BadgeVariant} from './components/badge.js';
 
-export { Pill, pillWidth } from "./components/pill.js"
+export {Pill, pillWidth} from './components/pill.js';
 
-export type { PillVariant, PillTone } from "./components/pill.js"
+export type {PillVariant, PillTone} from './components/pill.js';
 
-export { Header } from "./components/header.js"
+export {Header} from './components/header.js';
 
-export { Spinner } from "./components/spinner.js"
+export {Spinner} from './components/spinner.js';
 
-export { Table } from "./components/table.js"
+export {Table} from './components/table.js';
 
-export type {
-  Column,
-  ColumnAlign,
-  ColumnOverflow,
-} from "./components/table.js"
+export type {Column, ColumnAlign, ColumnOverflow} from './components/table.js';
 
-export { FooterHints, tailHints } from "./components/footer-hints.js"
+export {FooterHints, tailHints} from './components/footer-hints.js';
 
-export type { Hint } from "./components/footer-hints.js"
+export type {Hint} from './components/footer-hints.js';
 
-export { Page, PAGE_CHROME } from "./components/page.js"
+export {Page, PAGE_CHROME} from './components/page.js';
 
-export type { PageStatus } from "./components/page.js"
+export type {PageStatus} from './components/page.js';
 
-export { KeyValue } from "./components/key-value.js"
+export {KeyValue} from './components/key-value.js';
 
-export { LoadingScreen } from "./components/loading-screen.js"
+export {LoadingScreen} from './components/loading-screen.js';
 
-export { Panel } from "./components/panel.js"
+export {Panel} from './components/panel.js';
 
-export { Columns } from "./components/columns.js"
+export {Columns} from './components/columns.js';
 
-export { SelectableRow } from "./components/selectable-row.js"
+export {SelectableRow} from './components/selectable-row.js';
 
-export { Select } from "./components/select.js"
+export {Select} from './components/select.js';
 
-export type { SelectOption } from "./components/select.js"
+export type {SelectOption} from './components/select.js';
 
-export { MultiSelect } from "./components/multi-select.js"
+export {MultiSelect} from './components/multi-select.js';
 
-export { TextInput } from "./components/text-input.js"
+export {TextInput} from './components/text-input.js';
 
-export { EmailInput } from "./components/email-input.js"
+export {EmailInput} from './components/email-input.js';
 
-export { PasswordInput } from "./components/password-input.js"
+export {PasswordInput} from './components/password-input.js';
 
-export { ConfirmInput } from "./components/confirm-input.js"
+export {ConfirmInput} from './components/confirm-input.js';
 
-export { UnorderedList } from "./components/unordered-list.js"
+export {UnorderedList} from './components/unordered-list.js';
 
-export { OrderedList } from "./components/ordered-list.js"
+export {OrderedList} from './components/ordered-list.js';
 
-export { ScrollView } from "./components/scroll-view.js"
+export {ScrollView} from './components/scroll-view.js';
 
-export type { StyledLine, Span } from "./components/scroll-view.js"
+export type {StyledLine, Span} from './components/scroll-view.js';
 
-export { Tabs } from "./components/tabs.js"
+export {Tabs} from './components/tabs.js';
 
 export {
   Step,
@@ -68,67 +64,77 @@ export {
   StepperProgress,
   StepperNavigation,
   useStepper,
-} from "./components/stepper.js"
+} from './components/stepper.js';
 
 export type {
   StepProps,
   StepContext,
   StepperProps,
   StepperProgressProps,
-} from "./components/stepper.js"
+} from './components/stepper.js';
 
-export type { TabItem } from "./components/tabs.js"
+export type {TabItem} from './components/tabs.js';
 
-export { useTabs } from "./components/use-tabs.js"
+export {useTabs} from './components/use-tabs.js';
 
-export { CommandPalette } from "./components/command-palette.js"
+export {CommandPalette} from './components/command-palette.js';
 
-export type { PaletteItem, PaletteMessage } from "./components/command-palette.js"
+export type {PaletteItem, PaletteMessage} from './components/command-palette.js';
 
-export { fuzzyFilter } from "./components/fuzzy-filter.js"
+export {fuzzyFilter} from './components/fuzzy-filter.js';
 
-export { useListCursor } from "./components/use-list-cursor.js"
+export {useListCursor} from './components/use-list-cursor.js';
 
-export { useAppKeys } from "./components/use-app-keys.js"
+export {useAppKeys} from './components/use-app-keys.js';
 
-export { useFilterMode } from "./components/use-filter-mode.js"
+export {useFilterMode} from './components/use-filter-mode.js';
 
-export { FilterBar } from "./components/filter-bar.js"
+export {FilterBar} from './components/filter-bar.js';
 
-export { Switch } from "./components/switch.js"
+export {Switch} from './components/switch.js';
 
-export type { SwitchValue } from "./components/switch.js"
+export type {SwitchValue} from './components/switch.js';
 
-export { Toggle } from "./components/toggle.js"
+export {Toggle} from './components/toggle.js';
 
-export { ToggleSwitch } from "./components/toggle-switch.js"
+export {ToggleSwitch} from './components/toggle-switch.js';
 
-export { UpdateBanner } from "./components/update-banner.js"
+export {UpdateBanner} from './components/update-banner.js';
 
-export { ProgressBar } from "./components/progress-bar.js"
+export {ProgressBar} from './components/progress-bar.js';
 
-export { SkeletonBar, SkeletonRows } from "./components/skeleton.js"
+export {SkeletonBar, SkeletonRows} from './components/skeleton.js';
 
-export { StatusMessage } from "./components/status-message.js"
+export {StatusMessage} from './components/status-message.js';
 
-export { Alert } from "./components/alert.js"
+export {Alert} from './components/alert.js';
 
-export { Toast } from "./components/toast.js"
+export {Toast} from './components/toast.js';
 
-export type { StatusVariant } from "./components/status-variants.js"
+export type {StatusVariant} from './components/status-variants.js';
 
-export { setIconMode, getIconMode } from "./icon-mode.js"
+export {setIconMode, getIconMode} from './icon-mode.js';
 
-export type { IconMode } from "./icon-mode.js"
+export type {IconMode} from './icon-mode.js';
 
-export { notify } from "./notify.js"
+export {notify} from './notify.js';
 
-export type { NotifyOptions } from "./notify.js"
+export type {NotifyOptions} from './notify.js';
 
-export { colors, softColors, tonalColors, tonalStrongColors, spacing, palette, priorityColors } from "./tokens.js"
+export {
+  colors,
+  softColors,
+  tonalColors,
+  tonalStrongColors,
+  spacing,
+  palette,
+  priorityColors,
+} from './tokens.js';
 
-export type { Color, SoftColor, Spacing, Palette, PriorityColor } from "./tokens.js"
+export type {Color, SoftColor, Spacing, Palette, PriorityColor} from './tokens.js';
 
-export { symbols, asciiSymbols, borders, motion } from "./tokens.js"
+export {symbols, asciiSymbols, borders, motion} from './tokens.js';
 
-export type { Symbols, BorderStyle } from "./tokens.js"
+export type {Symbols, BorderStyle} from './tokens.js';
+
+export type {WidgetColor} from './widget-color.js';

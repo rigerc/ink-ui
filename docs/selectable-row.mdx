@@ -3,7 +3,7 @@ title: 👉 SelectableRow
 description: Cursor-aware row primitive for interactive lists.
 ---
 
-`<SelectableRow>` renders a row with an active cursor marker. It is intentionally stateless: keep cursor state in your own `useInput` handler and pass `active` to the selected row.
+`<SelectableRow>` renders a row with an active cursor marker. It is intentionally stateless: keep cursor state in `useListCursor` and pass `active` to the selected row.
 
 ```tsx
 import { SelectableRow } from "@rigerc/ink-ui";
@@ -14,7 +14,7 @@ import { SelectableRow } from "@rigerc/ink-ui";
 | Prop       | Type              | Default | Description                  |
 | ---------- | ----------------- | ------- | ---------------------------- |
 | `children` | `React.ReactNode` | —       | Row content                  |
-| `active`   | `boolean`         | `false` | Whether the row is selected  |
+| `active`   | `boolean`         | `false` | Whether the row is focused  |
 | `marker`   | `string`          | `"❯"`   | Cursor marker for active row |
 
 ## 💡 Examples
@@ -22,3 +22,9 @@ import { SelectableRow } from "@rigerc/ink-ui";
 ```tsx
 <SelectableRow active>Review PR #42</SelectableRow>
 ```
+
+## Host appearance
+
+`markerColor` and `textColor` accept `WidgetColor`: omit for existing defaults, pass `null` for terminal foreground, or supply a host semantic color. `textColor` applies to string/number children; rich children own their styles. `indent` defaults to 2 and can be 0 for a compact inline host. Active and inactive gutters reserve the measured terminal-cell width of `marker`, including multi-cell ASCII markers.
+
+See [widget appearance](./widget-appearance) for a complete example.
