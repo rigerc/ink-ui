@@ -5,6 +5,7 @@ description: Controlled, fixed-height viewport for large lists of React rows.
 
 ```tsx
 import {VirtualList, useListCursor} from "@rigerc/ink-ui"
+import {Text} from "ink"
 
 const items = Array.from({length: 1000}, (_, index) => "item " + index)
 const {cursor} = useListCursor(items.length)

@@ -76,9 +76,10 @@ export const VirtualList = <T,>({
     <Box flexDirection="column">
       {length === 0 ? <Text color={colors.muted}>{emptyText}</Text> : visible.map((item, i) => {
         const index = visibleStart + i
+        const rendered = renderItem(item, index)
         return (
           <Box key={getKey?.(item, index) ?? index} flexDirection="column">
-            {renderItem(item, index)}
+            {typeof rendered === "string" || typeof rendered === "number" ? <Text>{rendered}</Text> : rendered}
           </Box>
         )
       })}
