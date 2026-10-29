@@ -4,6 +4,14 @@ All notable changes to this project are documented here.
 
 ---
 
+## 0.44.0 — 2026-10-30
+
+- Add `VirtualList`, a fixed-row-height viewport that renders only the visible window, keeps a selected row in view, and exposes `scrollToIndex` through a ref. The scrolling maths is exported as `ensureVisible`.
+- Add `TreeView` with `flattenTree`, `TreeNode` and `FlatTreeNode`, rendering expandable hierarchy with branch connectors while leaving the cursor and expand/collapse keys to the host.
+- `Table` gains presentational `selectedIndex` (a marker gutter on every row), `maxVisible` windowing independent of the header, and `emptyText`.
+
+---
+
 ## 0.43.0 — 2026-10-30
 
 - Add `Link`, a hyperlink that degrades to a readable label plus URL on terminals without OSC 8 support, with terminal detection exported as `supportsHyperlinks`.
